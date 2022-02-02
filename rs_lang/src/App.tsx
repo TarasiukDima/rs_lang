@@ -1,10 +1,18 @@
-import React, { FC } from 'react';
-import './App.css';
+import React, { FC } from "react";
+import Header from "./components/header";
+import Main from "./components/main";
+import Footer from "./components/footer";
+
+import './App.scss';
 
 const App: FC = () => {
-  return (
-    <div className="App">Start</div>
-  );
-}
+    return (
+        <>
+            <Header />
+            <Main />
+            <Footer />
+        </>
+    );
+};
 
 export default App;

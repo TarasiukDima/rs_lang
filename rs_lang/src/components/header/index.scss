@@ -1,0 +1,29 @@
+@import "../../scss/mixins";
+@import "../../scss/variebles";
+
+
+.header {
+    padding: 15px 0;
+    background-color: $bgColor1;
+
+    &__logo {
+        width: 50px;
+    }
+
+    .wrapper {
+        @include dflex(space-between, center);
+    }
+
+    .nav__list {
+        @include dflex(space-between, center);
+    }
+
+    .nav__list_item {
+        margin: 0 10px;
+
+        a {
+            color: $headerButtonBg;
+        }
+    }
+
+}

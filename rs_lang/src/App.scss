@@ -1,0 +1,170 @@
+@import "./scss/normalize";
+@import "./scss/variebles";
+@import "./scss/mixins";
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+html {
+    font: 18px / 1.5 "Roboto", sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    color: $black;
+    background-color: $bgColor2;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main__content {
+    flex: 1 0 auto;
+    padding: 40px 0;
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+figure {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    display: block;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+svg,
+img {
+    display: block;
+    max-width: 100%;
+}
+
+button,
+input[type="submit"] {
+    display: block;
+    outline: none;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+
+/* common start */
+.wrapper {
+    width: calc(100% - 40px);
+    max-width: $wrapper-max-width;
+    margin: 0 auto;
+}
+
+.title {
+    margin-bottom: 20px;
+    font-size: 60px;
+    text-align: center;
+}
+
+
+.button {
+    @include buttonHover();
+
+    font-size: 16px;
+    border-radius: 5px;
+    background-color: $headerButtonBg;
+}
+
+
+.pagination__page {
+    @include dflex();
+
+    margin-top: 30px;
+
+    .pagination__item {
+        margin: 0 10px;
+    }
+
+    .button {
+        min-width: $minWidthButton;
+        padding: 10px;
+
+        &:disabled {
+            opacity: 0.6;
+        }
+    }
+}
+
+/* common end */
+
+
+@include largeDisplay() {
+    .title {
+        font-size: 50px;
+    }
+
+    .page__title {
+        font-size: 24px;
+    }
+}
+
+@include desctop() {
+    .title {
+        font-size: 42px;
+    }
+}
+
+@include tablet() {
+    .title {
+        font-size: 38px;
+    }
+
+    .page__title {
+        font-size: 22px;
+    }
+}
+
+@include smallTablet() {
+    .wrapper {
+        width: calc(100% - 20px);
+    }
+
+    .title {
+        font-size: 34px;
+    }
+}
+
+@include mobile() {
+    .title {
+        font-weight: normal;
+        font-size: 28px;
+    }
+
+    .pagination__page {
+        flex-wrap: wrap;
+
+        .pagination__item {
+            margin: 5px;
+        }
+    }
+
+    .page__title {
+        font-size: 20px;
+    }
+}
