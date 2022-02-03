@@ -2,6 +2,11 @@
 @import "./scss/variebles";
 @import "./scss/mixins";
 
+@include font-face("Roboto", "../assets/fonts/RobotoRegular");
+@include font-face("Roboto", "../assets/fonts/RobotoMedium", 600);
+@include font-face("Roboto", "../assets/fonts/RobotoBold", bold);
+@include font-face("ComicSans", "../assets/fonts/ComicSans", bold);
+
 *,
 *:before,
 *:after {
@@ -27,9 +32,8 @@ body {
 
 .main__content {
     flex: 1 0 auto;
-    padding: 40px 0;
+    background-color: $contentBg;
 }
-
 
 h1,
 h2,
@@ -51,7 +55,7 @@ li {
 a {
     display: block;
     text-decoration: none;
-    transition: 0.3s;
+    transition: $transitionTime;
 }
 
 svg,
@@ -64,10 +68,9 @@ button,
 input[type="submit"] {
     display: block;
     outline: none;
-    transition: 0.3s;
+    transition: $transitionTime;
     cursor: pointer;
 }
-
 
 /* common start */
 .wrapper {
@@ -78,19 +81,10 @@ input[type="submit"] {
 
 .title {
     margin-bottom: 20px;
+    font-family: "ComicSans", sans-serif;
     font-size: 60px;
     text-align: center;
 }
-
-
-.button {
-    @include buttonHover();
-
-    font-size: 16px;
-    border-radius: 5px;
-    background-color: $headerButtonBg;
-}
-
 
 .pagination__page {
     @include dflex();
@@ -111,32 +105,40 @@ input[type="submit"] {
     }
 }
 
-/* common end */
+::-webkit-scrollbar {
+    width: $scrollbarWidth;
+}
 
+::-webkit-scrollbar-track {
+    background-color: $scrollbarTrack;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: $scrollbarThumb;
+    border-radius: 15px;
+    box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
+}
+
+section {
+    overflow: hidden;
+}
+/* common end */
 
 @include largeDisplay() {
     .title {
         font-size: 50px;
     }
-
-    .page__title {
-        font-size: 24px;
-    }
 }
 
 @include desctop() {
     .title {
-        font-size: 42px;
+        font-size: 48px;
     }
 }
 
 @include tablet() {
     .title {
-        font-size: 38px;
-    }
-
-    .page__title {
-        font-size: 22px;
+        font-size: 46px;
     }
 }
 
@@ -146,14 +148,14 @@ input[type="submit"] {
     }
 
     .title {
-        font-size: 34px;
+        font-size: 40px;
     }
 }
 
 @include mobile() {
     .title {
         font-weight: normal;
-        font-size: 28px;
+        font-size: 34px;
     }
 
     .pagination__page {
@@ -162,9 +164,5 @@ input[type="submit"] {
         .pagination__item {
             margin: 5px;
         }
-    }
-
-    .page__title {
-        font-size: 20px;
     }
 }

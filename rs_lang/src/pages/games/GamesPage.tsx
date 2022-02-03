@@ -4,7 +4,7 @@ import "./index.scss";
 
 const GamesPage = () => {
     return (
-        <SectionContent>
+        <SectionContent nameClass="section">
             <div className="">game</div>
         </SectionContent>
     );

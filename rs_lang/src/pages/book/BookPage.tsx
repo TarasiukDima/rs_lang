@@ -4,7 +4,7 @@ import "./index.scss";
 
 const BookPage = () => {
     return (
-        <SectionContent>
+        <SectionContent nameClass="section">
             <div className="">book</div>
         </SectionContent>
     );

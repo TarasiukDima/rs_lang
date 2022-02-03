@@ -19,17 +19,6 @@
     justify-content: $just;
 }
 
-@mixin buttonHover() {
-    &:not(:disabled):hover {
-        color: $whiteColor;
-        background-color: $orange;
-    }
-
-    &:active {
-        box-shadow: inset 0 0 10px $blackTransparent;
-    }
-}
-
 @mixin psevdo($cont: "", $pos: absolute, $topValue: 0, $ind: -1) {
     content: $cont;
     position: $pos;
@@ -38,7 +27,7 @@
 }
 
 @mixin largeDisplay() {
-    @media screen and (max-width: 1450px) {
+    @media screen and (max-width: 1400px) {
         @content;
     }
 }

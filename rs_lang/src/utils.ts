@@ -1,6 +1,7 @@
 export enum PageLinks {
     mainPage = '/',
-    authPage = '/auth',
-    bookPage = '/bool',
-    statisticPage = '/statistic',
+    authPage = '/auth/',
+    bookPage = '/book/',
+    gamesPage = '/games/',
+    statisticPage = '/statistic/',
 }

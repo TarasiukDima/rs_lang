@@ -4,7 +4,7 @@ import "./index.scss";
 
 const AuthPage = () => {
     return (
-        <SectionContent>
+        <SectionContent nameClass="section">
             <div className="">auth</div>
         </SectionContent>
     );

@@ -1,22 +1,17 @@
 import React from "react";
-import SectionContent from "../../components/section";
+
+import AdvantegesSection from "./sections/AdvantegesSection";
+import TeamSection from "./sections/TeamSection";
+import TopSection from "./sections/TopSection";
+
 import "./index.scss";
 
 const MainPage = () => {
     return (
         <>
-            <SectionContent>
-                <div className="">asdfasdfasdf</div>
-            </SectionContent>
-            <SectionContent>
-                <div className="">asdfasdfasdf</div>
-            </SectionContent>
-            <SectionContent>
-                <div className="">asdfasdfasdf</div>
-            </SectionContent>
-            <SectionContent>
-                <div className="">asdfasdfasdf</div>
-            </SectionContent>
+            <TopSection/>
+            <AdvantegesSection/>
+            <TeamSection/>
         </>
     );
 };

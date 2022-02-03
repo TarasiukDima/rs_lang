@@ -2,12 +2,12 @@ import React from "react";
 import SectionContent from "../../components/section";
 import "./index.scss";
 
-const StatisticPage = () => {
+const ErrorPage = () => {
     return (
         <SectionContent nameClass="section">
-            <div className="">statistic</div>
+            <div className="">404</div>
         </SectionContent>
     );
 };
 
-export default StatisticPage;
+export default ErrorPage;

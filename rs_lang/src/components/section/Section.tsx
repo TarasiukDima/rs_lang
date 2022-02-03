@@ -1,8 +1,13 @@
-import React, { FC } from 'react';
+import React from 'react';
 
-const SectionContent: FC = ({children}) => {
+interface SectionProps {
+    nameClass: string;
+    children: JSX.Element | Array<JSX.Element> | string;
+}
+
+const SectionContent = ({nameClass, children}: SectionProps) => {
     return (
-        <section>
+        <section className={nameClass}>
             <div className="wrapper">
                 {children}
             </div>

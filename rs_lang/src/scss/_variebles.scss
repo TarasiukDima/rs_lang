@@ -1,24 +1,45 @@
 /* colors start */
-$bgColor1: #3A6073;
+$scrollbarTrack: #e4e4e4;
+$scrollbarThumb: #411f26;
+$bgColor1: #333c54;
 $bgColor2: #fff;
 
-$headerButtonBg: #cbb796;
+$withOutColor: transparent;
 $whiteColor: #fff;
 $black: #000;
+$burgerColor: #d27230;
+$footerLinks: #e2d4c4;
+$linksHover: #d27230;
+
+$contentBg: #e2d4c4;
+$whiteBg: #f6f6f6;
+$mainTitle: #411f26;
+$fonText1: #c4d0ee;
+$fonText2: #eae8db;
+
+
+$buttonBgColor1: #757b92;
+$buttonBgColor2: #30364a;
+$buttonShadowColor: rgba(57, 70, 137, 0.8);
+
+$cardShadowColor: rgba(132, 132, 133, 0.4);
+$cardShadowColorHover: rgba(112, 112, 112, 0.8);
+$cardImgBg1: #F09819;
+$cardImgBg2: #FF512F;
 
 
 
-$blackTransparent: rgba(0, 0, 0, 0.4);
-$buttonShadow: rgba(182, 182, 182, 0.4);
-$orange: #db5c01;
-$red: #ff0004;
-$green: #00ff40;
-$withOutColor: transparent;
-$oddCarItemBg: rgba(255, 255, 255, 0.09);
+// $cardImgBg1: #0575E6;
+// $cardImgBg2: #021B79;
 /* colors end */
 
+
+
 /* values start */
+$scrollbarWidth: 10px;
 $wrapper-max-width: 1300px;
 $minWidthButton: 150px;
+$transitionTime: 0.3s;
+$transitionTimeLong: 0.5s;
 /* values end */
 

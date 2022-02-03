@@ -1,0 +1,637 @@
+@import "../../scss/normalize";
+@import "../../scss/variebles";
+@import "../../scss/mixins";
+
+.top__display {
+    position: relative;
+    z-index: 1;
+    padding: 200px 0;
+
+    &:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        z-index: 1;
+        width: 100%;
+        height: 60px;
+        background: url(../../assets/svg/topBootomWawes.svg) no-repeat center center;
+        background-size: cover;
+        transform: rotate(180deg);
+    }
+
+    .wrapper {
+        @include dflex(center, center);
+    }
+
+    .top__img,
+    .content__wrap {
+        position: relative;
+        z-index: 1;
+
+        &:before,
+        &:after {
+            position: absolute;
+            z-index: -1;
+            font-weight: bold;
+            font-size: 80px;
+            line-height: 1;
+            text-shadow: 5px 8px 10px rgb(48, 48, 48);
+        }
+
+        &:before {
+            content: attr(data-text1);
+        }
+        &:after {
+            content: attr(data-text2);
+        }
+    }
+
+    .top__img {
+        width: 46%;
+        margin-right: 4%;
+
+        &:before {
+            top: -120px;
+            left: -100px;
+            transform: scale(0.8) rotate(-30deg);
+            opacity: 0.1;
+            color: $fonText2;
+        }
+
+        &:after {
+            left: 30px;
+            bottom: -100px;
+            transform: scale(0.8) rotate(30deg);
+            opacity: 0.2;
+            color: $fonText1;
+        }
+    }
+
+    .content__wrap {
+        width: 50%;
+
+        &:before {
+            top: -150px;
+            right: -40px;
+            transform: scale(0.8) rotate(15deg);
+            opacity: 0.1;
+            color: $fonText1;
+        }
+
+        &:after {
+            right: 30px;
+            bottom: -150px;
+            transform: scale(0.8) rotate(-20deg);
+            opacity: 0.2;
+            color: $fonText2;
+        }
+    }
+
+    .main__title {
+        margin-bottom: 70px;
+        font-size: 44px;
+        line-height: 1.6;
+        text-transform: uppercase;
+        color: $mainTitle;
+
+        span {
+            position: relative;
+            z-index: 1;
+            display: block;
+
+            &:after {
+                @include psevdo(attr(data-text), absolute, 40px, -1);
+
+                left: 0;
+                line-height: 1;
+                color: rgba(255, 255, 255, 0);
+                background: linear-gradient(0deg, $scrollbarThumb 0%, $withOutColor 70%);
+                -webkit-background-clip: text;
+                transform: scale(1, -1);
+                opacity: 0.9;
+            }
+        }
+    }
+
+    .buttons__wrapper {
+        @include dflex(flex-start);
+
+        button ~ button {
+            margin-left: 15px;
+        }
+    }
+}
+
+.advanteges__app {
+    position: relative;
+    z-index: 1;
+    padding: 70px 0;
+    background-color: $whiteBg;
+
+    &:before {
+        top: 0;
+        left: 0;
+        background: url(../../assets/img/advBg1.png) no-repeat center center;
+    }
+
+    &:after {
+        bottom: 0;
+        right: 0;
+        background: url(../../assets/img/advBg2.png) no-repeat center center;
+    }
+
+    &:before,
+    &:after {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        width: 300px;
+        height: 350px;
+        opacity: 0.2;
+        background-size: contain;
+    }
+
+    .cards__list {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: stretch;
+        width: 100%;
+        height: 400px;
+        margin-top: 50px;
+
+        li {
+            position: absolute;
+            top: 0;
+            z-index: 1;
+            transition: 0.3s;
+            left: 50%;
+
+            &:hover {
+                z-index: 100;
+            }
+        }
+
+        li:nth-child(1) {
+            transform: translate(calc(-50% - 150px), 10px) rotate(-15deg);
+
+            &:hover {
+                transform: translate(calc(-50% - 150px), 10px) rotate(0);
+            }
+
+            .img__wrap:after {
+                transform: rotate(-10deg) scaleX(-1);
+            }
+        }
+
+        li:nth-child(2) {
+            transform: translate(calc(-50% - 50px), -15px) rotate(-8deg);
+
+            &:hover {
+                transform: translate(calc(-50% - 50px), -15px) rotate(0);
+            }
+
+            .img__wrap:after {
+                transform: rotate(5deg);
+            }
+        }
+
+        li:nth-child(3) {
+            transform: translate(calc(-50% + 70px), -15px) rotate(8deg);
+
+            &:hover {
+                transform: translate(calc(-50% + 70px), -15px) rotate(0);
+            }
+
+            .img__wrap:after {
+                transform: rotate(15deg) scaleX(-1);
+            }
+        }
+
+        li:nth-child(4) {
+            transform: translate(calc(-50% + 180px), 10px) rotate(15deg);
+
+            &:hover {
+                transform: translate(calc(-50% + 180px), 10px) rotate(0);
+            }
+
+            .img__wrap:after {
+                transform: rotate(25deg);
+            }
+        }
+    }
+}
+
+.dream__team {
+    position: relative;
+    z-index: 1;
+    padding: 70px 0;
+
+    &:before {
+        top: 0;
+        left: 0;
+        z-index: 1;
+        width: 100%;
+        height: 60px;
+        background-image: url(../../assets/svg/topBootomWawes.svg);
+        background-size: cover;
+    }
+
+    &:after {
+        top: 20%;
+        left: 50px;
+        z-index: -1;
+        width: 200px;
+        height: 200px;
+        background-image: url(../../assets/img/mosaics1.png);
+        background-size: contain;
+        transform: rotate(25deg);
+    }
+
+    &:before,
+    &:after {
+        content: "";
+        position: absolute;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+
+    .wrapper {
+        position: relative;
+        z-index: 1;
+
+        &:before {
+            bottom: 50%;
+            right: -50px;
+            background-image: url(../../assets/img/mosaics2.png);
+            transform: rotate(-25deg) scaleX(-1);
+        }
+
+        &:after {
+            bottom: 70px;
+            right: -120px;
+            background-image: url(../../assets/img/mosaics1.png);
+            transform: rotate(85deg) scaleX(-1);
+        }
+
+        &:before,
+        &:after {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            width: 200px;
+            height: 200px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+    }
+
+    .team__list {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        margin: 0 auto;
+
+        &:before {
+            @include psevdo("", absolute, calc(100% - 200px));
+
+            left: -250px;
+            z-index: -1;
+            width: 200px;
+            height: 200px;
+            background: url(../../assets/img/mosaics2.png) no-repeat center center;
+            background-size: contain;
+            transform: rotate(-25deg);
+        }
+
+        li ~ li {
+            margin-top: 50px;
+        }
+    }
+}
+
+// <1400
+@include largeDisplay() {
+    .top__display {
+        padding: 140px 0;
+
+        .top__img,
+        .content__wrap {
+            &:before,
+            &:after {
+                font-size: 60px;
+            }
+        }
+
+        .top__img {
+            width: 40%;
+            margin-right: 4%;
+
+            &:before {
+                top: -80px;
+                left: -50px;
+            }
+
+            &:after {
+                left: 30px;
+                bottom: -80px;
+                transform: scale(0.8) rotate(20deg);
+            }
+        }
+
+        .content__wrap {
+            width: 55%;
+
+            &:before {
+                top: -100px;
+                right: -20px;
+            }
+
+            &:after {
+                bottom: -90px;
+                transform: scale(0.8) rotate(-10deg);
+            }
+        }
+
+        .main__title {
+            margin-bottom: 60px;
+            font-size: 40px;
+        }
+    }
+
+    .dream__team {
+        &:after {
+            left: 20px;
+            width: 150px;
+            height: 150px;
+        }
+
+        .wrapper {
+            &:before {
+                bottom: 50%;
+                right: -30px;
+            }
+
+            &:after {
+                right: -50px;
+            }
+
+            &:before,
+            &:after {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        .team__list {
+            max-width: 800px;
+
+            &:before {
+                left: -150px;
+                width: 150px;
+                height: 150px;
+            }
+        }
+    }
+}
+
+// <1100
+@include desctop() {
+    .top__display .main__title {
+        font-size: 36px;
+    }
+}
+
+// <992
+@include tablet() {
+    .top__display {
+        padding-top: 100px;
+        .wrapper {
+            flex-direction: column;
+        }
+
+        .top__img {
+            width: 50%;
+            margin: 0 0 20px;
+
+            &:before {
+                top: -70px;
+                left: -20%;
+                transform: scale(0.8) rotate(-15deg);
+            }
+
+            &:after {
+                left: 80%;
+                bottom: calc(100% + 15px);
+            }
+        }
+
+        .content__wrap {
+            width: 100%;
+
+            &:before {
+                top: 100%;
+                right: 60%;
+                transform: scale(0.8) rotate(-5deg);
+            }
+
+            &:after {
+                right: 30px;
+                bottom: -50px;
+                transform: scale(0.8) rotate(10deg);
+            }
+        }
+
+        .main__title {
+            margin-bottom: 30px;
+            line-height: 1.6;
+
+            span {
+                text-align: center;
+
+                &:after {
+                    top: 30px;
+                    width: 100%;
+                }
+            }
+        }
+
+        .buttons__wrapper {
+            justify-content: center;
+
+            button ~ button {
+                margin-left: 15px;
+            }
+        }
+    }
+
+    .advanteges__app {
+        .cards__list {
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 100%;
+            height: auto;
+            margin-top: 50px;
+
+            li {
+                position: static;
+                margin: 0 15px 40px;
+
+                &:hover {
+                    z-index: 100;
+                }
+            }
+
+            li:nth-child(1),
+            li:nth-child(2),
+            li:nth-child(3),
+            li:nth-child(4) {
+                transform: none;
+
+                &:hover {
+                    transform: none;
+                }
+            }
+        }
+    }
+
+    .dream__team {
+        &:after {
+            left: 10px;
+            width: 100px;
+            height: 100px;
+        }
+
+
+        .wrapper {
+            &:before {
+                bottom: 50%;
+                right: -10px;
+            }
+
+            &:after {
+                bottom: 70px;
+                right: -20px;
+            }
+
+            &:before,
+            &:after {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        .team__list {
+            max-width: 500px;
+
+            &:before {
+                left: -100px;
+                width: 100px;
+                height: 100px;
+            }
+
+            li ~ li {
+                margin-top: 40px;
+            }
+        }
+    }
+}
+
+// <576
+@include mobile() {
+    .top__display {
+        padding: 70px 0;
+
+        &:after {
+            height: 30px;
+        }
+
+        .top__img,
+        .content__wrap {
+            &:before,
+            &:after {
+                font-size: 40px;
+            }
+        }
+
+        .top__img {
+            width: 200px;
+
+            &:before {
+                top: -50px;
+                left: -30%;
+            }
+
+            &:after {
+                top: -30px;
+            }
+        }
+
+        .content__wrap {
+            &:before {
+                right: 50%;
+            }
+
+            &:after {
+                right: 0;
+            }
+        }
+
+        .main__title {
+            margin-bottom: 15px;
+            font-size: 28px;
+            text-align: center;
+            line-height: 1.3;
+
+            span {
+                display: inline;
+
+                &:after {
+                    display: none;
+                }
+            }
+        }
+
+        .buttons__wrapper {
+            flex-wrap: wrap;
+            justify-content: center;
+
+            button {
+                margin: 10px 5px;
+            }
+        }
+    }
+
+    .advanteges__app {
+        padding: 40px 0;
+    }
+
+    .dream__team {
+        padding: 40px 0;
+
+        &:after {
+            display: none;
+        }
+
+        .wrapper {
+            &:before,
+            &:after {
+                display: none;
+            }
+        }
+
+        .team__list {
+            max-width: 350px;
+
+            &:before {
+                display: none;
+            }
+
+            li ~ li {
+                margin-top: 30px;
+            }
+        }
+    }
+}
