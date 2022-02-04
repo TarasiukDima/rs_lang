@@ -6,18 +6,17 @@ import { IInputsObjInfo, TFormSubmitFC } from "../../types/form";
 import { PageLinks } from "../../utils";
 import "./index.scss";
 
-enum AuthFormText {
-    text = 'Если у вас есть аккаунт, тогда войдите в него',
-    linkText = 'Войти',
+enum LoginFormText {
+    text = 'Если у вас нет аккаунта, тогда зарегистрируйтесь',
+    linkText = 'Создать аккаунт',
 }
 
-const AuthPage = () => {
+const LoginPage = () => {
     const fieldsForm: Array<IInputsObjInfo> = [
-        { name: "name", type: "text", placeholder: "Name" },
         { name: "email", type: "email", placeholder: "Email" },
         { name: "password", type: "password", placeholder: "Password" },
     ];
-    const submitRegistrText = "Зарегистрироваться";
+    const submitRegistrText = "Войти";
 
     const submitFunction: TFormSubmitFC = (
         event: React.FormEvent<HTMLFormElement>
@@ -28,22 +27,21 @@ const AuthPage = () => {
 
     return (
         <SectionContent nameClass="authorization__section">
-            <h1 className="title">Регистрация</h1>
+            <h1 className="title">Войти</h1>
 
             <FormApp
                 submitFunction={submitFunction}
                 fieldsForm={fieldsForm}
                 submitBtnText={submitRegistrText}
-                needFileButton={true}
             />
 
             <FormInfo
-                text={AuthFormText.text}
-                pageLink={PageLinks.loginPage}
-                textPageLink={AuthFormText.linkText}
+                text={LoginFormText.text}
+                pageLink={PageLinks.authPage}
+                textPageLink={LoginFormText.linkText}
             />
         </SectionContent>
     );
 };
 
-export default AuthPage;
+export default LoginPage;

@@ -16,7 +16,7 @@ const NavigationPages = ({ navClassShow, clickMenu }: INavigationPages) => {
         { link: PageLinks.gamesPage, textLink: "Игры" },
         { link: PageLinks.bookPage, textLink: "Словарь" },
         { link: PageLinks.statisticPage, textLink: "Статистика" },
-        { link: PageLinks.authPage, textLink: "Авторизация" },
+        { link: PageLinks.loginPage, textLink: "Войти" },
     ];
 
     const navClasses = navClassShow ? "header__nav active__nav" : "header__nav";
