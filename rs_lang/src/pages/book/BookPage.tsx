@@ -1,11 +1,13 @@
 import React from "react";
 import SectionContent from "../../components/section";
+import BookContetn from "./BookContetn";
 import "./index.scss";
 
 const BookPage = () => {
     return (
-        <SectionContent nameClass="section">
-            <div className="">book</div>
+        <SectionContent nameClass="book__section">
+            <h1 className="title">Словарь</h1>
+            <BookContetn/>
         </SectionContent>
     );
 };

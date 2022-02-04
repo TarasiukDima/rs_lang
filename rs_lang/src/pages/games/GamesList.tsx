@@ -1,17 +1,18 @@
 import React from "react";
 import GameLink from "./GameLink";
-import avatar1 from "../../assets/img/avatar1.jpg";
+import music from "../../assets/img/music.jpg";
+import fast from "../../assets/img/fast.jpg";
 import { PageLinks } from "../../utils";
 
 const GamesList = () => {
     const gamesInfo = [
         {
-            gameImg: avatar1,
+            gameImg: fast,
             pageLink: PageLinks.gameSprintPage,
             linkName: "Спринт",
         },
         {
-            gameImg: avatar1,
+            gameImg: music,
             pageLink: PageLinks.gameAudioPage,
             linkName: "Аудио",
         },
