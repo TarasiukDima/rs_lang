@@ -1,0 +1,42 @@
+@import "../../scss/variebles";
+@import "../../scss/mixins";
+
+.error__section {
+    padding: 70px 0;
+    text-align: center;
+
+
+    .error__title {
+        margin-bottom: 25px;
+        font-size: 150px;
+        line-height: 1.1;
+        color: $errorTitleColor;
+    }
+
+    .error__text {
+        font-size: 18px;
+    }
+
+    .button {
+        width: max-content;
+        margin: 45px auto 0;
+    }
+}
+
+@include mobile() {
+    .error__section {
+        padding: 40px 0;
+
+        .error__title {
+            font-size: 120px;
+        }
+
+        .error__text {
+            font-size: 16px;
+        }
+
+        .button {
+            margin-top: 30px;
+        }
+    }
+}

@@ -1,0 +1,125 @@
+@import "../../scss/normalize";
+@import "../../scss/variebles";
+@import "../../scss/mixins";
+
+.games__section {
+    padding: 70px 0;
+
+    .list__games {
+        @include dflex(center, stretch);
+
+        flex-wrap: wrap;
+        margin-top: 50px;
+    }
+
+    .game__item {
+        position: relative;
+        z-index: 1;
+        width: 450px;
+        margin: 0 15px 30px;
+        border-radius: $borderRadius;
+        box-shadow: $gameShadow;
+        overflow: hidden;
+        transition: $transitionTime;
+
+        &:after {
+            @include psevdo("",absolute, 0, 1);
+
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: $gameDarkFon;
+            pointer-events: none;
+            transition: $transitionTime;
+        }
+
+        &:hover {
+            transform: translateY(-5px);
+
+            &:after {
+                opacity: 0.7;
+            }
+
+            .item__name {
+                color: $gameHoverName;
+                text-shadow: $gameNameShadow2;
+                transform: translateY(-10px);
+            }
+        }
+
+        img{
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            pointer-events: none;
+        }
+
+        .item__name {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            z-index: 2;
+            width: 100%;
+            text-align: center;
+            font-size: 50px;
+            text-shadow: $gameNameShadow;
+            color: $whiteColor;
+            transition: $transitionTime;
+        }
+    }
+}
+
+@include desctop() {
+    .games__section {
+        .game__item {
+            width: 400px;
+        }
+    }
+}
+
+@include tablet() {
+    .games__section {
+        .game__item {
+            width: 45%;
+
+            img{
+                height: 250px;
+            }
+
+            .item__name {
+                font-size: 40px;
+            }
+        }
+    }
+}
+@include smallTablet() {
+    .games__section {
+        .game__item {
+            width: 46%;
+            margin: 0 2% 30px;
+
+            img{
+                height: 180px;
+            }
+
+            .item__name {
+                font-size: 34px;
+            }
+        }
+    }
+}
+@include mobile() {
+    .games__section {
+        padding: 40px 0;
+
+        .list__games {
+            max-width: 350px;
+            margin: 30px auto 0;
+        }
+
+        .game__item {
+            width: 100%;
+            margin: 0 0 30px;
+        }
+    }
+}

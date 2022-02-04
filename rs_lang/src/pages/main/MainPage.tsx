@@ -9,9 +9,9 @@ import "./index.scss";
 const MainPage = () => {
     return (
         <>
-            <TopSection/>
-            <AdvantegesSection/>
-            <TeamSection/>
+            <TopSection />
+            <AdvantegesSection />
+            <TeamSection />
         </>
     );
 };

@@ -4,14 +4,13 @@ import FormInfo from "../../components/formInfo";
 import SectionContent from "../../components/section";
 import { IInputsObjInfo, TFormSubmitFC } from "../../types/form";
 import { PageLinks } from "../../utils";
-import "./index.scss";
 
 enum LoginFormText {
     text = 'Если у вас нет аккаунта, тогда зарегистрируйтесь',
     linkText = 'Создать аккаунт',
 }
 
-const LoginPage = () => {
+const LogInContent = () => {
     const fieldsForm: Array<IInputsObjInfo> = [
         { name: "email", type: "email", placeholder: "Email" },
         { name: "password", type: "password", placeholder: "Password" },
@@ -44,4 +43,4 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export default LogInContent;

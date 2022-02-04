@@ -34,6 +34,14 @@ $submitBthShadow: rgba(31, 31, 31, 0.9);
 $formFileRound: #6e6e6e;
 $formFileName: #FF512F;
 
+$errorTitleColor: #FF512F;
+
+$gameShadow: 2px 2px 10px rgba(112, 112, 112, 0.8);
+$gameNameShadow: 0 0 1px $black,  0 1px 2px $black, 1px 2px 3px $black;
+$gameNameShadow2: 0 1px 1px $black,  0 2px 2px $black, 1px 3px 2px $black,
+0 5px 2px $black,  0 6px 2px $black, 1px 8px 2px $black;
+$gameDarkFon: rgba(57, 70, 137, 0.8);
+$gameHoverName: #FF512F;
 
 // $cardImgBg1: #0575E6;
 // $cardImgBg2: #021B79;
@@ -47,6 +55,7 @@ $wrapper-max-width: 1300px;
 $minWidthButton: 150px;
 $transitionTime: 0.3s;
 $transitionTimeLong: 0.5s;
+$borderRadius: 15px;
 $formInputsBorderRadius: 5px;
 /* values end */
 
