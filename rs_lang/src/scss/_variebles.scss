@@ -43,8 +43,18 @@ $gameNameShadow2: 0 1px 1px $black,  0 2px 2px $black, 1px 3px 2px $black,
 $gameDarkFon: rgba(57, 70, 137, 0.8);
 $gameHoverName: #FF512F;
 
-// $cardImgBg1: #0575E6;
-// $cardImgBg2: #021B79;
+$tabBg: #30364a;
+$activeTabBg: #F09819;
+$tabShadow: 2px 2px 6px rgba(112, 112, 112, 0.7);
+
+
+$wordBg: rgba(255, 255, 255, 0.85);
+$wordShadow: inset 0 0 20px rgba(14, 14, 14, 0.5);
+$wordTranslateColor: #535353;
+$wordBorder: 3px solid rgba(109, 109, 109, 0.3);
+$wordMiniTitle: #394689;
+
+$paginationActiveBg: #333c54;
 /* colors end */
 
 
@@ -56,6 +66,10 @@ $minWidthButton: 150px;
 $transitionTime: 0.3s;
 $transitionTimeLong: 0.5s;
 $borderRadius: 15px;
+$tabBorderRadius: 10px;
 $formInputsBorderRadius: 5px;
+$smallBorderRadius: 5px;
+$wordBorderRadius: 10px;
+$appFontSize: 18px;
 /* values end */
 

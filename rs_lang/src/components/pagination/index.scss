@@ -1,0 +1,37 @@
+@import "../../scss/variebles";
+@import "../../scss/mixins";
+
+.pagination__list {
+    @include dflex(center, stretch);
+
+    flex-wrap: wrap;
+    margin-top: 30px;
+
+    .pagination__item {
+        margin: 5px;
+    }
+
+    .pagination__button {
+        min-width: 45px;
+        padding: 5px 10px;
+        border-radius: $smallBorderRadius;
+        border: 2px solid $bgColor1;
+        background-color: $whiteColor;
+    }
+
+    .pagination__button.active {
+        color: $whiteColor;
+        background-color: $paginationActiveBg;
+    }
+}
+
+
+@include mobile() {
+    .pagination__list {
+        .pagination__button {
+            font-size: 16px;
+            padding: 5px;
+            min-width: 40px;
+        }
+    }
+}

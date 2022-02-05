@@ -1,0 +1,42 @@
+@import "../../scss/variebles";
+@import "../../scss/mixins";
+
+.tab__list {
+    @include dflex(center, stretch);
+
+    flex-wrap: wrap;
+
+    .tab__item {
+        margin: 0 5px 10px;
+    }
+    .tab__button {
+        padding: 10px 40px;
+        font-size: $appFontSize;
+        border-radius: $tabBorderRadius;
+        box-shadow: $tabShadow;
+        color: $whiteColor;
+        background-color: $tabBg;
+    }
+
+    .tab__button.active {
+        background-color: $activeTabBg;
+    }
+}
+
+
+@include smallTablet() {
+    .tab__list {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+}
+
+@include mobile() {
+    .tab__list {
+        max-width: 400px;
+
+        .tab__button {
+            padding: 6px 20px;
+        }
+    }
+}

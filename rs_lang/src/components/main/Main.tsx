@@ -8,8 +8,6 @@ import MainPage from "../../pages/main";
 import StatisticPage from "../../pages/statistic";
 import { PageLinks } from "../../utils";
 
-import "./index.scss";
-
 const Main: FC = () => {
     return (
         <main className="main__content">
