@@ -1,0 +1,21 @@
+@import "../../scss/variebles";
+@import "../../scss/mixins";
+
+
+.sprint__game_head {
+    @include dflex();
+
+    .total__poinst {
+        margin-left: 15px;
+        padding: 5px 20px;
+        border: 2px solid $black;
+        font-size: 20px;
+
+        span {
+            font-weight: bold;
+            font-size: 150%;
+        }
+    }
+}
+
+

@@ -3,13 +3,11 @@ import { NavigateFunction, useNavigate } from "react-router-dom";
 
 import SectionContent from "../../../components/section";
 import ButtonEl from "../../../components/button";
-import { PageLinks } from "../../../utils";
 import topImg from "../../../assets/img/topImg.png";
+import { mainTitleText1, mainTitleText2, PageLinks } from "../../../helpers/settings";
 
 const TopSection = () => {
     const navigation: NavigateFunction = useNavigate();
-    const mainTitleText1 = "Изучай английский язык ";
-    const mainTitleText2 = "быстро и с интересом";
 
     const registrationPageShow = (): void => {
         navigation(PageLinks.authPage);

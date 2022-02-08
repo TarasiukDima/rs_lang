@@ -1,5 +1,16 @@
-export type TSoundButtonClick = (audio1: string, audio2: string, audio3: string) => void;
+export type TChangeNumber = (id: number) => void;
+export type TSoundButtonClick = (audio: string) => void;
+export type TSoundPlay = (audio: boolean) => void;
 
+
+export interface IBookPageProps {
+    vocabularyCategory: number;
+    vocabularyPage: number;
+    changeCategory: TChangeNumber;
+    changePage: TChangeNumber;
+    changeSrcSong: TSoundButtonClick;
+    changePlay: TSoundPlay;
+}
 
 export interface IWordItemObj {
     id: string;

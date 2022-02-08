@@ -1,3 +1,51 @@
 @import "../../scss/variebles";
 @import "../../scss/mixins";
 
+
+.statistic__section {
+    padding: 70px 0;
+}
+
+.game__statistic_wrap {
+    @include dflex(center, stretch);
+
+    margin: 30px auto;
+
+    .statistic_block {
+        width: 35%;
+    }
+}
+
+@include largeDisplay() {
+    .game__statistic_wrap {
+        .statistic_block {
+            width: 40%;
+        }
+    }
+}
+
+@include desctop() {
+    .game__statistic_wrap {
+        .statistic_block {
+            width: 48%;
+        }
+    }
+}
+
+@include tablet() {
+    .game__statistic_wrap {
+        display: block;
+        max-width: 500px;
+
+        .statistic_block {
+            width: 100%;
+        }
+    }
+}
+
+@include mobile() {
+    .statistic__section {
+        padding: 40px 0;
+    }
+}
+

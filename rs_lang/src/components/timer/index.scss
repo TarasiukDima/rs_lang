@@ -1,0 +1,16 @@
+@import "../../scss/variebles";
+@import "../../scss/mixins";
+
+
+.timer {
+    width: $timerSize;
+    height: $timerSize;
+    font-weight: 500;
+    font-size: 28px;
+    text-align: center;
+    line-height: $timerSize;
+    border: 2px solid $black;
+    border-radius: 50%;
+    color: $timerColor;
+}
+

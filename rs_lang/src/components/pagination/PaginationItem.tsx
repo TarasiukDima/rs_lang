@@ -1,6 +1,6 @@
 import React from "react";
+import { NEXT_PAGINGATION_TEXT, PREV_PAGINGATION_TEXT } from "../../helpers/settings";
 import { IPaginationItemProps } from "../../types/pagination";
-import { NEXT_PAGINGATION_TEXT, PREV_PAGINGATION_TEXT } from "../../utils";
 
 import "./index.scss";
 

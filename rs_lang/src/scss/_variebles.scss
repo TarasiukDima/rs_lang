@@ -55,6 +55,17 @@ $wordBorder: 3px solid rgba(109, 109, 109, 0.3);
 $wordMiniTitle: #394689;
 
 $paginationActiveBg: #333c54;
+
+$loaderColor: #0a69aa;
+$loaderColor2: rgba(7,171, 204, 0.2);
+$loaderColor3: rgba(7,171, 204, 0.5);
+$loaderColor4: rgba(7,171, 204, 0.7);
+
+$statisticBoxshadow: inset 0 0 20px rgba(14, 14, 14, 0.4);
+$statisticTitleColor: #333c54;
+$statisticListColor: #6e6e6e;
+
+$timerColor: #394689;
 /* colors end */
 
 
@@ -71,5 +82,16 @@ $formInputsBorderRadius: 5px;
 $smallBorderRadius: 5px;
 $wordBorderRadius: 10px;
 $appFontSize: 18px;
+
+$loaderSize: 25px;
+$loaderAnimationShadow1: 0 -40px 0 0;
+$loaderAnimationShadow2: 30px -30px 0 0;
+$loaderAnimationShadow3: 40px 0 0 0;
+$loaderAnimationShadow4: 30px 30px 0 0;
+$loaderAnimationShadow5: 0 40px 0 0;
+$loaderAnimationShadow6: -30px 30px 0 0;
+$loaderAnimationShadow7: -40px 0 0 0;
+
+$timerSize: 60px;
 /* values end */
 

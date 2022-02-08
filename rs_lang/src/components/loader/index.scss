@@ -1,0 +1,103 @@
+@import "../../scss/variebles";
+@import "../../scss/mixins";
+
+@keyframes loaderAnimation {
+    0%,
+    100% {
+        box-shadow:
+        $loaderAnimationShadow1 $loaderColor,
+        $loaderAnimationShadow2 $loaderColor2,
+        $loaderAnimationShadow3 $loaderColor2,
+        $loaderAnimationShadow4 $loaderColor2,
+        $loaderAnimationShadow5 $loaderColor2,
+        $loaderAnimationShadow6 $loaderColor2,
+        $loaderAnimationShadow7 $loaderColor3,
+        -$loaderAnimationShadow2 $loaderColor4;
+    }
+    12.5% {
+        box-shadow:
+        $loaderAnimationShadow1 $loaderColor4,
+        $loaderAnimationShadow2 $loaderColor,
+        $loaderAnimationShadow3 $loaderColor2,
+        $loaderAnimationShadow4 $loaderColor2,
+        $loaderAnimationShadow5 $loaderColor2,
+        $loaderAnimationShadow6 $loaderColor2,
+        $loaderAnimationShadow7 $loaderColor2,
+        -$loaderAnimationShadow2 $loaderColor3;
+    }
+    25% {
+        box-shadow:
+        $loaderAnimationShadow1 $loaderColor3,
+        $loaderAnimationShadow2 $loaderColor4,
+        $loaderAnimationShadow3 $loaderColor,
+        $loaderAnimationShadow4 $loaderColor2,
+        $loaderAnimationShadow5 $loaderColor2,
+        $loaderAnimationShadow6 $loaderColor2,
+        $loaderAnimationShadow7 $loaderColor2,
+        -$loaderAnimationShadow2 $loaderColor2;
+    }
+    37.5% {
+        box-shadow:
+        $loaderAnimationShadow1 $loaderColor2,
+        $loaderAnimationShadow2 $loaderColor3,
+        $loaderAnimationShadow3 $loaderColor4,
+        $loaderAnimationShadow4 $loaderColor,
+        $loaderAnimationShadow5 $loaderColor2,
+        $loaderAnimationShadow6 $loaderColor2,
+        $loaderAnimationShadow7 $loaderColor2,
+        -$loaderAnimationShadow2 $loaderColor2;
+    }
+    50% {
+        box-shadow:
+        $loaderAnimationShadow1 $loaderColor2,
+        $loaderAnimationShadow2 $loaderColor2,
+        $loaderAnimationShadow3 $loaderColor3,
+        $loaderAnimationShadow4 $loaderColor4,
+        $loaderAnimationShadow5 $loaderColor,
+        $loaderAnimationShadow6 $loaderColor2,
+        $loaderAnimationShadow7 $loaderColor2,
+        -$loaderAnimationShadow2 $loaderColor2;
+    }
+    62.5% {
+        box-shadow:
+        $loaderAnimationShadow1 $loaderColor2,
+        $loaderAnimationShadow2 $loaderColor2,
+        $loaderAnimationShadow3 $loaderColor2,
+        $loaderAnimationShadow4 $loaderColor3,
+        $loaderAnimationShadow5 $loaderColor4,
+        $loaderAnimationShadow6 $loaderColor,
+        $loaderAnimationShadow7 $loaderColor2,
+        -$loaderAnimationShadow2 $loaderColor2;
+    }
+    75% {
+        box-shadow:
+        $loaderAnimationShadow1 $loaderColor2,
+        $loaderAnimationShadow2 $loaderColor2,
+        $loaderAnimationShadow3 $loaderColor2,
+        $loaderAnimationShadow4 $loaderColor2,
+        $loaderAnimationShadow5 $loaderColor3,
+        $loaderAnimationShadow6 $loaderColor4,
+        $loaderAnimationShadow7 $loaderColor,
+        -$loaderAnimationShadow2 $loaderColor2;
+    }
+    87.5% {
+        box-shadow:
+        $loaderAnimationShadow1 $loaderColor2,
+        $loaderAnimationShadow2 $loaderColor2,
+        $loaderAnimationShadow3 $loaderColor2,
+        $loaderAnimationShadow4 $loaderColor2,
+        $loaderAnimationShadow5 $loaderColor2,
+        $loaderAnimationShadow6 $loaderColor3,
+        $loaderAnimationShadow7 $loaderColor4,
+        -$loaderAnimationShadow2 $loaderColor;
+    }
+}
+
+.loader {
+    position: relative;
+    width: $loaderSize;
+    height: $loaderSize;
+    margin: 150px auto;
+    border-radius: 50%;
+    animation: loaderAnimation 1.1s infinite ease;
+}

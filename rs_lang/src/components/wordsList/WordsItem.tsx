@@ -1,9 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { IWordItemProps } from "../../types/book";
-import avatar2 from "../../assets/img/avatar2.jpg";
-
-const URL_BECKEND = "";
+import { URL_DATA_FILES } from "../../helpers/settings";
 
 const WordsItem = ({
     word,
@@ -19,20 +17,36 @@ const WordsItem = ({
     textExampleTranslate,
     clickButton
 }: IWordItemProps) => {
-    const imgStyles = {
-        backgroundImage: `url(${URL_BECKEND + image})`,
-    };
+    const [activeSong, setActiveSong] = useState(0);
+    const audioPlayList = [audio, audioMeaning, audioExample]
 
+    const playSong = () => {
+        clickButton(audioPlayList[activeSong]);
+        (activeSong + 1 === 3)
+            ? setActiveSong(0)
+            : setActiveSong(activeSong + 1);
+    }
 
-    // TODO: delete
     const styles = {
-        backgroundImage: `url(${avatar2})`,
+        backgroundImage: `url(${URL_DATA_FILES + image})`,
     };
+    const clazzList = ['word__item'];
+
+    const autorization = false;
+    const itemLearnd = false;
+    const difficult = false;
+
+    if (autorization) {
+        if (itemLearnd) {
+            clazzList.push('learned');
+        }
+        if (difficult) {
+            clazzList.push('difficult');
+        }
+    }
 
     return (
-        // learned difficult
-        // <li className="word__item" style={imgStyles}>
-        <li className="word__item learned difficult" style={styles}>
+        <li className={clazzList.join(' ')} style={styles}>
             <p className="item__name">{word}</p>
 
             <p className="item__name_translate">
@@ -40,7 +54,7 @@ const WordsItem = ({
                 <span className="name__transcription">{transcription}</span>
                 <button
                     className="play__button"
-                    onClick={() => clickButton(audio, audioMeaning, audioExample)}
+                    onClick={playSong}
                 ></button>
             </p>
 

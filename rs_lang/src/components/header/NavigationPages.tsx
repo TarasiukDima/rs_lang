@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { PageLinks } from "../../utils";
-import "./index.scss";
-
 import { TSimpleFunction } from "../../types/common";
+import { PageLinks } from "../../helpers/settings";
+
+import "./index.scss";
 
 interface INavigationPages {
     navClassShow: boolean;

@@ -1,8 +1,9 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { PageLinks } from "../../utils";
 import AuthContent from "./AuthContent";
 import LogInContent from "./LogInContent";
+import { PageLinks } from "../../helpers/settings";
+
 import "./index.scss";
 
 

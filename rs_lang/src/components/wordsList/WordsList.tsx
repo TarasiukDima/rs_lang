@@ -5,6 +5,7 @@ import "./index.scss";
 import { IWordsListProps, IWordItemObj } from "../../types/book";
 
 const WordsList = ({ bookListInfoArr, clickButton }: IWordsListProps) => {
+    if (!bookListInfoArr.length) return null;
 
     return (
         <ul className="words__list">

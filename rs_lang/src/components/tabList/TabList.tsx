@@ -15,12 +15,12 @@ const TabList = ({ tabsInfo, tabClick, activeTab }: ITabsListProps) => {
 
                     return (
                         <TabItem
-                            onclick={tabClick}
+                            onclick={()=> tabClick(tabInfoEl.id)}
                             id={tabInfoEl.id}
                             nameClass={buttonClassName}
                             key={tabInfoEl.id}
                         >
-                            {tabInfoEl.id.toString()}
+                            {tabInfoEl.text.toString()}
                         </TabItem>
                     );
                 })}

@@ -2,22 +2,12 @@ import React from "react";
 import FormApp from "../../components/form";
 import FormInfo from "../../components/formInfo";
 import SectionContent from "../../components/section";
-import { IInputsObjInfo, TFormSubmitFC } from "../../types/form";
-import { PageLinks } from "../../utils";
+import { AuthFormText, PageLinks, rgistrFieldsForm, submitRegistrText } from "../../helpers/settings";
+import { TFormSubmitFC } from "../../types/form";
 
-enum AuthFormText {
-    text = 'Если у вас есть аккаунт, тогда войдите в него',
-    linkText = 'Войти',
-}
+
 
 const AuthContent = () => {
-    const fieldsForm: Array<IInputsObjInfo> = [
-        { name: "name", type: "text", placeholder: "Name" },
-        { name: "email", type: "email", placeholder: "Email" },
-        { name: "password", type: "password", placeholder: "Password" },
-    ];
-    const submitRegistrText = "Зарегистрироваться";
-
     const submitFunction: TFormSubmitFC = (
         event: React.FormEvent<HTMLFormElement>
     ): void => {
@@ -31,7 +21,7 @@ const AuthContent = () => {
 
             <FormApp
                 submitFunction={submitFunction}
-                fieldsForm={fieldsForm}
+                fieldsForm={rgistrFieldsForm}
                 submitBtnText={submitRegistrText}
                 needFileButton={true}
             />

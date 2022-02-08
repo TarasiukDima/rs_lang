@@ -2,21 +2,12 @@ import React from "react";
 import FormApp from "../../components/form";
 import FormInfo from "../../components/formInfo";
 import SectionContent from "../../components/section";
-import { IInputsObjInfo, TFormSubmitFC } from "../../types/form";
-import { PageLinks } from "../../utils";
+import { loginFieldsForm, LoginFormText, PageLinks, submitLoginText } from "../../helpers/settings";
+import { TFormSubmitFC } from "../../types/form";
 
-enum LoginFormText {
-    text = 'Если у вас нет аккаунта, тогда зарегистрируйтесь',
-    linkText = 'Создать аккаунт',
-}
+
 
 const LogInContent = () => {
-    const fieldsForm: Array<IInputsObjInfo> = [
-        { name: "email", type: "email", placeholder: "Email" },
-        { name: "password", type: "password", placeholder: "Password" },
-    ];
-    const submitRegistrText = "Войти";
-
     const submitFunction: TFormSubmitFC = (
         event: React.FormEvent<HTMLFormElement>
     ): void => {
@@ -30,8 +21,8 @@ const LogInContent = () => {
 
             <FormApp
                 submitFunction={submitFunction}
-                fieldsForm={fieldsForm}
-                submitBtnText={submitRegistrText}
+                fieldsForm={loginFieldsForm}
+                submitBtnText={submitLoginText}
             />
 
             <FormInfo

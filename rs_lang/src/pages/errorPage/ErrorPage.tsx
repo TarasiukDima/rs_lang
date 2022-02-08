@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SectionContent from "../../components/section";
-import { PageLinks } from "../../utils";
+import { PageLinks } from "../../helpers/settings";
 import "./index.scss";
 
 const ErrorPage = () => {

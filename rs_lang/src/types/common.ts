@@ -1,6 +1,6 @@
+import { TSoundPlay } from "./book";
 
 export type TSimpleFunction = () => void;
-
 
 export type TCheckValue = (
     value: number,
@@ -10,12 +10,12 @@ export type TCheckValue = (
 
 
 
-
 /* tabs start */
 export type TTabClickFC = (id: number) => void;
 
 export interface ITabInfoObj {
     id: number;
+    text: string | number;
 }
 
 export interface ITabsListProps {
@@ -34,3 +34,8 @@ export interface ITabsItemProps {
 /* tabs end */
 
 
+export interface IAudioProps {
+    audioSrc: string;
+    playAudio: boolean;
+    changeCategory: TSoundPlay;
+}

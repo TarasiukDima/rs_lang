@@ -3,7 +3,7 @@ import PaginationItem from "./PaginationItem";
 
 import { IPaginationPageProps } from "../../types/pagination";
 import "./index.scss";
-import { checkValue } from "../../utils";
+import { checkValue } from "../../helpers/utils";
 
 const PaginationPage = ({
     activePage,
@@ -15,26 +15,26 @@ const PaginationPage = ({
     const paginationsArr = [];
 
     // start
-    checkValue(activePage - 3, 1, "more")
-        ? paginationsArr.push({ textPage: "start", numberPage: 1 })
+    checkValue(activePage - 3, 0, "more")
+        ? paginationsArr.push({ textPage: "start", numberPage: 0 })
         : null;
     // -2
-    checkValue(activePage - 2, 1, "more")
+    checkValue(activePage - 2, 0, "more")
         ? paginationsArr.push({
-              textPage: activePage - 2,
+              textPage: activePage - 1,
               numberPage: activePage - 2,
           })
         : null;
     // -1
-    checkValue(activePage - 1, 1, "more")
+    checkValue(activePage - 1, 0, "more")
         ? paginationsArr.push({
-              textPage: activePage - 1,
+              textPage: activePage,
               numberPage: activePage - 1,
           })
         : null;
     // active
     paginationsArr.push({
-        textPage: activePage,
+        textPage: activePage + 1,
         numberPage: activePage,
         active: true,
     });
@@ -42,14 +42,14 @@ const PaginationPage = ({
     // +1
     checkValue(activePage + 1, countPages, "less")
         ? paginationsArr.push({
-              textPage: activePage + 1,
+              textPage: activePage + 2,
               numberPage: activePage + 1,
           })
         : null;
     // +2
     checkValue(activePage + 2, countPages, "less")
         ? paginationsArr.push({
-              textPage: activePage + 2,
+              textPage: activePage + 3,
               numberPage: activePage + 2,
           })
         : null;
