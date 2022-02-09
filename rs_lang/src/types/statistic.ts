@@ -17,3 +17,6 @@ export interface IGameDayStatistic extends IDayStatistic {
 }
 
 
+export interface IStatisticPageProps {
+    authorization: boolean;
+}

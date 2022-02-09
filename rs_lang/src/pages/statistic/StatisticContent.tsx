@@ -6,7 +6,7 @@ import { TTabClickFC } from "../../types/common";
 import { IDayStatistic, IGameDayStatistic } from "../../types/statistic";
 
 const StatisticContent = () => {
-    const [activeTab, setActiveTab] = useState(1);
+    const [activeTab, setActiveTab] = useState(0);
 
     const dayStatistic: IDayStatistic = {
         countsWords: 15,
@@ -33,7 +33,7 @@ const StatisticContent = () => {
 
             <div className="game__statistic_wrap">
                 <GameStatistic
-                    blockTitle={statisticTabsInfo[activeTab - 1].text}
+                    blockTitle={statisticTabsInfo[activeTab].text}
                 >
                     <li className="statistic__list_item">
                         Количество изученных слов:{" "}

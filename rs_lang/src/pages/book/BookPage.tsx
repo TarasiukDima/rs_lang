@@ -6,13 +6,10 @@ import SectionContent from "../../components/section";
 import TabList from "../../components/tabList";
 import WordsList from "../../components/wordsList";
 import { COUNT_PAGE, tabsBookInfo } from "../../helpers/settings";
-import ServiceApi from "../../services/services";
-import {
-    changeAudioPlay,
-    changeAudioSrc,
-    changeVocabularyCategory,
-    changeVocabularyPage,
-} from "../../store/actions";
+import { serviceApi } from "../../services/services";
+import { changeAudioPlay, changeAudioSrc } from "../../store/actions/actionsAudio";
+import { changeVocabularyCategory, changeVocabularyPage } from "../../store/actions/actionsVocabulary";
+
 import { IBookPageProps, TSoundButtonClick } from "../../types/book";
 import { TTabClickFC } from "../../types/common";
 import { IAction, IState } from "../../types/redux";
@@ -31,7 +28,7 @@ const BookPage = ({
 
     const getData = async () => {
         setLoadingData(true);
-        const words = await new ServiceApi().getWords(
+        const words = await serviceApi.getWords(
             vocabularyCategory,
             vocabularyPage
         );
@@ -85,7 +82,7 @@ const BookPage = ({
     );
 };
 
-const mapStateToProps = ({ vocabularyCategory, vocabularyPage }: IState) => ({
+const mapStateToProps = ( {vocabulary: { vocabularyCategory, vocabularyPage }}: IState) => ({
     vocabularyCategory,
     vocabularyPage,
 });

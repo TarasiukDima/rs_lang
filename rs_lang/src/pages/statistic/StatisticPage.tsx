@@ -1,15 +1,18 @@
 import React from "react";
+import { connect } from "react-redux";
 import SectionContent from "../../components/section";
 import Loader from "../../components/loader";
 import StatisticContent from "./StatisticContent";
-import "./index.scss";
 import FormInfo from "../../components/formInfo";
 import { AuthFormText, PageLinks } from "../../helpers/settings";
+import { IState } from "../../types/redux";
+import { IStatisticPageProps } from "../../types/statistic";
 
-const StatisticPage = () => {
+import "./index.scss";
+
+
+const StatisticPage = ({authorization}: IStatisticPageProps) => {
     const loading = false;
-    const authorization = false;
-
 
     if (!authorization) {
         return (
@@ -39,4 +42,9 @@ const StatisticPage = () => {
     );
 };
 
-export default StatisticPage;
+
+const mapStateToProps = ({ user: { authorization } }: IState) => ({
+    authorization,
+});
+
+export default connect(mapStateToProps)(StatisticPage);

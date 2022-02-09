@@ -1,6 +1,9 @@
 import { TSoundPlay } from "./book";
+import { IAction } from "./redux";
 
 export type TSimpleFunction = () => void;
+export type TSimpleTypeFunction<T> = (el: T) => void;
+export type TSimpleActionFC<T> = (el: T) => IAction;
 
 export type TCheckValue = (
     value: number,

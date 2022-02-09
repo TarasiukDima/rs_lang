@@ -1,6 +1,6 @@
 import React, { Dispatch, RefObject, useEffect, useRef } from "react";
 import { connect } from "react-redux";
-import { changeAudioPlay } from "../../store/actions";
+import { changeAudioPlay } from "../../store/actions/actionsAudio";
 import { IAudioProps } from "../../types/common";
 import { IAction, IState } from "../../types/redux";
 import "./index.scss";
@@ -37,7 +37,7 @@ const AudioGame = ({ audioSrc, playAudio, changeCategory }: IAudioProps) => {
 };
 
 
-const mapStateToProps = ({ audioSrc, playAudio }: IState) => ({
+const mapStateToProps = ({ audio: { audioSrc, playAudio } }: IState) => ({
     audioSrc,
     playAudio,
 });
