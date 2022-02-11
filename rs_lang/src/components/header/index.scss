@@ -96,6 +96,15 @@
                 color: $linksHover;
             }
         }
+
+        a.active {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: $whiteColor url(../../assets/svg/user.svg) no-repeat center center;
+            background-size: contain;
+            color: $withOutColor;
+        }
     }
 
 }
@@ -149,6 +158,10 @@
                 padding: 10px;
                 border-bottom: 1px solid $whiteColor;
                 color: $whiteColor;
+            }
+
+            a.active {
+                margin: 10px;
             }
         }
 

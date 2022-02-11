@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { IWordItemProps } from "../../types/book";
-import { URL_DATA_FILES } from "../../helpers/settings";
+import { URL_DATA_FILES } from "../../helpers/consts";
 
 const WordsItem = ({
     word,
@@ -60,13 +60,13 @@ const WordsItem = ({
 
             <p className="item__meaning">
                 <span className="item__text_title">Meaning (Значение):</span>
-                <span>{textMeaning}</span>
+                <span dangerouslySetInnerHTML={{__html: textMeaning}}/>
                 <span>{textMeaningTranslate}</span>
             </p>
 
             <p className="item__example">
                 <span className="item__text_title">Example (Пример):</span>
-                <span>{textExample}</span>
+                <span dangerouslySetInnerHTML={{__html: textExample}}/>
                 <span>{textExampleTranslate}</span>
             </p>
         </li>

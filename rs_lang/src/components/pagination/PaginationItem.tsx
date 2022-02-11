@@ -1,5 +1,5 @@
 import React from "react";
-import { NEXT_PAGINGATION_TEXT, PREV_PAGINGATION_TEXT } from "../../helpers/settings";
+import { NEXT_PAGINGATION_TEXT, PREV_PAGINGATION_TEXT } from "../../helpers/consts";
 import { IPaginationItemProps } from "../../types/pagination";
 
 import "./index.scss";

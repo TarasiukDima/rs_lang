@@ -4,11 +4,11 @@ import SectionContent from "../../components/section";
 import Loader from "../../components/loader";
 import StatisticContent from "./StatisticContent";
 import FormInfo from "../../components/formInfo";
-import { AuthFormText, PageLinks } from "../../helpers/settings";
 import { IState } from "../../types/redux";
 import { IStatisticPageProps } from "../../types/statistic";
 
 import "./index.scss";
+import { AuthFormText, PageLinks } from "../../helpers/consts";
 
 
 const StatisticPage = ({authorization}: IStatisticPageProps) => {

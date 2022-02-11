@@ -1,26 +1,88 @@
-import { URL_DATA } from "../helpers/settings";
-import { IWordItemObj } from "../types/book";
+import { URL_DATA } from "../helpers/consts";
+import {
+    ApiUrls,
+    ErrorMessages,
+    IApiOptions,
+    IUserCreateForm,
+    IUserLogInForm,
+    TOptionsMethods,
+} from "../types/api";
 
-type TGetWords = (group: number, page: number) => Promise<Array<IWordItemObj>>;
-
-export interface IServiceApi {
-    getWords: TGetWords;
-}
-
-class ServiceApi implements IServiceApi {
-    // , params: {} = {}
-    private getData = async (stingSearch: string) => {
-        return await fetch(URL_DATA + stingSearch).then((response) =>
-            response.json()
-        );
+const _getData = async (
+    stingSearch: string,
+    method: TOptionsMethods = "GET",
+    body = ""
+) => {
+    const url = URL_DATA + stingSearch;
+    const options: IApiOptions = {
+        method: method,
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
     };
 
-    public getWords = async (group: number, page: number) => {
-        return await this.getData(`words?group=${group}&page=${page}`)
-            .catch((error) => console.error(error, "ошибка при загрузке списка слов"));
-    };
-}
+    if (body) {
+        options.body = body;
+    }
 
-// TODO: remove
-// Very bad or not?????????????????????????????
-export const serviceApi = new ServiceApi();
+    return await fetch(url, options).then((response) => {
+        if (!response.ok) {
+            throw new Error(`Bad url:${url}`);
+        }
+        return response.json();
+    });
+};
+
+/* words start */
+export const getWords = async (group: number, page: number) => {
+    const urlString = `${ApiUrls.words}?group=${group}&page=${page}`;
+
+    return await _getData(urlString).catch((error) =>
+        console.error(error, ErrorMessages.getWords)
+    );
+};
+/* words end */
+
+/* user start */
+export const createUser = async (user: IUserCreateForm) => {
+    const data = JSON.stringify(user);
+    return await _getData(ApiUrls.createUser, "POST", data)
+    .then((data) => {
+        return {
+            ...data,
+            errorText: null,
+        };
+    })
+    .catch((error) => {
+        console.error(error);
+        return { id: null, errorText: ErrorMessages.createUser };
+    });
+};
+
+export const getToken = async (id: string) => {
+    const urlString = `${ApiUrls.createUser}/${id}/tokens`;
+
+    return await _getData(urlString).catch((error) =>
+        console.error(error, ErrorMessages.getToken)
+    );
+};
+
+export const logInUser = async (user: IUserLogInForm) => {
+    const data = JSON.stringify(user);
+
+    return await _getData(ApiUrls.signInUser, "POST", data)
+        .then((data) => {
+            console.log(data);
+
+            return {
+                ...data,
+                errorLoginText: null,
+            };
+        })
+        .catch((error) => {
+            console.error(error);
+            return { errorLoginText: ErrorMessages.authorization };
+        });
+};
+/* user end */

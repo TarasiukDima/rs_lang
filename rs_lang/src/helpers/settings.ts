@@ -1,27 +1,4 @@
 import { ITabInfoObj } from "../types/common";
-import { IInputsObjInfo } from "../types/form";
-
-export const URL_DATA = "https://dimkalang.herokuapp.com/";
-export const URL_DATA_FILES = "https://raw.githubusercontent.com/TarasiukDima/react-rslang-be/main/";
-export const SPRINT_GAME_TIME = 60;
-export const COUNT_PAGE = 29;
-export const PREV_PAGINGATION_TEXT = "&#171;";
-export const NEXT_PAGINGATION_TEXT = "&#187;";
-
-export const mainTitleText1 = "Изучай английский язык ";
-export const mainTitleText2 = "быстро и с интересом";
-
-export enum PageLinks {
-    mainPage = "/",
-    authPage = "/auth/",
-    loginPage = "/log_in/",
-    bookPage = "/book/",
-    gamesPage = "/games/",
-    gameSprintPage = "/games/sprint",
-    gameAudioPage = "/games/audio",
-    statisticPage = "/statistic/",
-}
-
 
 /* main advanteges info start */
 import freeImg from "../assets/svg/free.svg";
@@ -82,37 +59,10 @@ export const teamPeoplesArr = [
 ];
 /* team end */
 
-
-/* forms start */
-export enum AuthFormText {
-    text = 'Если у вас есть аккаунт, тогда войдите в него',
-    linkText = 'Войти',
-}
-
-export const rgistrFieldsForm: Array<IInputsObjInfo> = [
-    { name: "name", type: "text", placeholder: "Name" },
-    { name: "email", type: "email", placeholder: "Email" },
-    { name: "password", type: "password", placeholder: "Password" },
-];
-
-export const submitRegistrText = "Зарегистрироваться";
-
-export enum LoginFormText {
-    text = 'Если у вас нет аккаунта, тогда зарегистрируйтесь',
-    linkText = 'Создать аккаунт',
-}
-
-export const loginFieldsForm: Array<IInputsObjInfo> = [
-    { name: "email", type: "email", placeholder: "Email" },
-    { name: "password", type: "password", placeholder: "Password" },
-];
-export const submitLoginText = "Войти";
-/* forms end */
-
-
 /* games start */
 import music from "../assets/img/music.jpg";
 import fast from "../assets/img/fast.jpg";
+import { PageLinks } from "./consts";
 
 export const gamesInfo = [
     {
@@ -147,3 +97,4 @@ export const statisticTabsInfo: Array<ITabInfoObj> = [
     { id: 1, text: "Спринт" },
 ];
 /* statistic end */
+

@@ -11,6 +11,16 @@
         width: 100%;
     }
 
+    label {
+        margin-bottom: 25px;
+    }
+
+    .error__text {
+        margin-top: 3px;
+        color: $errorText;
+        font-size: 14px;
+    }
+
     input[type="text"],
     input[type="email"],
     input[type="password"],
@@ -23,7 +33,6 @@
     input[type="text"],
     input[type="password"],
     input[type="email"] {
-        margin-bottom: 25px;
         box-shadow: 2px 2px 5px $authInfoBorder;
         background-color: $whiteColor;
 
@@ -123,18 +132,16 @@
 
 @include mobile() {
     .form {
+        label {
+            margin-bottom: 15px;
+        }
+
         input[type="text"],
         input[type="email"],
         input[type="password"],
         input[type="submit"] {
             padding: 10px;
             font-size: 16px;
-        }
-
-        input[type="text"],
-        input[type="password"],
-        input[type="email"] {
-            margin-bottom: 15px;
         }
 
         .file__fake {

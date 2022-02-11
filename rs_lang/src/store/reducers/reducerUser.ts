@@ -1,10 +1,11 @@
 import { IAction, IUserState } from "../../types/redux";
-import { CHANGE_AUTHORIZATION, CHANGE_USER_ID, CHANGE_USER_TOKEN } from "../actions/actionsUser";
+import { CHANGE_AUTHORIZATION, CHANGE_USER_ID, CHANGE_USER_NAME, CHANGE_USER_TOKEN } from "../actions/actionsUser";
 
 const INITIAL_STATE: IUserState = {
     id: "",
+    name: "",
     token: "",
-    authorization: true,
+    authorization: false,
 };
 
 const reducerUser = (state: IUserState = INITIAL_STATE, action: IAction) => {
@@ -27,6 +28,12 @@ const reducerUser = (state: IUserState = INITIAL_STATE, action: IAction) => {
             return {
                 ...state,
                 id: payload as string,
+            };
+
+        case CHANGE_USER_NAME:
+            return {
+                ...state,
+                name: payload as string,
             };
 
         default:

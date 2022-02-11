@@ -18,6 +18,20 @@
         margin: 50px auto;
     }
 
+    .user__name {
+        text-align: center;
+        line-height: 1.2;
+        font-size: 25px;
+
+        .user__nik {
+            display: block;
+            font-size: 130%;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: $userNameColor;
+        }
+    }
+
     .logout__button {
         margin: 50px auto 0;
     }
@@ -34,6 +48,10 @@
 
         .form {
             margin: 30px auto;
+        }
+
+        .user__name {
+            font-size: 18px;
         }
     }
 }

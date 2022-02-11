@@ -1,37 +1,39 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { TSimpleFunction } from "../../types/common";
-import { PageLinks } from "../../helpers/settings";
+import { INavigationPages, TSimpleFunction } from "../../types/common";
+import { HeaderLinks, PageLinks } from "../../helpers/consts";
 
 import "./index.scss";
+import { IState } from "../../types/redux";
+import { connect } from "react-redux";
 
-interface INavigationPages {
-    navClassShow: boolean;
-    clickMenu: TSimpleFunction;
-}
 
-const NavigationPages = ({ navClassShow, clickMenu }: INavigationPages) => {
-    const pages = [
-        { link: PageLinks.mainPage, textLink: "Главная" },
-        { link: PageLinks.gamesPage, textLink: "Игры" },
-        { link: PageLinks.bookPage, textLink: "Словарь" },
-        { link: PageLinks.statisticPage, textLink: "Статистика" },
-        { link: PageLinks.loginPage, textLink: "Войти" },
-    ];
-
-    const navClasses = navClassShow ? "header__nav active__nav" : "header__nav";
+const NavigationPages = ({ navClassShow, clickMenu, authorization }: INavigationPages) => {
+    const navClazzName = navClassShow ? "header__nav active__nav" : "header__nav";
+    const loginClazzName = authorization ? "active" : "";
 
     return (
-        <nav className={navClasses} onClick={clickMenu}>
+        <nav className={navClazzName} onClick={clickMenu}>
             <ul className="nav__list">
-                {pages.map((pageObj) => (
+                {HeaderLinks.map((pageObj) => (
                     <li key={pageObj.textLink} className="nav__list_item">
                         <Link to={pageObj.link}>{pageObj.textLink}</Link>
                     </li>
                 ))}
+
+                <li className="nav__list_item">
+                    <Link className={ loginClazzName} to={PageLinks.loginPage}>Войти</Link>
+                </li>
             </ul>
         </nav>
     );
 };
 
-export default NavigationPages;
+
+
+const mapStateToProps = ( {user: { authorization }}: IState) => ({
+    authorization
+});
+
+
+export default connect(mapStateToProps)(NavigationPages);

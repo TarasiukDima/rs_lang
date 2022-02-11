@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Route, Routes } from "react-router-dom";
-import { PageLinks } from "../../helpers/settings";
+import { PageLinks } from "../../helpers/consts";
 import AuthPage from "../../pages/auth";
 import BookPage from "../../pages/book";
 import ErrorPage from "../../pages/errorPage";

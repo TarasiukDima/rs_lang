@@ -1,21 +1,28 @@
 import React from "react";
-import SectionContent from "../../components/section";
-import { ILogOutProps } from "../../types/form";
+import SectionContent from "../../../components/section";
+import { ILogOut } from "../../../types/form";
 
 const LogOutContent = ({
+    name,
     changeUserAuthorization,
     changeUserToken,
     changeUserId,
-}: ILogOutProps) => {
+    changeUserName,
+}: ILogOut) => {
     const logOutUser = () => {
-        changeUserAuthorization(false);
-        changeUserToken("");
         changeUserId("");
+        changeUserName("");
+        changeUserToken("");
+        changeUserAuthorization(false);
     };
 
     return (
         <SectionContent nameClass="authorization__section">
-            <h1 className="title">Вы уже авторизованы</h1>
+            <h1 className="title">Вы авторизованы</h1>
+
+            <p className="user__name">
+                <span>Ваш ник:</span> <span className="user__nik">{name}</span>
+            </p>
 
             <button className="button logout__button" onClick={logOutUser}>
                 <span>Выйти</span>

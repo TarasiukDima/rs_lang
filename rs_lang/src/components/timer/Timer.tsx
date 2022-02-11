@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SPRINT_GAME_TIME } from "../../helpers/settings";
+import { SPRINT_GAME_TIME } from "../../helpers/consts";
 import "./index.scss";
 
 const Timer = () => {

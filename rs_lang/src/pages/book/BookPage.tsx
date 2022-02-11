@@ -5,8 +5,9 @@ import PaginationPage from "../../components/pagination";
 import SectionContent from "../../components/section";
 import TabList from "../../components/tabList";
 import WordsList from "../../components/wordsList";
-import { COUNT_PAGE, tabsBookInfo } from "../../helpers/settings";
-import { serviceApi } from "../../services/services";
+import { COUNT_PAGE } from "../../helpers/consts";
+import { tabsBookInfo } from "../../helpers/settings";
+import { getWords } from "../../services/services";
 import { changeAudioPlay, changeAudioSrc } from "../../store/actions/actionsAudio";
 import { changeVocabularyCategory, changeVocabularyPage } from "../../store/actions/actionsVocabulary";
 
@@ -28,7 +29,7 @@ const BookPage = ({
 
     const getData = async () => {
         setLoadingData(true);
-        const words = await serviceApi.getWords(
+        const words = await getWords(
             vocabularyCategory,
             vocabularyPage
         );

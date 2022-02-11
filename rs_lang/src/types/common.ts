@@ -42,3 +42,10 @@ export interface IAudioProps {
     playAudio: boolean;
     changeCategory: TSoundPlay;
 }
+
+
+export interface INavigationPages {
+    navClassShow: boolean;
+    clickMenu: TSimpleFunction;
+    authorization: boolean;
+}

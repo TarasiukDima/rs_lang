@@ -15,6 +15,7 @@ export interface IAudioState {
 
 export interface IUserState {
     id: string;
+    name: string;
     token: string;
     authorization: boolean;
 }

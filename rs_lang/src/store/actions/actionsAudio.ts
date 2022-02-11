@@ -1,4 +1,4 @@
-import { URL_DATA_FILES } from "../../helpers/settings";
+import { URL_DATA_FILES } from "../../helpers/consts";
 import { TSimpleActionFC } from "../../types/common";
 import { IAction } from "../../types/redux";
 

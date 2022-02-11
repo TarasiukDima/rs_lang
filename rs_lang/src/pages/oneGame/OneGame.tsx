@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import AudioGame from "../../components/audioGame";
 import SectionContent from "../../components/section";
 import SprintGame from "../../components/sprintGame";
-import { PageLinks } from "../../helpers/settings";
+import { PageLinks } from "../../helpers/consts";
 
 import "./index.scss";
 
