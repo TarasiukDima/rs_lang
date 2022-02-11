@@ -37,6 +37,13 @@
     }
 }
 
+.form {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+
+
 @include mobile() {
     .authorization__section {
         padding: 40px 0;

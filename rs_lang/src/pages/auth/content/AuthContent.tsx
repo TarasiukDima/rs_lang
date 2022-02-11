@@ -1,26 +1,16 @@
 import React, { RefObject, useRef, useState } from "react";
 import FormInfo from "../../../components/formInfo";
-import SectionContent from "../../../components/section";
+import LabelForm from "../../../components/label";
 import {
     AuthFormText,
     PageLinks,
     submitRegistrText,
 } from "../../../helpers/consts";
-import {
-    validateEmail,
-    validateForm,
-    validateName,
-    validatePassword,
-} from "../../../helpers/utils";
+import { checkFormErrors } from "../../../helpers/utils";
 import { createUser, logInUser } from "../../../services/services";
 import { ILogUserProps, TFormSubmitFC } from "../../../types/form";
 
-const AuthContent = ({
-    changeUserAuthorization,
-    changeUserToken,
-    changeUserId,
-    changeUserName,
-}: ILogUserProps) => {
+const AuthContent = ({ changeUser }: ILogUserProps) => {
     const [errorName, setErrorName] = useState("");
     const [errorEmail, setErrorEmail] = useState("");
     const [errorPassword, setErrorPassword] = useState("");
@@ -31,40 +21,32 @@ const AuthContent = ({
     const passwordUser = useRef() as RefObject<HTMLInputElement>;
     const sumbitButton = useRef() as RefObject<HTMLInputElement>;
 
-    const checkFormErrors = (
-        inputEmail: HTMLInputElement,
-        inputPassword: HTMLInputElement,
-        inputName: HTMLInputElement
-    ) => {
-        const {
-            name: errNameText,
-            email: errEmailText,
-            password: errPasswordText,
-        } = validateForm(inputEmail, inputPassword, inputName);
-
-        errNameText ? setErrorName(errNameText) : setErrorName("");
-        errEmailText ? setErrorEmail(errEmailText) : setErrorEmail("");
-        errPasswordText
-            ? setErrorPassword(errPasswordText)
-            : setErrorPassword("");
-
-        if (errNameText || errEmailText || errPasswordText) {
-            return false;
-        }
-
-        return true;
+    const stopSubmit = (errorText: string) => {
+        setErrorSubmint(errorText);
+        sumbitButton.current?.setAttribute("disable", "false");
     };
 
-    const changeUserInfo = (
-        id: string,
-        name: string,
-        token: string,
-        authorization: boolean
-    ) => {
-        changeUserId(id);
-        changeUserName(name);
-        changeUserToken(token);
-        changeUserAuthorization(authorization);
+    const checkForm = (emailText: string, passwordText: string, nameText: string) => {
+        return !checkFormErrors(
+            emailText,
+            setErrorEmail,
+            passwordText,
+            setErrorPassword,
+            nameText,
+            setErrorName
+        );
+    };
+
+    const getInputsText = () => {
+        const nameText = (nameUser.current as HTMLInputElement).value;
+        const emailText = (emailUser.current as HTMLInputElement).value;
+        const passwordText = (passwordUser.current as HTMLInputElement).value;
+
+        return {
+            nameText,
+            emailText,
+            passwordText,
+        };
     };
 
     const submitFunction: TFormSubmitFC = async (
@@ -72,56 +54,46 @@ const AuthContent = ({
     ): Promise<void> => {
         event.preventDefault();
         sumbitButton.current?.setAttribute("disable", "true");
+        const { nameText, emailText, passwordText } = getInputsText();
 
-        const inputName = nameUser.current as HTMLInputElement;
-        const inputEmail = emailUser.current as HTMLInputElement;
-        const inputPassword = passwordUser.current as HTMLInputElement;
-
-        if (!checkFormErrors(inputEmail, inputPassword, inputName)) {
-            sumbitButton.current?.setAttribute("disable", "false");
-            return;
+        if (checkForm(emailText, passwordText, nameText)) {
+            return stopSubmit("");
         }
 
         const { id, errorText } = await createUser({
-            name: inputName.value,
-            email: inputEmail.value,
-            password: inputPassword.value,
+            name: nameText,
+            email: emailText,
+            password: passwordText,
         });
 
         if (errorText) {
-            sumbitButton.current?.setAttribute("disable", "false");
-            setErrorSubmint(errorText);
-            return;
+            return stopSubmit(errorText);
         }
 
         const { token, errorLoginText } = await logInUser({
-            email: inputEmail.value,
-            password: inputPassword.value,
+            email: emailText,
+            password: passwordText,
         });
 
         if (errorLoginText) {
-            sumbitButton.current?.setAttribute("disable", "false");
-            setErrorSubmint(errorLoginText);
-            return;
+            return stopSubmit(errorLoginText);
         }
 
-        changeUserInfo(
+        changeUser({
             id,
-            inputName.value,
+            name: nameText,
             token,
-            true
-        );
-
-        setErrorSubmint("");
-        sumbitButton.current?.setAttribute("disable", "false");
+            authorization: true,
+        });
+        stopSubmit("");
     };
 
     return (
-        <SectionContent nameClass="authorization__section">
+        <>
             <h1 className="title">Регистрация</h1>
 
             <form className="form" onSubmit={submitFunction}>
-                <label>
+                <LabelForm errorText={errorName}>
                     <input
                         ref={nameUser}
                         type="text"
@@ -129,12 +101,9 @@ const AuthContent = ({
                         placeholder="Name"
                         required
                     />
-                    {errorName ? (
-                        <p className="error__text">{errorName}</p>
-                    ) : null}
-                </label>
+                </LabelForm>
 
-                <label>
+                <LabelForm errorText={errorEmail}>
                     <input
                         ref={emailUser}
                         type="email"
@@ -142,12 +111,9 @@ const AuthContent = ({
                         placeholder="Email"
                         required
                     />
-                    {errorEmail ? (
-                        <p className="error__text">{errorEmail}</p>
-                    ) : null}
-                </label>
+                </LabelForm>
 
-                <label>
+                <LabelForm errorText={errorPassword}>
                     <input
                         ref={passwordUser}
                         type="password"
@@ -155,20 +121,15 @@ const AuthContent = ({
                         placeholder="Password"
                         required
                     />
+                </LabelForm>
 
-                    {errorPassword ? (
-                        <p className="error__text">{errorPassword}</p>
-                    ) : null}
-                </label>
-
-                <input
-                    ref={sumbitButton}
-                    type="submit"
-                    value={submitRegistrText}
-                />
-                {errorSubmint ? (
-                    <p className="error__text">{errorSubmint}</p>
-                ) : null}
+                <LabelForm errorText={errorSubmint}>
+                    <input
+                        ref={sumbitButton}
+                        type="submit"
+                        value={submitRegistrText}
+                    />
+                </LabelForm>
             </form>
 
             <FormInfo
@@ -176,7 +137,7 @@ const AuthContent = ({
                 pageLink={PageLinks.loginPage}
                 textPageLink={AuthFormText.linkText}
             />
-        </SectionContent>
+        </>
     );
 };
 

@@ -48,7 +48,7 @@ export const getWords = async (group: number, page: number) => {
 export const createUser = async (user: IUserCreateForm) => {
     const data = JSON.stringify(user);
     return await _getData(ApiUrls.createUser, "POST", data)
-    .then((data) => {
+        .then((data) => {
         return {
             ...data,
             errorText: null,

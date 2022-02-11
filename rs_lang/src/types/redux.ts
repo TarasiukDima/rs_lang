@@ -1,6 +1,8 @@
+import { IChangeUserObject } from "./form";
+
 export interface IAction {
     type: string;
-    payload: number | string | boolean;
+    payload: number | string | boolean | IChangeUserObject;
 }
 
 export interface IVocabularyState {

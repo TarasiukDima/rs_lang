@@ -2,19 +2,13 @@ import React from "react";
 import SectionContent from "../../../components/section";
 import { ILogOut } from "../../../types/form";
 
-const LogOutContent = ({
-    name,
-    changeUserAuthorization,
-    changeUserToken,
-    changeUserId,
-    changeUserName,
-}: ILogOut) => {
-    const logOutUser = () => {
-        changeUserId("");
-        changeUserName("");
-        changeUserToken("");
-        changeUserAuthorization(false);
-    };
+const LogOutContent = ({ name, changeUser }: ILogOut) => {
+    const logOutUser = () => changeUser({
+        id: "",
+        name: "",
+        token: "",
+        authorization: false
+    });
 
     return (
         <SectionContent nameClass="authorization__section">

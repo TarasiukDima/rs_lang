@@ -1,5 +1,3 @@
-import { IInputsObjInfo } from "../types/form";
-
 export const URL_DATA = "https://dimkalang.herokuapp.com/";
 export const URL_DATA_FILES = "https://raw.githubusercontent.com/TarasiukDima/react-rslang-be/main/";
 export const SPRINT_GAME_TIME = 60;
@@ -33,29 +31,17 @@ export const HeaderLinks = [
 
 /* forms start */
 export const submitRegistrText = "Зарегистрироваться";
+export const submitLoginText = "Войти";
 
 export enum AuthFormText {
     text = 'Если у вас есть аккаунт, тогда войдите в него',
     linkText = 'Войти',
 }
 
-export const rgistrFieldsForm: Array<IInputsObjInfo> = [
-    { name: "name", type: "text", placeholder: "Name" },
-    { name: "email", type: "email", placeholder: "Email" },
-    { name: "password", type: "password", placeholder: "Password" },
-];
-
-export const submitLoginText = "Войти";
-
 export enum LoginFormText {
     text = 'Если у вас нет аккаунта, тогда зарегистрируйтесь',
     linkText = 'Создать аккаунт',
 }
-
-export const loginFieldsForm: Array<IInputsObjInfo> = [
-    { name: "email", type: "email", placeholder: "Email" },
-    { name: "password", type: "password", placeholder: "Password" },
-];
 /* forms end */
 
 
@@ -63,7 +49,7 @@ export const loginFieldsForm: Array<IInputsObjInfo> = [
 export const MIN_LENGTH_NAME = 3;
 export const MAX_LENGTH_NAME = 15;
 export const ERROR_VALIDATE_LENGTH_NAME = `Минимальная длина имени ${MIN_LENGTH_NAME} символа, максимальная ${MAX_LENGTH_NAME}`;
-export const ERROR_VALIDATE_LETTERS = "Только буквы";
+export const ERROR_VALIDATE_LETTERS = "Только буквы и цыфры";
 
 export const MIN_LENGTH_PASSWORD = 3;
 export const MAX_LENGTH_PASSWORD = 15;
@@ -80,6 +66,7 @@ export const ERROR_VALIDATE_EMAIL_LENGTH = `Минимальная длина и
 export const ERROR_VALIDATE_DOMAIN = "Только буквы, цифры и '_ -' в домене";
 export const ERROR_VALIDATE_DOMAIN_DOG = 'Нужна "@"';
 export const ERROR_VALIDATE_DOMAIN_DOT = 'Нужна "." после 1 доменного имени';
+export const ERROR_VALIDATE_DOMAIN_LETTER = 'Не верный email (name@domain.domain2)';
 
 export const ERROR_VALIDATE_DOMAIN_LENGTH = `Длинна почты должна быть более ${MIN_LENGTH_DOMAIN1} и меньше ${MAX_LENGTH_DOMAIN1} букв`;
 export const ERROR_VALIDATE_DOMAIN1_LETTER = `В 1 доменном имени должно быть не менее ${LENGTH_DOMAIN1} букв`;

@@ -1,9 +1,11 @@
 import { TSimpleActionFC } from "../../types/common";
+import { IChangeUserObject } from "../../types/form";
 
 export const CHANGE_AUTHORIZATION = "CHANGE_AUTHORIZATION";
 export const CHANGE_USER_TOKEN = "CHANGE_USER_TOKEN";
 export const CHANGE_USER_ID = "CHANGE_USER_ID";
 export const CHANGE_USER_NAME = "CHANGE_USER_NAME";
+export const CHANGE_USER_INFO = "CHANGE_USER_INFO";
 
 export const changeAuthorization: TSimpleActionFC<boolean> = (authorization: boolean) => {
     return {
@@ -30,6 +32,13 @@ export const changeName: TSimpleActionFC<string> = (newName: string) => {
     return {
         type: CHANGE_USER_NAME,
         payload: newName
+    };
+}
+
+export const changeUserInformation = (newUserObj: IChangeUserObject) => {
+    return {
+        type: CHANGE_USER_INFO,
+        payload: newUserObj
     };
 }
 

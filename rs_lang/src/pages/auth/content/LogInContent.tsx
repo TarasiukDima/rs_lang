@@ -1,21 +1,16 @@
 import React, { RefObject, useRef, useState } from "react";
 import FormInfo from "../../../components/formInfo";
-import SectionContent from "../../../components/section";
+import LabelForm from "../../../components/label";
 import {
     LoginFormText,
     PageLinks,
     submitLoginText,
 } from "../../../helpers/consts";
-import { validateForm } from "../../../helpers/utils";
+import { checkFormErrors } from "../../../helpers/utils";
 import { logInUser } from "../../../services/services";
 import { ILogUserProps, TFormSubmitFC } from "../../../types/form";
 
-const LogInContent = ({
-    changeUserAuthorization,
-    changeUserToken,
-    changeUserId,
-    changeUserName,
-}: ILogUserProps) => {
+const LogInContent = ({ changeUser }: ILogUserProps) => {
     const [errorEmail, setErrorEmail] = useState("");
     const [errorPassword, setErrorPassword] = useState("");
     const [errorSubmint, setErrorSubmint] = useState("");
@@ -24,39 +19,9 @@ const LogInContent = ({
     const passwordUser = useRef() as RefObject<HTMLInputElement>;
     const sumbitButton = useRef() as RefObject<HTMLInputElement>;
 
-
-    const checkFormErrors = (
-        inputEmail: HTMLInputElement,
-        inputPassword: HTMLInputElement,
-    ) => {
-        const {
-            email: errEmailText,
-            password: errPasswordText,
-        } = validateForm(inputEmail, inputPassword);
-
-        errEmailText ? setErrorEmail(errEmailText) : setErrorEmail("");
-
-        errPasswordText
-            ? setErrorPassword(errPasswordText)
-            : setErrorPassword("");
-
-        if (errEmailText || errPasswordText) {
-            return false;
-        }
-
-        return true;
-    };
-
-    const changeUserInfo = (
-        id: string,
-        name: string,
-        token: string,
-        authorization: boolean
-    ) => {
-        changeUserId(id);
-        changeUserName(name);
-        changeUserToken(token);
-        changeUserAuthorization(authorization);
+    const stopSubmit = (errorText: string) => {
+        setErrorSubmint(errorText);
+        sumbitButton.current?.setAttribute("disable", "false");
     };
 
     const submitFunction: TFormSubmitFC = async (
@@ -65,41 +30,49 @@ const LogInContent = ({
         event.preventDefault();
         sumbitButton.current?.setAttribute("disable", "true");
 
-        const inputEmail = emailUser.current as HTMLInputElement;
-        const inputPassword = passwordUser.current as HTMLInputElement;
+        const emailText = (emailUser.current as HTMLInputElement).value;
+        const passwordText = (passwordUser.current as HTMLInputElement).value;
 
-        if (!checkFormErrors(inputEmail, inputPassword)) {
-            sumbitButton.current?.setAttribute("disable", "false");
-            return;
+        if (
+            !checkFormErrors(
+                emailText,
+                setErrorEmail,
+                passwordText,
+                setErrorPassword
+            )
+        ) {
+            return stopSubmit("");
         }
-        const {  errorLoginText, token, userId: id, name } = await logInUser({
-            email: inputEmail.value,
-            password: inputPassword.value,
+
+        const {
+            errorLoginText,
+            token,
+            userId: id,
+            name,
+        } = await logInUser({
+            email: emailText,
+            password: passwordText,
         });
 
         if (errorLoginText) {
-            sumbitButton.current?.setAttribute("disable", "false");
-            setErrorSubmint(errorLoginText);
-            return;
+            return stopSubmit(errorLoginText);
         }
 
-        changeUserInfo(
-            id,
-            name,
-            token,
-            true
-        );
-
-        setErrorSubmint("");
-        sumbitButton.current?.setAttribute("disable", "false");
+        changeUser({
+            id: id,
+            name: name,
+            token: token,
+            authorization: true,
+        });
+        stopSubmit(errorLoginText);
     };
 
     return (
-        <SectionContent nameClass="authorization__section">
+        <>
             <h1 className="title">Войти</h1>
 
             <form className="form" onSubmit={submitFunction}>
-                <label>
+                <LabelForm errorText={errorEmail}>
                     <input
                         ref={emailUser}
                         type="email"
@@ -107,12 +80,9 @@ const LogInContent = ({
                         placeholder="Email"
                         required
                     />
-                    {errorEmail ? (
-                        <p className="error__text">{errorEmail}</p>
-                    ) : null}
-                </label>
+                </LabelForm>
 
-                <label>
+                <LabelForm errorText={errorPassword}>
                     <input
                         ref={passwordUser}
                         type="password"
@@ -120,20 +90,15 @@ const LogInContent = ({
                         placeholder="Password"
                         required
                     />
+                </LabelForm>
 
-                    {errorPassword ? (
-                        <p className="error__text">{errorPassword}</p>
-                    ) : null}
-                </label>
-
-                <input
-                    ref={sumbitButton}
-                    type="submit"
-                    value={submitLoginText}
-                />
-                {errorSubmint ? (
-                    <p className="error__text">{errorSubmint}</p>
-                ) : null}
+                <LabelForm errorText={errorSubmint}>
+                    <input
+                        ref={sumbitButton}
+                        type="submit"
+                        value={submitLoginText}
+                    />
+                </LabelForm>
             </form>
 
             <FormInfo
@@ -141,7 +106,7 @@ const LogInContent = ({
                 pageLink={PageLinks.authPage}
                 textPageLink={LoginFormText.linkText}
             />
-        </SectionContent>
+        </>
     );
 };
 
