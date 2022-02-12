@@ -2,13 +2,14 @@ import React, { RefObject, useRef, useState } from "react";
 import FormInfo from "../../../components/formInfo";
 import LabelForm from "../../../components/label";
 import {
+    LOCASTORAGE__NAME_USER,
     LoginFormText,
     PageLinks,
     submitLoginText,
 } from "../../../helpers/consts";
-import { checkFormErrors } from "../../../helpers/utils";
+import { checkFormErrors, saveSettingsLocalStorage } from "../../../helpers/utils";
 import { logInUser } from "../../../services/services";
-import { ILogUserProps, TFormSubmitFC } from "../../../types/form";
+import { IChangeUserObject, ILocalStoragUser, ILogUserProps, TFormSubmitFC } from "../../../types/form";
 
 const LogInContent = ({ changeUser }: ILogUserProps) => {
     const [errorEmail, setErrorEmail] = useState("");
@@ -48,6 +49,7 @@ const LogInContent = ({ changeUser }: ILogUserProps) => {
             errorLoginText,
             token,
             userId: id,
+            refreshToken,
             name,
         } = await logInUser({
             email: emailText,
@@ -58,12 +60,21 @@ const LogInContent = ({ changeUser }: ILogUserProps) => {
             return stopSubmit(errorLoginText);
         }
 
-        changeUser({
+        const refreshUserObj: IChangeUserObject = {
             id: id,
             name: name,
             token: token,
+            refreshToken: refreshToken,
             authorization: true,
-        });
+        };
+        const objInfo: ILocalStoragUser = {
+            ...refreshUserObj,
+            email: emailText,
+        };
+
+        changeUser(refreshUserObj);
+        saveSettingsLocalStorage(LOCASTORAGE__NAME_USER, objInfo);
+
         stopSubmit(errorLoginText);
     };
 

@@ -98,6 +98,10 @@
         }
 
         a.active {
+            color: $linksHover;
+        }
+
+        a.authorization {
             width: 30px;
             height: 30px;
             border-radius: 50%;
@@ -158,9 +162,17 @@
                 padding: 10px;
                 border-bottom: 1px solid $whiteColor;
                 color: $whiteColor;
+
+                &:hover {
+                    color: $bgColor1;
+                }
             }
 
             a.active {
+                color: $bgColor1;
+            }
+
+            a.authorization {
                 margin: 10px;
             }
         }

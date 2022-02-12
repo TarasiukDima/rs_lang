@@ -2,12 +2,12 @@ import React from "react";
 import PaginationItem from "./PaginationItem";
 
 import { IPaginationPageProps } from "../../types/pagination";
-import "./index.scss";
 import { checkValue } from "../../helpers/utils";
+
+import "./index.scss";
 
 const PaginationPage = ({
     activePage,
-    clickButton,
     countPages,
 }: IPaginationPageProps) => {
     if (countPages <= 1) return null;
@@ -36,7 +36,6 @@ const PaginationPage = ({
     paginationsArr.push({
         textPage: activePage + 1,
         numberPage: activePage,
-        active: true,
     });
 
     // +1
@@ -65,7 +64,6 @@ const PaginationPage = ({
                     <PaginationItem
                         key={paginationInfo.textPage}
                         {...paginationInfo}
-                        clickButton={clickButton}
                     />
                 );
             })}

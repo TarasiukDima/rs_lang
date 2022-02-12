@@ -15,9 +15,12 @@ const WordsItem = ({
     transcription,
     textExample,
     textExampleTranslate,
-    clickButton
+    clickButton,
+    authorization,
 }: IWordItemProps) => {
     const [activeSong, setActiveSong] = useState(0);
+    const [difficult, setDifficult] = useState(false);
+    const [learned, setLearned] = useState(false);
     const audioPlayList = [audio, audioMeaning, audioExample]
 
     const playSong = () => {
@@ -27,22 +30,24 @@ const WordsItem = ({
             : setActiveSong(activeSong + 1);
     }
 
+    const changeDifficult = () => {
+        setDifficult((difficult) => !difficult);
+    }
+
+    const changeLearned = () => {
+        setLearned((learned) => !learned);
+    }
+
     const styles = {
         backgroundImage: `url(${URL_DATA_FILES + image})`,
     };
     const clazzList = ['word__item'];
 
-    const autorization = false;
-    const itemLearnd = false;
-    const difficult = false;
-
-    if (autorization) {
-        if (itemLearnd) {
-            clazzList.push('learned');
-        }
-        if (difficult) {
-            clazzList.push('difficult');
-        }
+    if (authorization && learned) {
+        clazzList.push('learned');
+    }
+    if (authorization && difficult) {
+        clazzList.push('difficult');
     }
 
     return (
@@ -69,6 +74,19 @@ const WordsItem = ({
                 <span dangerouslySetInnerHTML={{__html: textExample}}/>
                 <span>{textExampleTranslate}</span>
             </p>
+
+            {authorization && (
+                <div className="buttons__wrap">
+                    <button
+                        className="button__card"
+                        onClick={changeDifficult}
+                    >{ difficult ? "Убрать из сложных" : "Добавить в сложные"}</button>
+                    <button
+                        className="button__card"
+                        onClick={changeLearned}
+                    >{ learned ? "Убрать из изученных" : "Добавить в изученные"}</button>
+                </div>
+            )}
         </li>
     );
 };

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import Header from "./components/header";
 import Main from "./components/main";
 import Footer from "./components/footer";
@@ -10,6 +10,11 @@ import store from './store/store'
 import './App.scss';
 
 const App: FC = () => {
+    useEffect(() => {
+        // const localObj = localStorage.getItem(LOCASTORAGE__NAME);
+        // console.log(store);
+
+    },[])
     return (
         <Provider store={store}>
             <Header />

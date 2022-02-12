@@ -112,13 +112,25 @@
             }
         }
     }
+}
 
-    .buttons__wrapper {
-        @include dflex(flex-start);
+.main__page_games {
+    position: relative;
+    z-index: 1;
+    padding: 70px 0;
+    background-color: $whiteBg;
 
-        button ~ button {
-            margin-left: 15px;
-        }
+    &:before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        width: 300px;
+        height: 350px;
+        top: 0;
+        right: 0;
+        background: url(../../assets/img/advBg1.png) no-repeat center center;
+        background-size: contain;
+        opacity: 0.3;
     }
 }
 
@@ -147,7 +159,7 @@
         z-index: -1;
         width: 300px;
         height: 350px;
-        opacity: 0.2;
+        opacity: 0.3;
         background-size: contain;
     }
 
@@ -456,14 +468,6 @@
                 }
             }
         }
-
-        .buttons__wrapper {
-            justify-content: center;
-
-            button ~ button {
-                margin-left: 15px;
-            }
-        }
     }
 
     .advanteges__app {
@@ -592,17 +596,9 @@
                 }
             }
         }
-
-        .buttons__wrapper {
-            flex-wrap: wrap;
-            justify-content: center;
-
-            button {
-                margin: 10px 5px;
-            }
-        }
     }
 
+    .main__page_games,
     .advanteges__app {
         padding: 40px 0;
     }

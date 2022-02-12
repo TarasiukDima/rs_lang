@@ -19,6 +19,7 @@ export interface IUserState {
     id: string;
     name: string;
     token: string;
+    refreshToken: string;
     authorization: boolean;
 }
 

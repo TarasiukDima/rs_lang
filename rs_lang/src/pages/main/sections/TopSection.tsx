@@ -13,10 +13,6 @@ const TopSection = () => {
         navigation(PageLinks.authPage);
     };
 
-    const gamesPageShow = (): void => {
-        navigation(PageLinks.gamesPage);
-    };
-
     return (
         <SectionContent nameClass="top__display">
             <div className="top__img" data-text1="learning" data-text2="goal">
@@ -33,13 +29,10 @@ const TopSection = () => {
                     <span data-text={mainTitleText2}>{mainTitleText2}</span>
                 </h1>
 
-                <div className="buttons__wrapper">
-                    <ButtonEl onclick={registrationPageShow}>
-                        Регистрация
-                    </ButtonEl>
+                <ButtonEl onclick={registrationPageShow}>
+                    Регистрация
+                </ButtonEl>
 
-                    <ButtonEl onclick={gamesPageShow}>Игры</ButtonEl>
-                </div>
             </div>
         </SectionContent>
     );

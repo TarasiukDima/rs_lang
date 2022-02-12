@@ -1,0 +1,44 @@
+@import "../../scss/variebles";
+@import "../../scss/mixins";
+
+
+.categories__list {
+    @include dflex(center, stretch);
+
+    flex-wrap: wrap;
+
+    .categories__item {
+        margin: 0 5px 10px;
+    }
+
+    .categories__item_link {
+        padding: 10px 40px;
+        font-size: $appFontSize;
+        border-radius: $tabBorderRadius;
+        box-shadow: $tabShadow;
+        color: $whiteColor;
+        background-color: $tabBg;
+    }
+
+    .categories__item_link.active {
+        background-color: $activeTabBg;
+    }
+}
+
+
+@include smallTablet() {
+    .categories__list {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+}
+
+@include mobile() {
+    .categories__list {
+        max-width: 400px;
+
+        .categories__item_link {
+            padding: 6px 20px;
+        }
+    }
+}

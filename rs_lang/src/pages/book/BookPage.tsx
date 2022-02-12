@@ -1,26 +1,25 @@
 import React, { Dispatch, useEffect, useState } from "react";
 import { connect } from "react-redux";
+import CategoriesLinks from "../../components/categoriesLinks";
 import Loader from "../../components/loader";
 import PaginationPage from "../../components/pagination";
 import SectionContent from "../../components/section";
-import TabList from "../../components/tabList";
 import WordsList from "../../components/wordsList";
-import { COUNT_PAGE } from "../../helpers/consts";
-import { tabsBookInfo } from "../../helpers/settings";
+import { COUNT_PAGE, NUMBER_HIDDEN_CATEGORY } from "../../helpers/consts";
 import { getWords } from "../../services/services";
-import { changeAudioPlay, changeAudioSrc } from "../../store/actions/actionsAudio";
-import { changeVocabularyCategory, changeVocabularyPage } from "../../store/actions/actionsVocabulary";
+import {
+    changeAudioPlay,
+    changeAudioSrc,
+} from "../../store/actions/actionsAudio";
 
 import { IBookPageProps, TSoundButtonClick } from "../../types/book";
-import { TTabClickFC } from "../../types/common";
 import { IAction, IState } from "../../types/redux";
 import "./index.scss";
 
 const BookPage = ({
+    authorization,
     vocabularyCategory,
     vocabularyPage,
-    changeCategory,
-    changePage,
     changeSrcSong,
     changePlay,
 }: IBookPageProps) => {
@@ -29,26 +28,27 @@ const BookPage = ({
 
     const getData = async () => {
         setLoadingData(true);
-        const words = await getWords(
-            vocabularyCategory,
-            vocabularyPage
-        );
+        const words = await getWords(vocabularyCategory, vocabularyPage);
         setBookListData(words);
         setLoadingData(false);
     };
+    const getDifficultData = async () => {
+        // setLoadingData(true);
+        // const words = await getWords(vocabularyCategory, vocabularyPage);
+        // setBookListData(words);
+        // setLoadingData(false);
+    };
+    const showPagination = vocabularyCategory === NUMBER_HIDDEN_CATEGORY ? false : true;
 
     useEffect(() => {
-        getData();
+        if (vocabularyCategory === NUMBER_HIDDEN_CATEGORY) {
+            getDifficultData();
+        } else {
+            getData();
+        }
     }, [vocabularyCategory, vocabularyPage]);
 
-    const changeCategoryNumber: TTabClickFC = (id: number) => {
-        changePage(1);
-        changeCategory(id);
-    };
 
-    const clickPaginationButton: TTabClickFC = (id) => {
-        changePage(id);
-    };
 
     const clickButton: TSoundButtonClick = (audio) => {
         changeSrcSong(audio);
@@ -59,43 +59,41 @@ const BookPage = ({
         <SectionContent nameClass="book__section">
             <h1 className="title">Словарь</h1>
 
-            <TabList
-                tabsInfo={tabsBookInfo}
-                tabClick={changeCategoryNumber}
-                activeTab={vocabularyCategory}
-            />
+            <CategoriesLinks />
 
             {loadingData ? (
                 <Loader />
             ) : (
                 <WordsList
+                    authorization={authorization}
                     bookListInfoArr={bookListData}
                     clickButton={clickButton}
                 />
             )}
 
-            <PaginationPage
-                activePage={vocabularyPage}
-                clickButton={clickPaginationButton}
-                countPages={COUNT_PAGE}
-            />
+            {showPagination ? (
+                 <PaginationPage
+                    activePage={vocabularyPage}
+                    countPages={COUNT_PAGE}
+                />
+            ) : (
+                <p/>
+            )}
         </SectionContent>
     );
 };
 
-const mapStateToProps = ( {vocabulary: { vocabularyCategory, vocabularyPage }}: IState) => ({
+const mapStateToProps = ({
+    vocabulary: { vocabularyCategory, vocabularyPage },
+    user: { authorization },
+}: IState) => ({
     vocabularyCategory,
     vocabularyPage,
+    authorization,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<IAction>) => {
     return {
-        changeCategory: (categoryNumber: number) => {
-            dispatch(changeVocabularyCategory(categoryNumber));
-        },
-        changePage: (pageNumber: number) => {
-            dispatch(changeVocabularyPage(pageNumber));
-        },
         changeSrcSong: (audio: string) => {
             dispatch(changeAudioSrc(audio));
         },

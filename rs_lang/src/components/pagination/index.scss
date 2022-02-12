@@ -9,6 +9,7 @@
 
     .pagination__item {
         margin: 5px;
+        text-align:center;
     }
 
     .pagination__button {
@@ -19,9 +20,17 @@
         background-color: $whiteColor;
     }
 
+    span {
+        color: $bgColor1;
+    }
+
+
     .pagination__button.active {
-        color: $whiteColor;
         background-color: $paginationActiveBg;
+
+        span {
+            color: $whiteColor;
+        }
     }
 }
 

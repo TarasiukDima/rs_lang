@@ -4,6 +4,8 @@ export const SPRINT_GAME_TIME = 60;
 export const COUNT_PAGE = 29;
 export const PREV_PAGINGATION_TEXT = "&#171;";
 export const NEXT_PAGINGATION_TEXT = "&#187;";
+export const LOCASTORAGE__NAME_USER = "user_data";
+export const LOCASTORAGE__NAME_SETTINGS = "rs_lang";
 
 export const mainTitleText1 = "Изучай английский язык ";
 export const mainTitleText2 = "быстро и с интересом";
@@ -19,15 +21,8 @@ export enum PageLinks {
     statisticPage = "/statistic/",
 }
 
-/* header start */
-export const HeaderLinks = [
-    { link: PageLinks.mainPage, textLink: "Главная" },
-    { link: PageLinks.gamesPage, textLink: "Игры" },
-    { link: PageLinks.bookPage, textLink: "Словарь" },
-    { link: PageLinks.statisticPage, textLink: "Статистика" },
-];
-/* header start */
-
+export const categoriesNumbers = [0, 1, 2, 3, 4, 5];
+export const NUMBER_HIDDEN_CATEGORY = 6;
 
 /* forms start */
 export const submitRegistrText = "Зарегистрироваться";

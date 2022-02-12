@@ -30,7 +30,12 @@ export interface IChangeUserObject {
     id: string;
     name: string;
     token: string;
+    refreshToken: string;
     authorization: boolean;
+}
+
+export interface ILogUserProps {
+    changeUser: TСhangeUserInfo;
 }
 
 export interface IFormPageProps extends ILogUserProps {
@@ -39,11 +44,17 @@ export interface IFormPageProps extends ILogUserProps {
     changeUser: TСhangeUserInfo;
 }
 
-export interface ILogUserProps {
-    changeUser: TСhangeUserInfo;
-}
-
 export interface ILogOut extends ILogUserProps {
     name: string;
 }
+
+
+
+
+/* localstorage start */
+export interface ILocalStoragUser extends IChangeUserObject {
+    email: string;
+    time?: number;
+}
+/* localstorage end */
 

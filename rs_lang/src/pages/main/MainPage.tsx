@@ -1,6 +1,7 @@
 import React from "react";
 
 import AdvantegesSection from "./sections/AdvantegesSection";
+import GamesSection from "./sections/GamesSection";
 import TeamSection from "./sections/TeamSection";
 import TopSection from "./sections/TopSection";
 
@@ -10,6 +11,7 @@ const MainPage = () => {
     return (
         <>
             <TopSection />
+            <GamesSection/>
             <AdvantegesSection />
             <TeamSection />
         </>

@@ -3,12 +3,13 @@ import FormInfo from "../../../components/formInfo";
 import LabelForm from "../../../components/label";
 import {
     AuthFormText,
+    LOCASTORAGE__NAME_USER,
     PageLinks,
     submitRegistrText,
 } from "../../../helpers/consts";
-import { checkFormErrors } from "../../../helpers/utils";
+import { checkFormErrors, saveSettingsLocalStorage } from "../../../helpers/utils";
 import { createUser, logInUser } from "../../../services/services";
-import { ILogUserProps, TFormSubmitFC } from "../../../types/form";
+import { IChangeUserObject, ILocalStoragUser, ILogUserProps, TFormSubmitFC } from "../../../types/form";
 
 const AuthContent = ({ changeUser }: ILogUserProps) => {
     const [errorName, setErrorName] = useState("");
@@ -70,7 +71,7 @@ const AuthContent = ({ changeUser }: ILogUserProps) => {
             return stopSubmit(errorText);
         }
 
-        const { token, errorLoginText } = await logInUser({
+        const { token, errorLoginText, refreshToken } = await logInUser({
             email: emailText,
             password: passwordText,
         });
@@ -79,12 +80,21 @@ const AuthContent = ({ changeUser }: ILogUserProps) => {
             return stopSubmit(errorLoginText);
         }
 
-        changeUser({
-            id,
+        const refreshUserObj: IChangeUserObject = {
+            id: id,
             name: nameText,
-            token,
+            token: token,
+            refreshToken: refreshToken,
             authorization: true,
-        });
+        };
+
+        const objInfo: ILocalStoragUser = {
+            ...refreshUserObj,
+            email: emailText,
+        };
+
+        changeUser(refreshUserObj);
+        saveSettingsLocalStorage(LOCASTORAGE__NAME_USER, objInfo);
         stopSubmit("");
     };
 

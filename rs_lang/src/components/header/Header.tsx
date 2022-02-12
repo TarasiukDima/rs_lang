@@ -2,8 +2,9 @@ import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { PageLinks } from "../../helpers/consts";
 import { TSimpleFunction } from "../../types/common";
-import "./index.scss";
 import NavigationPages from "./NavigationPages";
+
+import "./index.scss";
 
 const Header: FC = () => {
     const [navClassShow, setNavClassShow] = useState(false);

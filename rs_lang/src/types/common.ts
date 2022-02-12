@@ -48,4 +48,6 @@ export interface INavigationPages {
     navClassShow: boolean;
     clickMenu: TSimpleFunction;
     authorization: boolean;
+    vocabularyCategory: number;
+    vocabularyPage: number;
 }

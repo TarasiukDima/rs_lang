@@ -10,6 +10,8 @@
     .word__item {
         position: relative;
         z-index: 1;
+        display: flex;
+        flex-direction: column;
         width: 48%;
         margin: 0 1% 20px;
         padding: 30px 20px;
@@ -117,10 +119,41 @@
     }
 
     .item__example {
+        flex-grow: 1;
         margin-top: 20px;
+    }
+
+    .buttons__wrap {
+        @include dflex(center, stretch);
+
+        flex-wrap: wrap;
+        margin-top: 15px;
+    }
+
+    .button__card {
+        padding: 10px;
+        width: 48%;
+        margin: 1%;
+        font-size: 16px;
+        color: $whiteColor;
+        border-radius: $wordBorderRadius;
+        background-color: $wordButtonHelpersBg;
+
+        &:hover {
+            background-color: $wordButtonHelpersBgHover;
+        }
+
+        &:active {
+            box-shadow: inset 0 0 10px $black;
+        }
     }
 }
 
+.learned__list {
+    .word__item {
+        box-shadow: $learnAllItemShadow;
+    }
+}
 
 @include tablet() {
     .words__list {
@@ -145,6 +178,11 @@
 
         .name__text {
             font-size: 16px;
+        }
+
+        .button__card {
+            padding: 10px 5px;
+            font-size: 14px;
         }
     }
 
@@ -173,6 +211,15 @@
         .play__button {
             width: 30px;
             height: 30px;
+        }
+
+        .buttons__wrap {
+            margin-top: 0;
+        }
+
+        .button__card {
+            width: 100%;
+            margin: 10px 0 0;
         }
     }
 }

@@ -17,7 +17,7 @@ const Main: FC = () => {
                 <Route path={PageLinks.gamesPage} element={<GamesPage />} />
                 <Route path={PageLinks.gameSprintPage} element={<OneGame />} />
                 <Route path={PageLinks.gameAudioPage} element={<OneGame />} />
-                <Route path={PageLinks.bookPage} element={<BookPage />} />
+                <Route path={PageLinks.bookPage + ":categoryid/:pageid"} element={<BookPage />}/>
                 <Route path={PageLinks.statisticPage} element={<StatisticPage />}/>
                 <Route path={PageLinks.authPage} element={<AuthPage />} />
                 <Route path={PageLinks.loginPage} element={<AuthPage />} />

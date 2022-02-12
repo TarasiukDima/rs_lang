@@ -3,13 +3,13 @@
 
 .games__section {
     padding: 70px 0;
+}
 
-    .list__games {
-        @include dflex(center, stretch);
+.list__games {
+    @include dflex(center, stretch);
 
-        flex-wrap: wrap;
-        margin-top: 50px;
-    }
+    flex-wrap: wrap;
+    margin-top: 50px;
 
     .game__item {
         position: relative;
@@ -69,7 +69,7 @@
 }
 
 @include desctop() {
-    .games__section {
+    .list__games {
         .game__item {
             width: 400px;
         }
@@ -77,7 +77,7 @@
 }
 
 @include tablet() {
-    .games__section {
+    .list__games {
         .game__item {
             width: 45%;
 
@@ -92,7 +92,7 @@
     }
 }
 @include smallTablet() {
-    .games__section {
+    .list__games {
         .game__item {
             width: 46%;
             margin: 0 2% 30px;
@@ -110,11 +110,11 @@
 @include mobile() {
     .games__section {
         padding: 40px 0;
+    }
 
-        .list__games {
-            max-width: 350px;
-            margin: 30px auto 0;
-        }
+    .list__games {
+        max-width: 350px;
+        margin: 30px auto 0;
 
         .game__item {
             width: 100%;

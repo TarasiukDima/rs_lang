@@ -3,6 +3,7 @@ import {
     ApiUrls,
     ErrorMessages,
     IApiOptions,
+    IHeaders,
     IUserCreateForm,
     IUserLogInForm,
     TOptionsMethods,
@@ -11,7 +12,8 @@ import {
 const _getData = async (
     stingSearch: string,
     method: TOptionsMethods = "GET",
-    body = ""
+    body = "",
+    token = "",
 ) => {
     const url = URL_DATA + stingSearch;
     const options: IApiOptions = {
@@ -24,6 +26,9 @@ const _getData = async (
 
     if (body) {
         options.body = body;
+    }
+    if (token) {
+        (options.headers as IHeaders )['Authorization']= `Bearer ${token}`;
     }
 
     return await fetch(url, options).then((response) => {
@@ -73,8 +78,6 @@ export const logInUser = async (user: IUserLogInForm) => {
 
     return await _getData(ApiUrls.signInUser, "POST", data)
         .then((data) => {
-            console.log(data);
-
             return {
                 ...data,
                 errorLoginText: null,

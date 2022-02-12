@@ -1,4 +1,5 @@
 import { TCheckValue } from "../types/common";
+import { ILocalStoragUser } from "../types/form";
 import {
     ERROR_VALIDATE_DOMAIN,
     ERROR_VALIDATE_DOMAIN1_LETTER,
@@ -30,8 +31,6 @@ export const checkValue: TCheckValue = (
 
     return value <= comparisonValue;
 };
-
-
 
 /* start validate form start */
 const _checkInputValue = (val: string, RegEx: RegExp) => {
@@ -131,6 +130,46 @@ export const checkFormErrors = (
         validName ? cbName(validName) : cbName("");
     }
 
-    return !(errEmailText || errPassword || validName );
+    return !(errEmailText || errPassword || validName);
 };
 /* start validate form end */
+
+/* locastorage start */
+export const saveSettingsLocalStorage = (
+    name: string,
+    infoObj: ILocalStoragUser
+): void => {
+    const date = new Date();
+    infoObj.time = date.getTime();
+    const stringObj: string = JSON.stringify(infoObj);
+    localStorage.setItem(name, stringObj);
+};
+
+export const removeSettingsLocalStorage = (name: string): void => {
+    localStorage.removeItem(name);
+};
+
+export const checkFielsdInObjFromLocalStorage = (
+    obj: object,
+    arrayKeys: Array<string>
+): boolean => {
+    const compareArr = arrayKeys.filter((key) => key in obj).length;
+    return compareArr === arrayKeys.length;
+};
+
+export const checkSettingsLocalStorage = (
+    name: string,
+    arrayKeys: Array<string>
+): null | ILocalStoragUser => {
+    const storageString: string | null = localStorage.getItem(name);
+    if (!storageString) return null;
+    const localObj = JSON.parse(storageString);
+
+    if (!checkFielsdInObjFromLocalStorage(
+        localObj,
+        arrayKeys
+    )) return null;
+
+    return localObj;
+};
+/* locastorage end */

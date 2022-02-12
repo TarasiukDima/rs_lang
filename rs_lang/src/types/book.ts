@@ -4,10 +4,9 @@ export type TSoundPlay = (audio: boolean) => void;
 
 
 export interface IBookPageProps {
+    authorization: boolean;
     vocabularyCategory: number;
     vocabularyPage: number;
-    changeCategory: TChangeNumber;
-    changePage: TChangeNumber;
     changeSrcSong: TSoundButtonClick;
     changePlay: TSoundPlay;
 }
@@ -31,10 +30,12 @@ export interface IWordItemObj {
 
 export interface IWordItemProps extends IWordItemObj {
     clickButton: TSoundButtonClick;
+    authorization: boolean;
 }
 
 export interface IWordsListProps {
     bookListInfoArr: Array<IWordItemObj>;
     clickButton: TSoundButtonClick;
+    authorization: boolean;
     key?: number | string;
 }
