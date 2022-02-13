@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { categoriesNumbers, NUMBER_HIDDEN_CATEGORY } from "../../helpers/consts";
+import { categoriesNumbers, NAME_HIDDEN_CATEGORY, NUMBER_HIDDEN_CATEGORY } from "../../helpers/consts";
 import {
     changeVocabularyCategory,
     changeVocabularyPage,
@@ -44,6 +44,7 @@ const CategoriesLinks = ({
                     <CategoriesLinkItem
                         pageNumber={NUMBER_HIDDEN_CATEGORY}
                         clickFunction={changeCategoryPage}
+                        textLink={NAME_HIDDEN_CATEGORY}
                     />
                 )}
             </ul>

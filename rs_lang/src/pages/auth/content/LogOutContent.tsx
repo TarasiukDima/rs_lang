@@ -11,7 +11,8 @@ const LogOutContent = ({ name, changeUser }: ILogOut) => {
             name: "",
             token: "",
             refreshToken: "",
-            authorization: false
+            authorization: false,
+            wordsSettings: {}
         });
 
         removeSettingsLocalStorage(LOCASTORAGE__NAME_USER);

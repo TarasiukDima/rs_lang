@@ -1,3 +1,5 @@
+import { IUserWordsInformation } from "./redux";
+
 export type TFormSubmitFC = (event: React.FormEvent<HTMLFormElement>) => void;
 
 export type TСhangeUserInfo = (newObj: IChangeUserObject) => void;
@@ -32,6 +34,7 @@ export interface IChangeUserObject {
     token: string;
     refreshToken: string;
     authorization: boolean;
+    wordsSettings: IUserWordsInformation;
 }
 
 export interface ILogUserProps {

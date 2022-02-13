@@ -6,11 +6,13 @@ import { TSimpleTypeFunction } from "../../types/common";
 export interface ICategoriesLinkItem {
     pageNumber: number;
     clickFunction: TSimpleTypeFunction<number>;
+    textLink?: string;
 }
 
 const CategoriesLinkItem = ({
     pageNumber,
     clickFunction,
+    textLink,
 }: ICategoriesLinkItem) => {
     const { pathname } = useLocation();
     const numberActiveCategory = Number(pathname.split("/")[2]);
@@ -25,7 +27,7 @@ const CategoriesLinkItem = ({
                 to={`${PageLinks.bookPage}${pageNumber + 1}/1`}
                 onClick={() => clickFunction(pageNumber)}
             >
-                {pageNumber + 1}
+                {textLink ? textLink : pageNumber + 1}
             </Link>
         </li>
     );

@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { Dispatch, useEffect, useState } from "react";
 
-import { IWordItemProps } from "../../types/book";
+import { IWordItemProps, TSoundButtonClick } from "../../types/book";
 import { URL_DATA_FILES } from "../../helpers/consts";
+import { IAction, IState } from "../../types/redux";
+import { changeAudioPlay, changeAudioSrc } from "../../store/actions/actionsAudio";
+import { addUserDifficultWord, addUserLearnedWord, removeUserDifficultWord, removeUserLearnedWord } from "../../store/actions/actionsUser";
+import { connect } from "react-redux";
+import { createUserWord, updateUserWord } from "../../services/services";
 
 const WordsItem = ({
+    id,
     word,
     image,
     audio,
@@ -15,13 +21,43 @@ const WordsItem = ({
     transcription,
     textExample,
     textExampleTranslate,
-    clickButton,
+
+    changeCountLearnedItems,
+    setCoutnSecond,
+
+    token,
+    userID,
+    wordsSettings,
     authorization,
+    changeSrcSong,
+    changePlay,
+    addLearned,
+    removeLearned,
+    addDifficult,
+    removeDifficult,
 }: IWordItemProps) => {
+    const wordInLearned = wordsSettings[id] ? wordsSettings[id].learned : false;
+    const wordInDifficult = wordsSettings[id] ? wordsSettings[id].difficult : false;
+    const [loading, setLoading] = useState(false);
     const [activeSong, setActiveSong] = useState(0);
-    const [difficult, setDifficult] = useState(false);
-    const [learned, setLearned] = useState(false);
-    const audioPlayList = [audio, audioMeaning, audioExample]
+    const [difficult, setDifficult] = useState(wordInDifficult);
+    const [learned, setLearned] = useState(wordInLearned);
+    const audioPlayList = [audio, audioMeaning, audioExample];
+
+    useEffect(() => {
+        setCoutnSecond(true);
+
+        (learned)
+            ? changeCountLearnedItems(+1)
+            : changeCountLearnedItems(-1);
+
+    },[learned])
+
+
+    const clickButton: TSoundButtonClick = (audio: string) => {
+        changeSrcSong(audio);
+        changePlay(true);
+    };
 
     const playSong = () => {
         clickButton(audioPlayList[activeSong]);
@@ -30,17 +66,67 @@ const WordsItem = ({
             : setActiveSong(activeSong + 1);
     }
 
-    const changeDifficult = () => {
+
+    const changeWordInformtion = async (varient: "add" | "remove", key: "learned" | "difficult") => {
+        const optionsObj = {
+            userId: userID,
+            wordId: id,
+            wordOptions: {
+                learned: false,
+                difficult: false,
+            },
+            token,
+        };
+
+        if (key === 'learned') {
+            optionsObj.wordOptions.learned = varient === "add";
+            optionsObj.wordOptions.difficult = wordsSettings[id] ? wordsSettings[id].difficult : false;
+        } else {
+            optionsObj.wordOptions.learned = wordsSettings[id] ? wordsSettings[id].learned : false;
+            optionsObj.wordOptions.difficult = varient === "add";
+        }
+
+
+        if (id in wordsSettings) {
+            const data = await updateUserWord(optionsObj);
+            console.log(data);
+            return;
+        }
+
+        const data = await createUserWord(optionsObj);
+        console.log(data);
+    }
+
+    const changeDifficult = (id: string) => {
+        setLoading(true);
+
+        if (difficult) {
+            changeWordInformtion("remove", "difficult");
+            removeDifficult(id);
+
+        } else {
+            changeWordInformtion("add", "difficult");
+            addDifficult(id);
+        }
         setDifficult((difficult) => !difficult);
+        setLoading(false);
     }
 
-    const changeLearned = () => {
+    const changeLearned = (id: string) => {
+        setLoading(true);
+
+        if (learned) {
+            changeWordInformtion("remove", "learned");
+            removeLearned(id);
+        } else {
+            changeWordInformtion("add", "learned");
+            addLearned(id);
+        }
+
         setLearned((learned) => !learned);
+        setLoading(false);
     }
 
-    const styles = {
-        backgroundImage: `url(${URL_DATA_FILES + image})`,
-    };
     const clazzList = ['word__item'];
 
     if (authorization && learned) {
@@ -51,7 +137,7 @@ const WordsItem = ({
     }
 
     return (
-        <li className={clazzList.join(' ')} style={styles}>
+        <li className={clazzList.join(' ')} style={{backgroundImage: `url(${URL_DATA_FILES + image})`}}>
             <p className="item__name">{word}</p>
 
             <p className="item__name_translate">
@@ -79,11 +165,13 @@ const WordsItem = ({
                 <div className="buttons__wrap">
                     <button
                         className="button__card"
-                        onClick={changeDifficult}
+                        onClick={()=>changeDifficult(id)}
+                        disabled={loading}
                     >{ difficult ? "Убрать из сложных" : "Добавить в сложные"}</button>
                     <button
                         className="button__card"
-                        onClick={changeLearned}
+                        onClick={()=>changeLearned(id)}
+                        disabled={loading}
                     >{ learned ? "Убрать из изученных" : "Добавить в изученные"}</button>
                 </div>
             )}
@@ -91,4 +179,37 @@ const WordsItem = ({
     );
 };
 
-export default WordsItem;
+
+const mapStateToProps = ({ user: { authorization, id, wordsSettings, token } }: IState) => ({
+    token,
+    userID: id,
+    authorization,
+    wordsSettings,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<IAction>) => {
+    return {
+        changeSrcSong: (audio: string) => {
+            dispatch(changeAudioSrc(audio));
+        },
+        changePlay: (play: boolean) => {
+            dispatch(changeAudioPlay(play));
+        },
+        addLearned: (id: string) => {
+            dispatch(addUserLearnedWord(id));
+        },
+        removeLearned: (id: string) => {
+            dispatch(removeUserLearnedWord(id));
+        },
+        addDifficult: (id: string) => {
+            dispatch(addUserDifficultWord(id));
+        },
+        removeDifficult: (id: string) => {
+            dispatch(removeUserDifficultWord(id));
+        },
+
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(WordsItem);
+

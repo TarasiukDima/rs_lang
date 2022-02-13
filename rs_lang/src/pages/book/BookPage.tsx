@@ -7,21 +7,14 @@ import SectionContent from "../../components/section";
 import WordsList from "../../components/wordsList";
 import { COUNT_PAGE, NUMBER_HIDDEN_CATEGORY } from "../../helpers/consts";
 import { getWords } from "../../services/services";
-import {
-    changeAudioPlay,
-    changeAudioSrc,
-} from "../../store/actions/actionsAudio";
 
-import { IBookPageProps, TSoundButtonClick } from "../../types/book";
-import { IAction, IState } from "../../types/redux";
+import { IBookPageProps } from "../../types/book";
+import { IState } from "../../types/redux";
 import "./index.scss";
 
 const BookPage = ({
-    authorization,
     vocabularyCategory,
     vocabularyPage,
-    changeSrcSong,
-    changePlay,
 }: IBookPageProps) => {
     const [loadingData, setLoadingData] = useState(false);
     const [bookListData, setBookListData] = useState([]);
@@ -48,13 +41,6 @@ const BookPage = ({
         }
     }, [vocabularyCategory, vocabularyPage]);
 
-
-
-    const clickButton: TSoundButtonClick = (audio) => {
-        changeSrcSong(audio);
-        changePlay(true);
-    };
-
     return (
         <SectionContent nameClass="book__section">
             <h1 className="title">Словарь</h1>
@@ -65,9 +51,7 @@ const BookPage = ({
                 <Loader />
             ) : (
                 <WordsList
-                    authorization={authorization}
                     bookListInfoArr={bookListData}
-                    clickButton={clickButton}
                 />
             )}
 
@@ -85,22 +69,9 @@ const BookPage = ({
 
 const mapStateToProps = ({
     vocabulary: { vocabularyCategory, vocabularyPage },
-    user: { authorization },
 }: IState) => ({
     vocabularyCategory,
     vocabularyPage,
-    authorization,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<IAction>) => {
-    return {
-        changeSrcSong: (audio: string) => {
-            dispatch(changeAudioSrc(audio));
-        },
-        changePlay: (play: boolean) => {
-            dispatch(changeAudioPlay(play));
-        },
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(BookPage);
+export default connect(mapStateToProps)(BookPage);

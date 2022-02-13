@@ -15,12 +15,21 @@ export interface IAudioState {
     playAudio: boolean;
 }
 
+
+export interface IUserWordsInformation {
+    [key: string]: {
+        learned: boolean,
+        difficult: boolean,
+    }
+}
+
 export interface IUserState {
     id: string;
     name: string;
     token: string;
     refreshToken: string;
     authorization: boolean;
+    wordsSettings: IUserWordsInformation;
 }
 
 export interface IState {

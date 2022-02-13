@@ -1,14 +1,14 @@
+import { TSimpleActionFC, TSimpleFunction, TSimpleTypeFunction } from "./common";
+import { IUserWordsInformation } from "./redux";
+
 export type TChangeNumber = (id: number) => void;
 export type TSoundButtonClick = (audio: string) => void;
 export type TSoundPlay = (audio: boolean) => void;
 
 
 export interface IBookPageProps {
-    authorization: boolean;
     vocabularyCategory: number;
     vocabularyPage: number;
-    changeSrcSong: TSoundButtonClick;
-    changePlay: TSoundPlay;
 }
 
 export interface IWordItemObj {
@@ -29,13 +29,26 @@ export interface IWordItemObj {
 }
 
 export interface IWordItemProps extends IWordItemObj {
-    clickButton: TSoundButtonClick;
     authorization: boolean;
+
+    token: string;
+    userID: string;
+    wordsSettings: IUserWordsInformation;
+
+    changeCountLearnedItems: TSimpleTypeFunction<number>;
+    setCoutnSecond: TSimpleTypeFunction<boolean>;
+
+    changeSrcSong: TSoundButtonClick;
+    changePlay: TSoundPlay;
+
+    addLearned: TSimpleTypeFunction<string>;
+    removeLearned: TSimpleTypeFunction<string>;
+    addDifficult: TSimpleTypeFunction<string>;
+    removeDifficult: TSimpleTypeFunction<string>;
+
+    key?: number | string;
 }
 
 export interface IWordsListProps {
     bookListInfoArr: Array<IWordItemObj>;
-    clickButton: TSoundButtonClick;
-    authorization: boolean;
-    key?: number | string;
 }

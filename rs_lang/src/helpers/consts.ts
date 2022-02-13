@@ -23,6 +23,7 @@ export enum PageLinks {
 
 export const categoriesNumbers = [0, 1, 2, 3, 4, 5];
 export const NUMBER_HIDDEN_CATEGORY = 6;
+export const NAME_HIDDEN_CATEGORY = "Сложные слова";
 
 /* forms start */
 export const submitRegistrText = "Зарегистрироваться";

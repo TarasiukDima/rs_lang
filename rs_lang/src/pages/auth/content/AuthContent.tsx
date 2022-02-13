@@ -8,7 +8,7 @@ import {
     submitRegistrText,
 } from "../../../helpers/consts";
 import { checkFormErrors, saveSettingsLocalStorage } from "../../../helpers/utils";
-import { createUser, logInUser } from "../../../services/services";
+import { createUser, getUserAllWords, logInUser } from "../../../services/services";
 import { IChangeUserObject, ILocalStoragUser, ILogUserProps, TFormSubmitFC } from "../../../types/form";
 
 const AuthContent = ({ changeUser }: ILogUserProps) => {
@@ -80,13 +80,23 @@ const AuthContent = ({ changeUser }: ILogUserProps) => {
             return stopSubmit(errorLoginText);
         }
 
+        const userWords = await getUserAllWords(id, token);
+        if (userWords.errorUserWords) {
+            return stopSubmit(userWords.errorUserWords);
+        }
+
         const refreshUserObj: IChangeUserObject = {
             id: id,
             name: nameText,
             token: token,
             refreshToken: refreshToken,
             authorization: true,
+            wordsSettings: {}
         };
+
+        userWords.words.forEach(({ wordId, optional }) => {
+            refreshUserObj.wordsSettings[wordId] = optional;
+        })
 
         const objInfo: ILocalStoragUser = {
             ...refreshUserObj,
