@@ -1,16 +1,6 @@
 import React from "react";
+import { CardProps } from "../../types/book";
 import "./index.scss";
-
-type ButtonClickFunction = () => void;
-
-interface CardProps {
-    title: string;
-    img: string;
-    description: string;
-    nameClassItem?: string;
-    nameClassButton?: string;
-    onclick?: ButtonClickFunction;
-}
 
 const CardItem = ({
     title,
@@ -18,7 +8,9 @@ const CardItem = ({
     description,
     nameClassItem = "",
 }: CardProps) => {
-    const classesText = nameClassItem ? "list__item " + nameClassItem : "list__item";
+    const classesText = nameClassItem
+        ? "list__item " + nameClassItem
+        : "list__item";
 
     return (
         <li className={classesText}>

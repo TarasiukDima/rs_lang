@@ -1,24 +1,27 @@
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
+import { Provider } from 'react-redux'
+
 import Header from "./components/header";
 import Main from "./components/main";
 import Footer from "./components/footer";
 import AudioGame from "./components/audioGame";
 
-import { Provider } from 'react-redux'
 import store from './store/store'
+import ServiceApi from "./services/services";
+import { ApiContextProvider } from "./services/servicesContext";
 
 import './App.scss';
 
 const App: FC = () => {
-    useEffect(() => {
-        // const localObj = localStorage.getItem(LOCASTORAGE__NAME);
-        // console.log(store);
+    const serviceApi = new ServiceApi();
+    serviceApi.init();
 
-    },[])
     return (
         <Provider store={store}>
             <Header />
-            <Main />
+            <ApiContextProvider value={serviceApi}>
+                <Main />
+            </ApiContextProvider>
             <Footer />
             <AudioGame />
         </Provider>

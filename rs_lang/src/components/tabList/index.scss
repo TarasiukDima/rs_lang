@@ -1,15 +1,16 @@
 @import "../../scss/variebles";
 @import "../../scss/mixins";
 
-.tab__list {
+.categories__list {
     @include dflex(center, stretch);
 
     flex-wrap: wrap;
 
-    .tab__item {
+    .categories__item {
         margin: 0 5px 10px;
     }
-    .tab__button {
+
+    .categories__item_link {
         padding: 10px 40px;
         font-size: $appFontSize;
         border-radius: $tabBorderRadius;
@@ -18,24 +19,23 @@
         background-color: $tabBg;
     }
 
-    .tab__button.active {
+    .categories__item_link.active {
         background-color: $activeTabBg;
     }
 }
 
-
 @include smallTablet() {
-    .tab__list {
+    .categories__list {
         max-width: 400px;
         margin: 0 auto;
     }
 }
 
 @include mobile() {
-    .tab__list {
+    .categories__list {
         max-width: 400px;
 
-        .tab__button {
+        .categories__item_link {
             padding: 6px 20px;
         }
     }

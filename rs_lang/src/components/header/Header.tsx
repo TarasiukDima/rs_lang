@@ -1,8 +1,8 @@
 import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
+import NavigationPages from "./NavigationPages";
 import { PageLinks } from "../../helpers/consts";
 import { TSimpleFunction } from "../../types/common";
-import NavigationPages from "./NavigationPages";
 
 import "./index.scss";
 
@@ -26,12 +26,17 @@ const Header: FC = () => {
                     RS Lang
                 </Link>
 
-                <button className={burgetClasses}
-                onClick={()=> changeShowMenu()}>
+                <button
+                    className={burgetClasses}
+                    onClick={() => changeShowMenu()}
+                >
                     <span></span>
                 </button>
 
-                <NavigationPages navClassShow={navClassShow} clickMenu={clickMenu}/>
+                <NavigationPages
+                    navClassShow={navClassShow}
+                    clickMenu={clickMenu}
+                />
             </div>
         </header>
     );

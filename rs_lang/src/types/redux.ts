@@ -5,22 +5,23 @@ export interface IAction {
     payload: number | string | boolean | IChangeUserObject;
 }
 
-export interface IVocabularyState {
-    vocabularyCategory: number;
-    vocabularyPage: number;
-}
-
 export interface IAudioState {
     audioSrc: string;
     playAudio: boolean;
 }
 
+export interface IPagesState {
+    vocabularyCategory: number;
+    vocabularyPage: number;
+    vocabularyHiddenTab: number;
+    statisticTab: number;
+}
 
 export interface IUserWordsInformation {
     [key: string]: {
-        learned: boolean,
-        difficult: boolean,
-    }
+        learned: boolean;
+        difficult: boolean;
+    };
 }
 
 export interface IUserState {
@@ -33,9 +34,7 @@ export interface IUserState {
 }
 
 export interface IState {
-    user: IUserState,
-    audio: IAudioState,
-    vocabulary: IVocabularyState,
+    user: IUserState;
+    audio: IAudioState;
+    pages: IPagesState;
 }
-
-

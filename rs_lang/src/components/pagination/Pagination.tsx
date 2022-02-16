@@ -1,15 +1,12 @@
 import React from "react";
 import PaginationItem from "./PaginationItem";
 
-import { IPaginationPageProps } from "../../types/pagination";
 import { checkValue } from "../../helpers/utils";
+import { IPaginationPageProps } from "../../types/pagination";
 
 import "./index.scss";
 
-const PaginationPage = ({
-    activePage,
-    countPages,
-}: IPaginationPageProps) => {
+const PaginationPage = ({ activePage, countPages }: IPaginationPageProps) => {
     if (countPages <= 1) return null;
 
     const paginationsArr = [];

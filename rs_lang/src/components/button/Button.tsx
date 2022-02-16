@@ -1,24 +1,13 @@
-import React from 'react';
+import React from "react";
+import { ButtonProps } from "../../types/common";
 import "./index.scss";
 
-type ButtonClickFunction = () => void;
-interface ButtonProps {
-    children: JSX.Element | Array<JSX.Element> | string;
-    nameClass?: string;
-    onclick?: ButtonClickFunction;
-}
-
-const ButtonEl = ({ nameClass = '', children, onclick }: ButtonProps) => {
-    const classesText = nameClass ? 'button ' + nameClass : 'button';
+const ButtonEl = ({ nameClass = "", children, onclick }: ButtonProps) => {
+    const classesText = nameClass ? "button " + nameClass : "button";
 
     return (
-        <button
-            className={classesText}
-            onClick={onclick}
-        >
-            <span>
-                {children}
-            </span>
+        <button className={classesText} onClick={onclick}>
+            <span>{children}</span>
         </button>
     );
 };

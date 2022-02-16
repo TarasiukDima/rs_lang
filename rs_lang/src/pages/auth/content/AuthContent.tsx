@@ -7,11 +7,18 @@ import {
     PageLinks,
     submitRegistrText,
 } from "../../../helpers/consts";
-import { checkFormErrors, saveSettingsLocalStorage } from "../../../helpers/utils";
-import { createUser, getUserAllWords, logInUser } from "../../../services/services";
-import { IChangeUserObject, ILocalStoragUser, ILogUserProps, TFormSubmitFC } from "../../../types/form";
+import {
+    checkFormErrors,
+    saveSettingsLocalStorage,
+} from "../../../helpers/utils";
+import {
+    IChangeUserObject,
+    ILocalStoragUser,
+    ILogUserProps,
+    TFormSubmitFC,
+} from "../../../types/form";
 
-const AuthContent = ({ changeUser }: ILogUserProps) => {
+const AuthContent = ({ changeUser, serviceApi }: ILogUserProps) => {
     const [errorName, setErrorName] = useState("");
     const [errorEmail, setErrorEmail] = useState("");
     const [errorPassword, setErrorPassword] = useState("");
@@ -27,7 +34,11 @@ const AuthContent = ({ changeUser }: ILogUserProps) => {
         sumbitButton.current?.setAttribute("disable", "false");
     };
 
-    const checkForm = (emailText: string, passwordText: string, nameText: string) => {
+    const checkForm = (
+        emailText: string,
+        passwordText: string,
+        nameText: string
+    ) => {
         return !checkFormErrors(
             emailText,
             setErrorEmail,
@@ -61,7 +72,7 @@ const AuthContent = ({ changeUser }: ILogUserProps) => {
             return stopSubmit("");
         }
 
-        const { id, errorText } = await createUser({
+        const { id, errorText } = await serviceApi.createUser({
             name: nameText,
             email: emailText,
             password: passwordText,
@@ -71,16 +82,17 @@ const AuthContent = ({ changeUser }: ILogUserProps) => {
             return stopSubmit(errorText);
         }
 
-        const { token, errorLoginText, refreshToken } = await logInUser({
-            email: emailText,
-            password: passwordText,
-        });
+        const { token, errorLoginText, refreshToken } =
+            await serviceApi.logInUser({
+                email: emailText,
+                password: passwordText,
+            });
 
         if (errorLoginText) {
             return stopSubmit(errorLoginText);
         }
 
-        const userWords = await getUserAllWords(id, token);
+        const userWords = await serviceApi.getUserAllWords();
         if (userWords.errorUserWords) {
             return stopSubmit(userWords.errorUserWords);
         }
@@ -91,12 +103,12 @@ const AuthContent = ({ changeUser }: ILogUserProps) => {
             token: token,
             refreshToken: refreshToken,
             authorization: true,
-            wordsSettings: {}
+            wordsSettings: {},
         };
 
         userWords.words.forEach(({ wordId, optional }) => {
             refreshUserObj.wordsSettings[wordId] = optional;
-        })
+        });
 
         const objInfo: ILocalStoragUser = {
             ...refreshUserObj,

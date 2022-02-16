@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import WordsItem from "./WordsItem";
+import { ApiContextConsumer } from "../../services/servicesContext";
 
-import "./index.scss";
 import { IWordsListProps, IWordItemObj } from "../../types/book";
 import { TSimpleTypeFunction } from "../../types/common";
-import { getUserAggregatedWords } from "../../services/services";
+
+import "./index.scss";
 
 const WordsList = ({ bookListInfoArr }: IWordsListProps) => {
     const [countLearnedEl, setCountLearnedEl] = useState(20);
@@ -41,12 +42,18 @@ const WordsList = ({ bookListInfoArr }: IWordsListProps) => {
         <ul className={listClassNames}>
             {bookListInfoArr.map((bookItemInfo: IWordItemObj) => {
                 return (
-                    <WordsItem
-                        key={bookItemInfo.id}
-                        changeCountLearnedItems={changeCountLearnedItems}
-                        setCoutnSecond={setCoutnSecond}
-                        {...bookItemInfo}
-                    />
+                    <ApiContextConsumer key={bookItemInfo.id}>
+                        {(serviceApi) => (
+                            <WordsItem
+                                changeCountLearnedItems={
+                                    changeCountLearnedItems
+                                }
+                                setCoutnSecond={setCoutnSecond}
+                                serviceApi={serviceApi}
+                                {...bookItemInfo}
+                            />
+                        )}
+                    </ApiContextConsumer>
                 );
             })}
         </ul>

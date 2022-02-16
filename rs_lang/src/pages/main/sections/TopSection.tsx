@@ -4,7 +4,11 @@ import { NavigateFunction, useNavigate } from "react-router-dom";
 import SectionContent from "../../../components/section";
 import ButtonEl from "../../../components/button";
 import topImg from "../../../assets/img/topImg.png";
-import { mainTitleText1, mainTitleText2, PageLinks } from "../../../helpers/consts";
+import {
+    mainTitleText1,
+    mainTitleText2,
+    PageLinks,
+} from "../../../helpers/consts";
 
 const TopSection = () => {
     const navigation: NavigateFunction = useNavigate();
@@ -29,10 +33,7 @@ const TopSection = () => {
                     <span data-text={mainTitleText2}>{mainTitleText2}</span>
                 </h1>
 
-                <ButtonEl onclick={registrationPageShow}>
-                    Регистрация
-                </ButtonEl>
-
+                <ButtonEl onclick={registrationPageShow}>Регистрация</ButtonEl>
             </div>
         </SectionContent>
     );

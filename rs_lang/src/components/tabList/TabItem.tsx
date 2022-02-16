@@ -1,20 +1,28 @@
 import React from "react";
-import { ITabsItemProps } from "../../types/common";
-import "./index.scss";
+import { Link } from "react-router-dom";
+import { ITabItem } from "../../types/common";
 
 const TabItem = ({
-    nameClass = "",
-    children,
-    onclick,
-    id,
-}: ITabsItemProps) => {
-    const classesText = nameClass ? "tab__button " + nameClass : "tab__button";
-
+    pageNumber,
+    pageLink,
+    clickFunction,
+    fildCheckActive,
+    textLink,
+}: ITabItem) => {
+    const textItem = textLink ? textLink : pageNumber;
+    const clazz =
+        fildCheckActive === pageNumber
+            ? "categories__item_link active"
+            : "categories__item_link";
     return (
-        <li className="tab__item">
-            <button className={classesText} onClick={() => onclick(id)}>
-                {children}
-            </button>
+        <li className="categories__item">
+            <Link
+                className={clazz}
+                to={pageLink}
+                onClick={() => clickFunction(pageNumber)}
+            >
+                {textItem}
+            </Link>
         </li>
     );
 };

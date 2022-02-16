@@ -1,4 +1,13 @@
-import { TCheckValue } from "../types/common";
+import {
+    TCheckFormErrors,
+    TCheckInputValue,
+    TCheckLocalObj,
+    TCheckValue,
+    TSaveLocalSettings,
+    TSimpleTypeFunction,
+    TValidateLocalObj,
+    TValidateString,
+} from "../types/common";
 import { ILocalStoragUser } from "../types/form";
 import {
     ERROR_VALIDATE_DOMAIN,
@@ -33,11 +42,11 @@ export const checkValue: TCheckValue = (
 };
 
 /* start validate form start */
-const _checkInputValue = (val: string, RegEx: RegExp) => {
+const _checkInputValue: TCheckInputValue = (val: string, RegEx: RegExp) => {
     return val.match(RegEx);
 };
 
-export const validateName = (name: string): string | null => {
+export const validateName: TValidateString = (name: string): string | null => {
     const inputValue = name.trim();
     const RegEx = /[^\dа-яА-ЯЁё-іa-zA-Z\s]+/gm;
     const failInput = _checkInputValue(inputValue, RegEx);
@@ -55,7 +64,9 @@ export const validateName = (name: string): string | null => {
     return null;
 };
 
-export const validatePassword = (password: string): string | null => {
+export const validatePassword: TValidateString = (
+    password: string
+): string | null => {
     const inputValue = password.trim();
 
     if (
@@ -69,7 +80,7 @@ export const validatePassword = (password: string): string | null => {
     return null;
 };
 
-export const validateEmail = (name: string): string | null => {
+export const validateEmail: TValidateString = (name: string): string | null => {
     const inputValue = name.trim();
     const RegEx = /[\w\d\_\-]{3,16}@[a-z]{4,}\.[a-z]{2,}/gm;
     const RegExDontLetter = /[^\-\_][\W\s]/gm;
@@ -110,7 +121,7 @@ export const validateEmail = (name: string): string | null => {
     return null;
 };
 
-export const checkFormErrors = (
+export const checkFormErrors: TCheckFormErrors = (
     textEmail: string,
     cbEmail: (st: string) => void,
     textPassword: string,
@@ -135,7 +146,7 @@ export const checkFormErrors = (
 /* start validate form end */
 
 /* locastorage start */
-export const saveSettingsLocalStorage = (
+export const saveSettingsLocalStorage: TSaveLocalSettings = (
     name: string,
     infoObj: ILocalStoragUser
 ): void => {
@@ -145,11 +156,13 @@ export const saveSettingsLocalStorage = (
     localStorage.setItem(name, stringObj);
 };
 
-export const removeSettingsLocalStorage = (name: string): void => {
+export const removeSettingsLocalStorage: TSimpleTypeFunction<string> = (
+    name: string
+): void => {
     localStorage.removeItem(name);
 };
 
-export const checkFielsdInObjFromLocalStorage = (
+export const checkFielsdInObjFromLocalStorage: TValidateLocalObj = (
     obj: object,
     arrayKeys: Array<string>
 ): boolean => {
@@ -157,7 +170,7 @@ export const checkFielsdInObjFromLocalStorage = (
     return compareArr === arrayKeys.length;
 };
 
-export const checkSettingsLocalStorage = (
+export const checkSettingsLocalStorage: TCheckLocalObj = (
     name: string,
     arrayKeys: Array<string>
 ): null | ILocalStoragUser => {
@@ -165,10 +178,7 @@ export const checkSettingsLocalStorage = (
     if (!storageString) return null;
     const localObj = JSON.parse(storageString);
 
-    if (!checkFielsdInObjFromLocalStorage(
-        localObj,
-        arrayKeys
-    )) return null;
+    if (!checkFielsdInObjFromLocalStorage(localObj, arrayKeys)) return null;
 
     return localObj;
 };

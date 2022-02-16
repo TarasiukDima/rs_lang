@@ -9,12 +9,12 @@ const ErrorPage = () => {
         <SectionContent nameClass="error__section">
             <h1 className="error__title">404</h1>
 
-            <p className="error__text">К сожалению данной страницы не существует!</p>
+            <p className="error__text">
+                К сожалению данной страницы не существует!
+            </p>
 
             <Link className="button" to={PageLinks.mainPage}>
-                <span>
-                    На главную
-                </span>
+                <span>На главную</span>
             </Link>
         </SectionContent>
     );

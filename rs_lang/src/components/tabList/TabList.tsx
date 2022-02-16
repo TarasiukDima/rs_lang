@@ -1,31 +1,31 @@
 import React from "react";
-import { ITabInfoObj, ITabsListProps } from "../../types/common";
 import TabItem from "./TabItem";
+import { ITabsListProps } from "../../types/common";
+
 import "./index.scss";
 
-const TabList = ({ tabsInfo, tabClick, activeTab }: ITabsListProps) => {
+const TabList = ({
+    listItems,
+    fildCheckActive,
+    tabClick,
+    children,
+}: ITabsListProps) => {
     return (
-        <>
-            <ul className="tab__list">
-                {tabsInfo.map((tabInfoEl: ITabInfoObj) => {
-                    const buttonClassName =
-                        activeTab === tabInfoEl.id
-                            ? "active"
-                            : "";
-
-                    return (
-                        <TabItem
-                            onclick={()=> tabClick(tabInfoEl.id)}
-                            id={tabInfoEl.id}
-                            nameClass={buttonClassName}
-                            key={tabInfoEl.id}
-                        >
-                            {tabInfoEl.text.toString()}
-                        </TabItem>
-                    );
-                })}
+        <nav className="categories__nav">
+            <ul className="categories__list">
+                {listItems.map((item) => (
+                    <TabItem
+                        key={item.link}
+                        pageNumber={item.id}
+                        pageLink={item.link}
+                        clickFunction={tabClick}
+                        textLink={item.text}
+                        fildCheckActive={fildCheckActive}
+                    />
+                ))}
+                {children}
             </ul>
-        </>
+        </nav>
     );
 };
 

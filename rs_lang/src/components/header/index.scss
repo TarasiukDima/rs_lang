@@ -1,7 +1,6 @@
 @import "../../scss/mixins";
 @import "../../scss/variebles";
 
-
 .header {
     padding: 15px 0;
     background-color: $bgColor1;
@@ -110,9 +109,7 @@
             color: $withOutColor;
         }
     }
-
 }
-
 
 @include tablet() {
     .header {

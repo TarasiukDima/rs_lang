@@ -1,7 +1,6 @@
 @import "../../scss/variebles";
 @import "../../scss/mixins";
 
-
 .timer {
     width: $timerSize;
     height: $timerSize;
@@ -13,4 +12,3 @@
     border-radius: 50%;
     color: $timerColor;
 }
-

@@ -1,20 +1,18 @@
-import { TSimpleActionFC, TSimpleFunction, TSimpleTypeFunction } from "./common";
+import {
+    TSimpleActionFC,
+    TSimpleFunction,
+    TSimpleTypeFunction,
+} from "./common";
+import ServiceApi from "../services/services";
 import { IUserWordsInformation } from "./redux";
 
-export type TChangeNumber = (id: number) => void;
 export type TSoundButtonClick = (audio: string) => void;
 export type TSoundPlay = (audio: boolean) => void;
 
-
-export interface IBookPageProps {
-    vocabularyCategory: number;
-    vocabularyPage: number;
-}
-
 export interface IWordItemObj {
     id: string;
-    group: number,
-    page: number,
+    group: number;
+    page: number;
     word: string;
     image: string;
     audio: string;
@@ -28,8 +26,25 @@ export interface IWordItemObj {
     wordTranslate: string;
 }
 
+export interface IBookContentProps {
+    vocabularyCategory: number;
+    vocabularyPage: number;
+    serviceApi: ServiceApi;
+}
+
+export interface IBookPageProps {
+    vocabularyCategory: number;
+    vocabularyPage: number;
+}
+
+export interface IWordsListProps {
+    bookListInfoArr: Array<IWordItemObj>;
+}
+
 export interface IWordItemProps extends IWordItemObj {
     authorization: boolean;
+
+    serviceApi: ServiceApi;
 
     token: string;
     userID: string;
@@ -49,6 +64,24 @@ export interface IWordItemProps extends IWordItemObj {
     key?: number | string;
 }
 
-export interface IWordsListProps {
-    bookListInfoArr: Array<IWordItemObj>;
+export interface CardProps {
+    title: string;
+    img: string;
+    description: string;
+    nameClassItem?: string;
+    nameClassButton?: string;
+    onclick?: TSimpleFunction;
+}
+
+export interface IBookCategoriesProps {
+    authorization: boolean;
+    vocabularyHiddenTab: number;
+    vocabularyCategory: number;
+    changeCategory: TSimpleTypeFunction<number>;
+    changeHiddenCategory: TSimpleTypeFunction<number>;
+}
+
+export interface IBookLearnProps {
+    authorization: boolean;
+    serviceApi: ServiceApi;
 }

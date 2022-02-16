@@ -1,13 +1,14 @@
-import { TTabClickFC } from "./common";
+import { TSimpleTypeFunction } from "./common";
+
+export interface IPaginationItemProps {
+    vocabularyPage: number;
+    numberPage: number;
+    vocabularyCategory: number;
+    textPage: string | number;
+    changePage: TSimpleTypeFunction<number>;
+}
 
 export interface IPaginationPageProps {
     activePage: number;
     countPages: number;
-}
-
-export interface IPaginationItemProps {
-    numberPage: number;
-    vocabularyCategory: number;
-    textPage: string | number;
-    changePage: TTabClickFC;
 }

@@ -2,8 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { IGameOptions } from "../../types/game";
 
-
-const GameLink = ({gameImg, pageLink, linkName}: IGameOptions) => {
+const GameLink = ({ gameImg, pageLink, linkName }: IGameOptions) => {
     return (
         <li className="game__item">
             <Link to={pageLink}>

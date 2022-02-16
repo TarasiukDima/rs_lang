@@ -1,14 +1,22 @@
 import React, { Dispatch, useEffect, useState } from "react";
-
-import { IWordItemProps, TSoundButtonClick } from "../../types/book";
-import { URL_DATA_FILES } from "../../helpers/consts";
-import { IAction, IState } from "../../types/redux";
-import { changeAudioPlay, changeAudioSrc } from "../../store/actions/actionsAudio";
-import { addUserDifficultWord, addUserLearnedWord, removeUserDifficultWord, removeUserLearnedWord } from "../../store/actions/actionsUser";
 import { connect } from "react-redux";
-import { createUserWord, updateUserWord } from "../../services/services";
+import { URL_DATA_FILES } from "../../helpers/consts";
+import {
+    changeAudioPlay,
+    changeAudioSrc,
+} from "../../store/actions/actionsAudio";
+import {
+    addUserDifficultWord,
+    addUserLearnedWord,
+    removeUserDifficultWord,
+    removeUserLearnedWord,
+} from "../../store/actions/actionsUser";
+import { IWordItemProps, TSoundButtonClick } from "../../types/book";
+import { IAction, IState } from "../../types/redux";
 
 const WordsItem = ({
+    serviceApi,
+
     id,
     word,
     image,
@@ -37,7 +45,9 @@ const WordsItem = ({
     removeDifficult,
 }: IWordItemProps) => {
     const wordInLearned = wordsSettings[id] ? wordsSettings[id].learned : false;
-    const wordInDifficult = wordsSettings[id] ? wordsSettings[id].difficult : false;
+    const wordInDifficult = wordsSettings[id]
+        ? wordsSettings[id].difficult
+        : false;
     const [loading, setLoading] = useState(false);
     const [activeSong, setActiveSong] = useState(0);
     const [difficult, setDifficult] = useState(wordInDifficult);
@@ -47,12 +57,8 @@ const WordsItem = ({
     useEffect(() => {
         setCoutnSecond(true);
 
-        (learned)
-            ? changeCountLearnedItems(+1)
-            : changeCountLearnedItems(-1);
-
-    },[learned])
-
+        learned ? changeCountLearnedItems(+1) : changeCountLearnedItems(-1);
+    }, [learned]);
 
     const clickButton: TSoundButtonClick = (audio: string) => {
         changeSrcSong(audio);
@@ -61,13 +67,13 @@ const WordsItem = ({
 
     const playSong = () => {
         clickButton(audioPlayList[activeSong]);
-        (activeSong + 1 === 3)
-            ? setActiveSong(0)
-            : setActiveSong(activeSong + 1);
-    }
+        activeSong + 1 === 3 ? setActiveSong(0) : setActiveSong(activeSong + 1);
+    };
 
-
-    const changeWordInformtion = async (varient: "add" | "remove", key: "learned" | "difficult") => {
+    const changeWordInformtion = async (
+        varient: "add" | "remove",
+        key: "learned" | "difficult"
+    ) => {
         const optionsObj = {
             userId: userID,
             wordId: id,
@@ -78,24 +84,27 @@ const WordsItem = ({
             token,
         };
 
-        if (key === 'learned') {
+        if (key === "learned") {
             optionsObj.wordOptions.learned = varient === "add";
-            optionsObj.wordOptions.difficult = wordsSettings[id] ? wordsSettings[id].difficult : false;
+            optionsObj.wordOptions.difficult = wordsSettings[id]
+                ? wordsSettings[id].difficult
+                : false;
         } else {
-            optionsObj.wordOptions.learned = wordsSettings[id] ? wordsSettings[id].learned : false;
+            optionsObj.wordOptions.learned = wordsSettings[id]
+                ? wordsSettings[id].learned
+                : false;
             optionsObj.wordOptions.difficult = varient === "add";
         }
 
-
         if (id in wordsSettings) {
-            const data = await updateUserWord(optionsObj);
+            const data = await serviceApi.updateUserWord(optionsObj);
             console.log(data);
             return;
         }
 
-        const data = await createUserWord(optionsObj);
+        const data = await serviceApi.createUserWord(optionsObj);
         console.log(data);
-    }
+    };
 
     const changeDifficult = (id: string) => {
         setLoading(true);
@@ -103,14 +112,13 @@ const WordsItem = ({
         if (difficult) {
             changeWordInformtion("remove", "difficult");
             removeDifficult(id);
-
         } else {
             changeWordInformtion("add", "difficult");
             addDifficult(id);
         }
         setDifficult((difficult) => !difficult);
         setLoading(false);
-    }
+    };
 
     const changeLearned = (id: string) => {
         setLoading(true);
@@ -125,39 +133,39 @@ const WordsItem = ({
 
         setLearned((learned) => !learned);
         setLoading(false);
-    }
+    };
 
-    const clazzList = ['word__item'];
+    const clazzList = ["word__item"];
 
     if (authorization && learned) {
-        clazzList.push('learned');
+        clazzList.push("learned");
     }
     if (authorization && difficult) {
-        clazzList.push('difficult');
+        clazzList.push("difficult");
     }
 
     return (
-        <li className={clazzList.join(' ')} style={{backgroundImage: `url(${URL_DATA_FILES + image})`}}>
+        <li
+            className={clazzList.join(" ")}
+            style={{ backgroundImage: `url(${URL_DATA_FILES + image})` }}
+        >
             <p className="item__name">{word}</p>
 
             <p className="item__name_translate">
                 <span className="name__text">{wordTranslate}</span>
                 <span className="name__transcription">{transcription}</span>
-                <button
-                    className="play__button"
-                    onClick={playSong}
-                ></button>
+                <button className="play__button" onClick={playSong}></button>
             </p>
 
             <p className="item__meaning">
                 <span className="item__text_title">Meaning (Значение):</span>
-                <span dangerouslySetInnerHTML={{__html: textMeaning}}/>
+                <span dangerouslySetInnerHTML={{ __html: textMeaning }} />
                 <span>{textMeaningTranslate}</span>
             </p>
 
             <p className="item__example">
                 <span className="item__text_title">Example (Пример):</span>
-                <span dangerouslySetInnerHTML={{__html: textExample}}/>
+                <span dangerouslySetInnerHTML={{ __html: textExample }} />
                 <span>{textExampleTranslate}</span>
             </p>
 
@@ -165,22 +173,29 @@ const WordsItem = ({
                 <div className="buttons__wrap">
                     <button
                         className="button__card"
-                        onClick={()=>changeDifficult(id)}
+                        onClick={() => changeDifficult(id)}
                         disabled={loading}
-                    >{ difficult ? "Убрать из сложных" : "Добавить в сложные"}</button>
+                    >
+                        {difficult ? "Убрать из сложных" : "Добавить в сложные"}
+                    </button>
                     <button
                         className="button__card"
-                        onClick={()=>changeLearned(id)}
+                        onClick={() => changeLearned(id)}
                         disabled={loading}
-                    >{ learned ? "Убрать из изученных" : "Добавить в изученные"}</button>
+                    >
+                        {learned
+                            ? "Убрать из изученных"
+                            : "Добавить в изученные"}
+                    </button>
                 </div>
             )}
         </li>
     );
 };
 
-
-const mapStateToProps = ({ user: { authorization, id, wordsSettings, token } }: IState) => ({
+const mapStateToProps = ({
+    user: { authorization, id, wordsSettings, token },
+}: IState) => ({
     token,
     userID: id,
     authorization,
@@ -207,9 +222,7 @@ const mapDispatchToProps = (dispatch: Dispatch<IAction>) => {
         removeDifficult: (id: string) => {
             dispatch(removeUserDifficultWord(id));
         },
-
     };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WordsItem);
-

@@ -1,6 +1,5 @@
 import { IWordItemObj } from "./book";
 
-
 export enum ErrorMessages {
     getWords = "Ошибка при загрузке списка слов.",
     getWordsUser = "Ошибка при загрузке списка слов пользователя.",
@@ -16,33 +15,37 @@ export enum ErrorMessages {
     getUseStatistics = "Ошибка при получении статистики пользователя.",
     ulpdateUseStatistics = "Ошибка при обновлении статистики пользователя.",
     getUseSettings = "Ошибка при получении настроек пользователя.",
-    ulpdateUseSettings = "Ошибка при обновлении настроек пользователя.",
+    updateUseSettings = "Ошибка при обновлении настроек пользователя.",
 }
 
 export enum ApiUrls {
-    words ="words",
-    createUser ="users",
-    signInUser ="signin",
+    words = "words",
+    createUser = "users",
+    signInUser = "signin",
+    tokens = "tokens",
+    aggregatedWords = "aggregatedWords",
+    statistics = "statistics",
+    settings = "settings",
 }
-
-
-export type TGetWords = (group: number, page: number) => Promise<Array<IWordItemObj>>;
 
 export type TOptionsMethods = "GET" | "POST" | "DELETE" | "PUT";
-
-export interface IAnswerFetch {
-    status: number;
-    answer: Promise<Array<IWordItemObj>>;
-}
 
 export interface IHeaders {
     [key: string]: string;
 }
+
 export interface IApiOptions {
-    method?: string;
+    method?: TOptionsMethods;
     headers?: IHeaders;
     body?: string;
     withCredentials?: true;
+}
+
+export interface IApiUserInfo {
+    token: string;
+    userId: string;
+    refreshToken: string;
+    time: boolean;
 }
 
 export interface IUserLogInForm {
@@ -50,11 +53,36 @@ export interface IUserLogInForm {
     password: string;
 }
 
-export interface IUserCreateForm extends IUserLogInForm{
+export interface IUserCreateForm extends IUserLogInForm {
     name: string;
 }
 
-export interface IServiceApi{
-    options: IApiOptions;
+export interface IApiWordsObj {
+    words: Array<IWordItemObj>;
+    errorWordsText: null | string;
 }
 
+export interface IWordOptionObj {
+    learned: boolean;
+    difficult: boolean;
+}
+
+export interface IUserWordOptionObj {
+    userId: string;
+    wordId: string;
+    token: string;
+}
+
+export interface ICreateUserWord extends IUserWordOptionObj {
+    wordOptions: IWordOptionObj;
+}
+
+export interface IStatisticData {
+    learnedWords: number;
+    optional: {};
+}
+
+export interface ISettingsData {
+    wordsPerDay: number;
+    optional: {};
+}

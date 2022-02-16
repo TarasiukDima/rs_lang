@@ -31,7 +31,6 @@ export const advantegesInfoArr = [
 ];
 /* main advanteges info end */
 
-
 /* team start */
 import avatar1 from "../assets/img/avatar1.jpg";
 import avatar2 from "../assets/img/avatar2.jpg";
@@ -52,10 +51,11 @@ export const teamPeoplesArr = [
     },
     {
         name: "Димка",
-        activity: "Разработал страницы словаря и учебника. Сделал игру Аудиовызов, написал логику для карточек слов.",
+        activity:
+            "Разработал страницы словаря и учебника. Сделал игру Аудиовызов, написал логику для карточек слов.",
         githubLink: "https://github.com/TarasiukDima",
         imgLink: avatar2,
-    }
+    },
 ];
 /* team end */
 
@@ -78,23 +78,38 @@ export const gamesInfo = [
 ];
 /* games end */
 
-
 /* book start */
 export const tabsBookInfo: Array<ITabInfoObj> = [
-    { id: 0, text: 1, },
-    { id: 1, text: 2, },
-    { id: 2, text: 3, },
-    { id: 3, text: 4, },
-    { id: 4, text: 5, },
-    { id: 5, text: 6, },
+    { id: 0, text: 1, link: PageLinks.bookPage + "1/1" },
+    { id: 1, text: 2, link: PageLinks.bookPage + "2/1" },
+    { id: 2, text: 3, link: PageLinks.bookPage + "3/1" },
+    { id: 3, text: 4, link: PageLinks.bookPage + "4/1" },
+    { id: 4, text: 5, link: PageLinks.bookPage + "5/1" },
+    { id: 5, text: 6, link: PageLinks.bookPage + "6/1" },
+];
+
+export const hiddenCategoriesTabsInfo: Array<ITabInfoObj> = [
+    { id: 0, text: "Сложные", link: PageLinks.vocabularyPage + "difficult" },
+    { id: 1, text: "Изученные", link: PageLinks.vocabularyPage + "learned" },
 ];
 /* book end */
 
-
 /* statistic start */
 export const statisticTabsInfo: Array<ITabInfoObj> = [
-    { id: 0, text: "Аудиовызов" },
-    { id: 1, text: "Спринт" },
+    { id: 0, text: "Аудиовызов", link: PageLinks.statisticPage + "audiogame" },
+    { id: 1, text: "Спринт", link: PageLinks.statisticPage + "sprint" },
 ];
 /* statistic end */
 
+/* localstorage user keys end */
+export const USER_LOCAL_KEYS = [
+    "name",
+    "id",
+    "token",
+    "token",
+    "refreshToken",
+    "authorization",
+    "time",
+    "wordsSettings",
+];
+/* localstorage user keys end */

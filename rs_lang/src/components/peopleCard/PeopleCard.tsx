@@ -1,12 +1,6 @@
 import React from "react";
+import { PeopleCardProps } from "../../types/common";
 import "./index.scss";
-
-interface PeopleCardProps {
-    name: string;
-    activity: string;
-    githubLink: string;
-    imgLink: string;
-}
 
 const PeopleCard = ({
     name,

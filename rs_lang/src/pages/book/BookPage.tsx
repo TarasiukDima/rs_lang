@@ -1,74 +1,50 @@
-import React, { Dispatch, useEffect, useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import CategoriesLinks from "../../components/categoriesLinks";
-import Loader from "../../components/loader";
-import PaginationPage from "../../components/pagination";
+import { ApiContextConsumer } from "../../services/servicesContext";
 import SectionContent from "../../components/section";
-import WordsList from "../../components/wordsList";
+import PaginationPage from "../../components/pagination";
+import BookCategories from "../../components/bookCategories";
+import BookWordsContent from "./BookWordsContent";
+
 import { COUNT_PAGE, NUMBER_HIDDEN_CATEGORY } from "../../helpers/consts";
-import { getWords } from "../../services/services";
-
-import { IBookPageProps } from "../../types/book";
 import { IState } from "../../types/redux";
+import { IBookPageProps } from "../../types/book";
+
 import "./index.scss";
+import BookLearnedContent from "./BookLearnedContent";
 
-const BookPage = ({
-    vocabularyCategory,
-    vocabularyPage,
-}: IBookPageProps) => {
-    const [loadingData, setLoadingData] = useState(false);
-    const [bookListData, setBookListData] = useState([]);
-
-    const getData = async () => {
-        setLoadingData(true);
-        const words = await getWords(vocabularyCategory, vocabularyPage);
-        setBookListData(words);
-        setLoadingData(false);
-    };
-    const getDifficultData = async () => {
-        // setLoadingData(true);
-        // const words = await getWords(vocabularyCategory, vocabularyPage);
-        // setBookListData(words);
-        // setLoadingData(false);
-    };
-    const showPagination = vocabularyCategory === NUMBER_HIDDEN_CATEGORY ? false : true;
-
-    useEffect(() => {
-        if (vocabularyCategory === NUMBER_HIDDEN_CATEGORY) {
-            getDifficultData();
-        } else {
-            getData();
-        }
-    }, [vocabularyCategory, vocabularyPage]);
+const BookPage = ({ vocabularyCategory, vocabularyPage }: IBookPageProps) => {
+    const hiddenCatActive = vocabularyCategory === NUMBER_HIDDEN_CATEGORY;
+    const titleText = hiddenCatActive ? "Список, изучаемых слов" : "Словарь";
 
     return (
         <SectionContent nameClass="book__section">
-            <h1 className="title">Словарь</h1>
+            <h1 className="title">{titleText}</h1>
 
-            <CategoriesLinks />
+            <BookCategories />
 
-            {loadingData ? (
-                <Loader />
-            ) : (
-                <WordsList
-                    bookListInfoArr={bookListData}
-                />
-            )}
+            <ApiContextConsumer>
+                {(serviceApi) =>
+                    hiddenCatActive ? (
+                        <BookLearnedContent serviceApi={serviceApi} />
+                    ) : (
+                        <BookWordsContent serviceApi={serviceApi} />
+                    )
+                }
+            </ApiContextConsumer>
 
-            {showPagination ? (
-                 <PaginationPage
+            {!hiddenCatActive ? (
+                <PaginationPage
                     activePage={vocabularyPage}
                     countPages={COUNT_PAGE}
                 />
-            ) : (
-                <p/>
-            )}
+            ) : <></>}
         </SectionContent>
     );
 };
 
 const mapStateToProps = ({
-    vocabulary: { vocabularyCategory, vocabularyPage },
+    pages: { vocabularyCategory, vocabularyPage },
 }: IState) => ({
     vocabularyCategory,
     vocabularyPage,

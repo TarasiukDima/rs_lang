@@ -1,23 +1,21 @@
 import React from "react";
 import { connect } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Dispatch } from "redux";
 import {
+    LOCASTORAGE__VOC_PAG,
     NEXT_PAGINGATION_TEXT,
     PageLinks,
     PREV_PAGINGATION_TEXT,
 } from "../../helpers/consts";
-import {
-    changeVocabularyCategory,
-    changeVocabularyPage,
-} from "../../store/actions/actionsVocabulary";
-import { TTabClickFC } from "../../types/common";
+import { changeVocabularyPage } from "../../store/actions/actionsPages";
+import { TSimpleTypeFunction } from "../../types/common";
 import { IPaginationItemProps } from "../../types/pagination";
 import { IAction, IState } from "../../types/redux";
 
-import "./index.scss";
 
 const PaginationItem = ({
+    vocabularyPage,
     numberPage,
     textPage,
     vocabularyCategory,
@@ -35,33 +33,43 @@ const PaginationItem = ({
             contentButton = textPage.toString();
     }
 
-    const clickPaginationButton: TTabClickFC = (id) => {
+    const clickPaginationButton: TSimpleTypeFunction<number> = (id: number) => {
+        if (id === vocabularyPage) return;
         changePage(id);
+        localStorage.setItem(LOCASTORAGE__VOC_PAG, id.toString());
     };
+
+    const clazz =
+        numberPage === vocabularyPage
+            ? "pagination__button active"
+            : "pagination__button";
 
     return (
         <li className="pagination__item">
-            <NavLink
+            <Link
                 onClick={() => clickPaginationButton(numberPage)}
-                className="pagination__button"
+                className={clazz}
                 to={`${PageLinks.bookPage}${vocabularyCategory + 1}/${
                     numberPage + 1
                 }`}
             >
-                <span dangerouslySetInnerHTML={{ __html: contentButton }}/>
-            </NavLink>
+                <span dangerouslySetInnerHTML={{ __html: contentButton }} />
+            </Link>
         </li>
     );
 };
 
-const mapStateToProps = ({ vocabulary: { vocabularyCategory } }: IState) => ({
+const mapStateToProps = ({
+    pages: { vocabularyCategory, vocabularyPage },
+}: IState) => ({
     vocabularyCategory,
+    vocabularyPage,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<IAction>) => {
     return {
-        changePage: (pageNumber: number) => {
-            dispatch(changeVocabularyPage(pageNumber));
+        changePage: (id: number) => {
+            dispatch(changeVocabularyPage(id));
         },
     };
 };

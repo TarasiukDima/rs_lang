@@ -1,7 +1,8 @@
 import { stringify } from "querystring";
 import { LOCASTORAGE__NAME_USER } from "../../helpers/consts";
+import { USER_LOCAL_KEYS } from "../../helpers/settings";
 import { checkSettingsLocalStorage } from "../../helpers/utils";
-import { IChangeUserObject } from "../../types/form";
+import { IChangeUserObject, ILocalStoragUser } from "../../types/form";
 import { IAction, IUserState } from "../../types/redux";
 import {
     ADD_USER_DIFFICULT,
@@ -16,7 +17,6 @@ import {
     REMOVE_USER_LEARNED,
 } from "../actions/actionsUser";
 
-
 const INITIAL_STATE = (): IUserState => {
     const startState = {
         id: "",
@@ -25,20 +25,12 @@ const INITIAL_STATE = (): IUserState => {
         refreshToken: "",
         authorization: false,
         wordsSettings: {},
-    }
+    };
 
-    const userLocalKeys = [
-        "name",
-        "id",
-        "token",
-        "token",
-        "refreshToken",
-        "authorization",
-        "time",
-        "wordsSettings",
-    ];
-
-    const answer = checkSettingsLocalStorage(LOCASTORAGE__NAME_USER, userLocalKeys);
+    const answer = checkSettingsLocalStorage(
+        LOCASTORAGE__NAME_USER,
+        USER_LOCAL_KEYS
+    ) as ILocalStoragUser;
     if (answer) {
         return {
             id: answer.id,
@@ -88,7 +80,8 @@ const reducerUser = (state: IUserState = INITIAL_STATE(), action: IAction) => {
             };
 
         case CHANGE_USER_INFO:
-            const { id, name, token, authorization, wordsSettings } = payload as IChangeUserObject;
+            const { id, name, token, authorization, wordsSettings } =
+                payload as IChangeUserObject;
             return {
                 ...state,
                 id: id,
@@ -98,17 +91,18 @@ const reducerUser = (state: IUserState = INITIAL_STATE(), action: IAction) => {
                 wordsSettings: wordsSettings,
             };
 
-
         case ADD_USER_LEARNED:
             return {
                 ...state,
                 wordsSettings: {
                     ...state.wordsSettings,
                     [payload as string]: {
-                        difficult: state.wordsSettings[payload as string] ? state.wordsSettings[payload as string].difficult : false,
+                        difficult: state.wordsSettings[payload as string]
+                            ? state.wordsSettings[payload as string].difficult
+                            : false,
                         learned: true,
-                    }
-                }
+                    },
+                },
             };
 
         case REMOVE_USER_LEARNED:
@@ -117,10 +111,12 @@ const reducerUser = (state: IUserState = INITIAL_STATE(), action: IAction) => {
                 wordsSettings: {
                     ...state.wordsSettings,
                     [payload as string]: {
-                        difficult: state.wordsSettings[payload as string] ? state.wordsSettings[payload as string].difficult : false,
+                        difficult: state.wordsSettings[payload as string]
+                            ? state.wordsSettings[payload as string].difficult
+                            : false,
                         learned: false,
-                    }
-                }
+                    },
+                },
             };
 
         case ADD_USER_DIFFICULT:
@@ -130,9 +126,11 @@ const reducerUser = (state: IUserState = INITIAL_STATE(), action: IAction) => {
                     ...state.wordsSettings,
                     [payload as string]: {
                         difficult: true,
-                        learned: state.wordsSettings[payload as string] ? state.wordsSettings[payload as string].learned : false,
-                    }
-                }
+                        learned: state.wordsSettings[payload as string]
+                            ? state.wordsSettings[payload as string].learned
+                            : false,
+                    },
+                },
             };
         case REMOVE_USER_DIFFICULT:
             return {
@@ -141,9 +139,11 @@ const reducerUser = (state: IUserState = INITIAL_STATE(), action: IAction) => {
                     ...state.wordsSettings,
                     [payload as string]: {
                         difficult: false,
-                        learned: state.wordsSettings[payload as string] ? state.wordsSettings[payload as string].learned : false,
-                    }
-                }
+                        learned: state.wordsSettings[payload as string]
+                            ? state.wordsSettings[payload as string].learned
+                            : false,
+                    },
+                },
             };
 
         default:

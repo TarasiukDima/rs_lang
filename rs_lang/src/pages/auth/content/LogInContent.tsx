@@ -7,11 +7,18 @@ import {
     PageLinks,
     submitLoginText,
 } from "../../../helpers/consts";
-import { checkFormErrors, saveSettingsLocalStorage } from "../../../helpers/utils";
-import { getUserAllWords, getUserWord, logInUser } from "../../../services/services";
-import { IChangeUserObject, ILocalStoragUser, ILogUserProps, TFormSubmitFC } from "../../../types/form";
+import {
+    checkFormErrors,
+    saveSettingsLocalStorage,
+} from "../../../helpers/utils";
+import {
+    IChangeUserObject,
+    ILocalStoragUser,
+    ILogUserProps,
+    TFormSubmitFC,
+} from "../../../types/form";
 
-const LogInContent = ({ changeUser }: ILogUserProps) => {
+const LogInContent = ({ changeUser, serviceApi }: ILogUserProps) => {
     const [errorEmail, setErrorEmail] = useState("");
     const [errorPassword, setErrorPassword] = useState("");
     const [errorSubmint, setErrorSubmint] = useState("");
@@ -51,7 +58,7 @@ const LogInContent = ({ changeUser }: ILogUserProps) => {
             userId: id,
             refreshToken,
             name,
-        } = await logInUser({
+        } = await serviceApi.logInUser({
             email: emailText,
             password: passwordText,
         });
@@ -60,7 +67,7 @@ const LogInContent = ({ changeUser }: ILogUserProps) => {
             return stopSubmit(errorLoginText);
         }
 
-        const userWords = await getUserAllWords(id, token);
+        const userWords = await serviceApi.getUserAllWords();
         if (userWords.errorUserWords) {
             return stopSubmit(userWords.errorUserWords);
         }
@@ -71,12 +78,12 @@ const LogInContent = ({ changeUser }: ILogUserProps) => {
             token: token,
             refreshToken: refreshToken,
             authorization: true,
-            wordsSettings: {}
+            wordsSettings: {},
         };
 
         userWords.words.forEach(({ wordId, optional }) => {
             refreshUserObj.wordsSettings[wordId] = optional;
-        })
+        });
 
         const objInfo: ILocalStoragUser = {
             ...refreshUserObj,

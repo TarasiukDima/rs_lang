@@ -3,7 +3,6 @@ import PeopleCard from "../../../components/peopleCard";
 import SectionContent from "../../../components/section";
 import { teamPeoplesArr } from "../../../helpers/settings";
 
-
 const TeamSection = () => {
     return (
         <SectionContent nameClass="dream__team">

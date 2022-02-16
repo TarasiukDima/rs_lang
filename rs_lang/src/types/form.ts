@@ -1,32 +1,8 @@
+import ServiceApi from "../services/services";
 import { IUserWordsInformation } from "./redux";
 
 export type TFormSubmitFC = (event: React.FormEvent<HTMLFormElement>) => void;
-
 export type TСhangeUserInfo = (newObj: IChangeUserObject) => void;
-
-
-export interface ILabelForm {
-    children: JSX.Element;
-    errorText: string;
-    nameClass?: string;
-}
-
-export interface FormProps {
-    submitFunction: TFormSubmitFC;
-    submitBtnText: string;
-    nameClass?: string;
-    children?: JSX.Element;
-    needFileButton?: boolean;
-}
-
-export interface FormInfoProps {
-    text: string;
-    pageLink: string;
-    textPageLink: string;
-    nameClass?: string;
-}
-
-
 
 export interface IChangeUserObject {
     id: string;
@@ -37,22 +13,33 @@ export interface IChangeUserObject {
     wordsSettings: IUserWordsInformation;
 }
 
-export interface ILogUserProps {
-    changeUser: TСhangeUserInfo;
-}
-
-export interface IFormPageProps extends ILogUserProps {
+export interface IFormPageProps {
     name: string;
     authorization: boolean;
     changeUser: TСhangeUserInfo;
+}
+
+export interface ILogUserProps {
+    changeUser: TСhangeUserInfo;
+    serviceApi: ServiceApi;
 }
 
 export interface ILogOut extends ILogUserProps {
     name: string;
 }
 
+export interface ILabelForm {
+    children: JSX.Element;
+    errorText: string;
+    nameClass?: string;
+}
 
-
+export interface FormInfoProps {
+    text: string;
+    pageLink: string;
+    textPageLink: string;
+    nameClass?: string;
+}
 
 /* localstorage start */
 export interface ILocalStoragUser extends IChangeUserObject {
@@ -60,4 +47,3 @@ export interface ILocalStoragUser extends IChangeUserObject {
     time?: number;
 }
 /* localstorage end */
-

@@ -1,16 +1,10 @@
-import React from 'react';
+import React from "react";
+import { SectionProps } from "../../types/common";
 
-interface SectionProps {
-    nameClass: string;
-    children: JSX.Element | Array<JSX.Element> | string;
-}
-
-const SectionContent = ({nameClass, children}: SectionProps) => {
+const SectionContent = ({ nameClass, children }: SectionProps) => {
     return (
         <section className={nameClass}>
-            <div className="wrapper">
-                {children}
-            </div>
+            <div className="wrapper">{children}</div>
         </section>
     );
 };

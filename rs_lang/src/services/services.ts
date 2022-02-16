@@ -1,333 +1,374 @@
-import { URL_DATA } from "../helpers/consts";
+import { LOCASTORAGE__NAME_USER, URL_DATA } from "../helpers/consts";
+import { USER_LOCAL_KEYS } from "../helpers/settings";
+import { checkSettingsLocalStorage } from "../helpers/utils";
 import {
     ApiUrls,
     ErrorMessages,
     IApiOptions,
+    IApiUserInfo,
+    IApiWordsObj,
+    ICreateUserWord,
     IHeaders,
+    ISettingsData,
+    IStatisticData,
     IUserCreateForm,
     IUserLogInForm,
     TOptionsMethods,
 } from "../types/api";
+import { ILocalStoragUser } from "../types/form";
 
-const _getData = async (
-    stingSearch: string,
-    method: TOptionsMethods = "GET",
-    body = "",
-    token = ""
-) => {
-    const url = URL_DATA + stingSearch;
-    const options: IApiOptions = {
-        method: method,
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-        },
+class ServiceApi {
+    time: number;
+    token: string;
+    refreshToken: string;
+    idUser: string;
+    difficult: "normal";
+
+    constructor() {
+        this.time = 0;
+        this.token = "";
+        this.refreshToken = "";
+        this.idUser = "";
+        this.difficult = "normal";
+    }
+
+    init = () => {
+        this.checkLocalStorage();
     };
 
-    if (body) {
-        options.body = body;
-    }
-    if (token) {
-        options.withCredentials = true;
-        (options.headers as IHeaders)["Authorization"] = `Bearer ${token}`;
-    }
+    private changeUserInfo = ({
+        token,
+        userId,
+        refreshToken,
+        time,
+    }: IApiUserInfo) => {
+        const date = new Date().getTime();
+        console.log(date);
 
-    return await fetch(url, options).then((response) => {
-        if (!response.ok) {
-            throw new Error(`Bad url:${url}`);
+        this.time = time ? date : 0;
+        this.token = token;
+        this.refreshToken = refreshToken;
+        this.idUser = userId;
+    };
+
+    private changeOptions = (
+        method: TOptionsMethods,
+        body: string
+    ): IApiOptions => {
+        const options: IApiOptions = {
+            method: method,
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+        };
+
+        if (body) {
+            options.body = body;
         }
-        return response.json();
-    });
-};
 
-/* words start */
-export const getWords = async (group: number, page: number) => {
-    const urlString = `${ApiUrls.words}?group=${group}&page=${page}`;
+        if (this.token) {
+            options.withCredentials = true;
+            (options.headers as IHeaders)[
+                "Authorization"
+            ] = `Bearer ${this.token}`;
+        }
+        return options;
+    };
 
-    return await _getData(urlString).catch((error) =>
-        console.error(error, ErrorMessages.getWords)
-    );
-};
-/* words end */
+    private checkLocalStorage = () => {
+        const answer = checkSettingsLocalStorage(
+            LOCASTORAGE__NAME_USER,
+            USER_LOCAL_KEYS
+        ) as ILocalStoragUser;
+        console.log(answer);
 
-/* user start */
-export const createUser = async (user: IUserCreateForm) => {
-    const data = JSON.stringify(user);
-    return await _getData(ApiUrls.createUser, "POST", data)
-        .then((data) => {
-            return {
-                ...data,
-                errorText: null,
-            };
-        })
-        .catch((error) => {
-            console.error(error);
-            return { id: null, errorText: ErrorMessages.createUser };
+        if (answer) {
+            this.time = answer.time || 0;
+            this.token = answer.token;
+            this.refreshToken = answer.refreshToken;
+            this.idUser = answer.id;
+        }
+    };
+
+    private getData = async (
+        stingSearch: string,
+        method: TOptionsMethods = "GET",
+        body: string | "" = ""
+    ) => {
+        const url = URL_DATA + stingSearch;
+        const options = this.changeOptions(method, body);
+
+        return await fetch(url, options).then((response) => {
+            if (!response.ok) {
+                throw new Error(`Bad url:${url}`);
+            }
+            return response.json();
         });
-};
+    };
 
-export const getToken = async (id: string) => {
-    const urlString = `${ApiUrls.createUser}/${id}/tokens`;
+    /* user start */
+    public createUser = async (user: IUserCreateForm) => {
+        const data = JSON.stringify(user);
+        return await this.getData(ApiUrls.createUser, "POST", data)
+            .then((data) => {
+                return {
+                    ...data,
+                    errorText: null,
+                };
+            })
+            .catch((error) => {
+                console.error(error);
+                return { id: null, errorText: ErrorMessages.createUser };
+            });
+    };
 
-    return await _getData(urlString).catch((error) =>
-        console.error(error, ErrorMessages.getToken)
-    );
-};
+    public getToken = async () => {
+        const urlString = `${ApiUrls.createUser}/${this.idUser}/${ApiUrls.tokens}`;
+        return await this.getData(urlString).catch((error) =>
+            console.error(error, ErrorMessages.getToken)
+        );
+    };
 
-export const logInUser = async (user: IUserLogInForm) => {
-    const data = JSON.stringify(user);
+    public logInUser = async (user: IUserLogInForm) => {
+        const data = JSON.stringify(user);
 
-    return await _getData(ApiUrls.signInUser, "POST", data)
-        .then((data) => {
-            return {
-                ...data,
-                errorLoginText: null,
-            };
-        })
-        .catch((error) => {
-            console.error(error);
-            return { errorLoginText: ErrorMessages.authorization };
+        return await this.getData(ApiUrls.signInUser, "POST", data)
+            .then((data) => {
+                this.changeUserInfo({
+                    token: data.token,
+                    userId: data.userId,
+                    refreshToken: data.refreshToken,
+                    time: true,
+                });
+
+                return {
+                    ...data,
+                    errorLoginText: null,
+                };
+            })
+            .catch((error) => {
+                console.error(error);
+                return { errorLoginText: ErrorMessages.authorization };
+            });
+    };
+
+    public logOut = () => {
+        this.changeUserInfo({
+            token: "",
+            userId: "",
+            refreshToken: "",
+            time: false,
         });
-};
-/* user end */
+    };
+    /* user end */
 
-/* user words start */
-interface IWordOptionObj {
-    learned: boolean;
-    difficult: boolean;
+    /* words start */
+    public getWords = async (
+        group: number,
+        page: number
+    ): Promise<IApiWordsObj> => {
+        const urlString = `${ApiUrls.words}?group=${group}&page=${page}`;
+
+        return await this.getData(urlString)
+            .then((words) => {
+                return {
+                    words: words,
+                    errorWordsText: null,
+                };
+            })
+            .catch((error) => {
+                console.error(error);
+                return { errorWordsText: ErrorMessages.getWords, words: [] };
+            });
+    };
+    /* words end */
+
+    /* user words start */
+    public getUserAllWords = async () => {
+        const url = `${ApiUrls.createUser}/${this.idUser}/${ApiUrls.words}`;
+        return await this.getData(url, "GET", "")
+            .then((data) => {
+                return {
+                    words: [...data],
+                    errorUserWords: null,
+                };
+            })
+            .catch((error) => {
+                console.error(error);
+                return { errorUserWords: ErrorMessages.getUserAllWords };
+            });
+    };
+
+    public createUserWord = async ({
+        wordId,
+        wordOptions,
+    }: ICreateUserWord) => {
+        const options = {
+            difficulty: this.difficult,
+            optional: wordOptions,
+        };
+        return await this.getData(
+            `${ApiUrls.createUser}/${this.idUser}/${ApiUrls.words}/${wordId}`,
+            "POST",
+            JSON.stringify(options)
+        )
+            .then((data) => {
+                return {
+                    ...data,
+                    errorUserWords: null,
+                };
+            })
+            .catch((error) => {
+                console.error(error);
+                return { errorUserWords: ErrorMessages.createUserWord };
+            });
+    };
+
+    public updateUserWord = async ({
+        wordId,
+        wordOptions,
+    }: ICreateUserWord) => {
+        const options = {
+            difficulty: this.difficult,
+            optional: wordOptions,
+        };
+
+        return await this.getData(
+            `${ApiUrls.createUser}/${this.idUser}/${ApiUrls.words}/${wordId}`,
+            "PUT",
+            JSON.stringify(options)
+        )
+            .then((data) => {
+                return {
+                    ...data,
+                    errorUserWords: null,
+                };
+            })
+            .catch((error) => {
+                console.error(error);
+                return { errorUserWords: ErrorMessages.updateUserWord };
+            });
+    };
+
+    public deleteUserWord = async (wordId: string) => {
+        return await this.getData(
+            `${ApiUrls.createUser}/${this.idUser}/${ApiUrls.words}/${wordId}`,
+            "DELETE",
+            ""
+        )
+            .then((data) => {
+                return {
+                    ...data,
+                    errorUserWords: null,
+                };
+            })
+            .catch((error) => {
+                console.error(error);
+                return { errorUserWords: ErrorMessages.deleteUserWord };
+            });
+    };
+
+    public getUserWord = async (wordId: string) => {
+        const url = `${ApiUrls.createUser}/${this.idUser}/${ApiUrls.words}/${wordId}`;
+        return await this.getData(url, "GET", "")
+            .then((data) => {
+                return {
+                    ...data,
+                    errorUserWords: null,
+                };
+            })
+            .catch((error) => {
+                console.error(error);
+                return { errorUserWords: ErrorMessages.getUserWord };
+            });
+    };
+    /* user words end */
+
+    /* user agregates start */
+    public getUserAggregatedWords = async () => {
+        const url = `${ApiUrls.createUser}/${this.idUser}/${ApiUrls.aggregatedWords}`;
+        return await this.getData(url, "GET", "")
+            .then((data) => {
+                return {
+                    ...data,
+                    errorUserWords: null,
+                };
+            })
+            .catch((error) => {
+                console.error(error);
+                return {
+                    errorUserWords: ErrorMessages.getUserAggregatedWords,
+                };
+            });
+    };
+    /* user agregates end */
+
+    /* user statistic start */
+    public getUseStatistics = async () => {
+        const url = `${ApiUrls.createUser}/${this.idUser}/${ApiUrls.statistics}`;
+        return await this.getData(url, "GET", "")
+            .then((data) => {
+                return {
+                    ...data,
+                    errorUserWords: null,
+                };
+            })
+            .catch((error) => {
+                console.error(error);
+                return { errorUserWords: ErrorMessages.getUseStatistics };
+            });
+    };
+
+    public ulpdateUseStatistics = async (optionsUpdate: IStatisticData) => {
+        const url = `${ApiUrls.createUser}/${this.idUser}/${ApiUrls.statistics}`;
+        return await this.getData(url, "PUT", JSON.stringify(optionsUpdate))
+            .then((data) => {
+                return {
+                    ...data,
+                    errorUserWords: null,
+                };
+            })
+            .catch((error) => {
+                console.error(error);
+                return {
+                    errorUserWords: ErrorMessages.ulpdateUseStatistics,
+                };
+            });
+    };
+    /* user statistic end */
+
+    /* user settings start */
+    public getUseSettings = async () => {
+        const url = `${ApiUrls.createUser}/${this.idUser}/${ApiUrls.settings}`;
+        return await this.getData(url, "GET", "")
+            .then((data) => {
+                return {
+                    ...data,
+                    errorUserWords: null,
+                };
+            })
+            .catch((error) => {
+                console.error(error);
+                return { errorUserWords: ErrorMessages.getUseSettings };
+            });
+    };
+
+    public updateUseSettings = async (optionsUpdate: ISettingsData) => {
+        const url = `${ApiUrls.createUser}/${this.idUser}/${ApiUrls.settings}`;
+        return await this.getData(url, "PUT", JSON.stringify(optionsUpdate))
+            .then((data) => {
+                return {
+                    ...data,
+                    errorUserWords: null,
+                };
+            })
+            .catch((error) => {
+                console.error(error);
+                return { errorUserWords: ErrorMessages.updateUseSettings };
+            });
+    };
+    /* user settings end */
 }
 
-interface ICreateUserWordObj {
-    difficulty: "normal",
-    optional: IWordOptionObj
-}
-
-interface IUserWordOptionObj {
-    userId: string;
-    wordId: string;
-    token: string;
-}
-
-interface ICreateUserWord extends IUserWordOptionObj {
-    wordOptions: IWordOptionObj;
-}
-
-export const getUserAllWords = async (userId: string, token: string) => {
-    const url = `users/${userId}/${ApiUrls.words}`;
-    return await _getData(url, "GET", "", token)
-        .then((data) => {
-            return {
-                words: [...data],
-                errorUserWords: null,
-            };
-        })
-        .catch((error) => {
-            console.error(error);
-            return { errorUserWords: ErrorMessages.getUserAllWords };
-        });
-};
-
-export const createUserWord = async ({
-    userId,
-    wordId,
-    wordOptions,
-    token,
-}: ICreateUserWord) => {
-    const options = {
-        difficulty: "normal",
-        optional: wordOptions
-    }
-    return await _getData(
-        `users/${userId}/words/${wordId}`,
-        "POST",
-        JSON.stringify(options),
-        token
-    )
-        .then((data) => {
-            return {
-                ...data,
-                errorUserWords: null,
-            };
-        })
-        .catch((error) => {
-            console.error(error);
-            return { errorUserWords: ErrorMessages.createUserWord };
-        });
-};
-
-export const updateUserWord = async ({
-    userId,
-    wordId,
-    wordOptions,
-    token,
-}: ICreateUserWord) => {
-    const options = {
-        difficulty: "normal",
-        optional: wordOptions
-    }
-
-    return await _getData(`users/${userId}/words/${wordId}`, "PUT", JSON.stringify(options), token)
-        .then((data) => {
-            return {
-                ...data,
-                errorUserWords: null,
-            };
-        })
-        .catch((error) => {
-            console.error(error);
-            return { errorUserWords: ErrorMessages.updateUserWord };
-        });
-};
-
-export const deleteUserWord = async ({
-    userId,
-    wordId,
-    token,
-}: IUserWordOptionObj) => {
-    return await _getData(
-        `users/${userId}/words/${wordId}`,
-        "DELETE",
-        "",
-        token
-    )
-        .then((data) => {
-            return {
-                ...data,
-                errorUserWords: null,
-            };
-        })
-        .catch((error) => {
-            console.error(error);
-            return { errorUserWords: ErrorMessages.deleteUserWord };
-        });
-};
-
-export const getUserWord = async (
-    userId: string,
-    wordId: string,
-    token: string
-) => {
-    const url = `users/${userId}/${ApiUrls.words}/${wordId}`;
-    return await _getData(url, "GET", "", token)
-        .then((data) => {
-            return {
-                ...data,
-                errorUserWords: null,
-            };
-        })
-        .catch((error) => {
-            console.error(error);
-            return { errorUserWords: ErrorMessages.getUserWord };
-        });
-};
-/* user words end */
-
-
-
-/* user agregates start */
-export const getUserAggregatedWords = async (
-    userId: string,
-    token: string
-) => {
-    const url = `users/${userId}/aggregatedWords`;
-    return await _getData(url, "GET", "", token)
-        .then((data) => {
-            return {
-                ...data,
-                errorUserWords: null,
-            };
-        })
-        .catch((error) => {
-            console.error(error);
-            return { errorUserWords: ErrorMessages.getUserAggregatedWords };
-        });
-};
-/* user agregates end */
-
-/* user statistic start */
-export const getUseStatistics = async (
-    userId: string,
-    token: string
-) => {
-    const url = `users/${userId}/statistics`;
-    return await _getData(url, "GET", "", token)
-        .then((data) => {
-            return {
-                ...data,
-                errorUserWords: null,
-            };
-        })
-        .catch((error) => {
-            console.error(error);
-            return { errorUserWords: ErrorMessages.getUseStatistics };
-        });
-};
-
-interface IStatisticData {
-    "learnedWords": number,
-    "optional": {}
-}
-export const ulpdateUseStatistics = async (
-    userId: string,
-    optionsUpdate: IStatisticData,
-    token: string
-) => {
-    const url = `users/${userId}/statistics`;
-    return await _getData(url, "PUT", JSON.stringify(optionsUpdate), token)
-        .then((data) => {
-            return {
-                ...data,
-                errorUserWords: null,
-            };
-        })
-        .catch((error) => {
-            console.error(error);
-            return { errorUserWords: ErrorMessages.ulpdateUseStatistics };
-        });
-};
-/* user statistic end */
-
-
-
-/* user settings start */
-export const getUseSettings = async (
-    userId: string,
-    token: string
-) => {
-    const url = `users/${userId}/settings`;
-    return await _getData(url, "GET", "", token)
-        .then((data) => {
-            return {
-                ...data,
-                errorUserWords: null,
-            };
-        })
-        .catch((error) => {
-            console.error(error);
-            return { errorUserWords: ErrorMessages.getUseSettings };
-        });
-};
-
-interface ISettingsData {
-    "wordsPerDay": number,
-    "optional": {}
-  }
-export const ulpdateUseSettings = async (
-    userId: string,
-    optionsUpdate: ISettingsData,
-    token: string
-) => {
-    const url = `users/${userId}/settings`;
-    return await _getData(url, "PUT", JSON.stringify(optionsUpdate), token)
-        .then((data) => {
-            return {
-                ...data,
-                errorUserWords: null,
-            };
-        })
-        .catch((error) => {
-            console.error(error);
-            return { errorUserWords: ErrorMessages.ulpdateUseSettings };
-        });
-};
-/* user settings end */
+export default ServiceApi;

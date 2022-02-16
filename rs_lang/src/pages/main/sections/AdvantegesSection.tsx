@@ -3,7 +3,6 @@ import SectionContent from "../../../components/section";
 import CardItem from "../../../components/cardItem";
 import { advantegesInfoArr } from "../../../helpers/settings";
 
-
 const AdvantegesSection = () => {
     return (
         <SectionContent nameClass="advanteges__app">

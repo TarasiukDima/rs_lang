@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { changeAudioPlay } from "../../store/actions/actionsAudio";
 import { IAudioProps } from "../../types/common";
 import { IAction, IState } from "../../types/redux";
+
 import "./index.scss";
 
 const AudioGame = ({ audioSrc, playAudio, changeCategory }: IAudioProps) => {
@@ -35,7 +36,6 @@ const AudioGame = ({ audioSrc, playAudio, changeCategory }: IAudioProps) => {
         />
     );
 };
-
 
 const mapStateToProps = ({ audio: { audioSrc, playAudio } }: IState) => ({
     audioSrc,

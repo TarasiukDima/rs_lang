@@ -43,13 +43,12 @@
         }
     }
 
-
     .item__img {
         @include dflex();
 
         width: 45%;
 
-        img{
+        img {
             max-width: 300px;
             object-fit: contain;
         }
@@ -105,7 +104,6 @@
             }
         }
 
-
         .item__img {
             width: 35%;
 
@@ -154,11 +152,10 @@
             }
         }
 
-
         .item__img {
             width: 100%;
 
-            img{
+            img {
                 max-width: 200px;
             }
         }

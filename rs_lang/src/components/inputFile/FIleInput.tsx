@@ -1,5 +1,5 @@
 import React, { createRef, LegacyRef, useState } from "react";
-import './index.scss';
+import "./index.scss";
 
 const FileInput = () => {
     const fileRef: LegacyRef<HTMLInputElement> = createRef();

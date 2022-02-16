@@ -13,73 +13,82 @@ export const REMOVE_USER_LEARNED = "REMOVE_USER_LEARNED";
 export const ADD_USER_DIFFICULT = "ADD_USER_DIFFICULT";
 export const REMOVE_USER_DIFFICULT = "REMOVE_USER_DIFFICULT";
 
-export const changeAuthorization: TSimpleActionFC<boolean> = (authorization: boolean) => {
+export const changeAuthorization: TSimpleActionFC<boolean> = (
+    authorization: boolean
+) => {
     return {
         type: CHANGE_AUTHORIZATION,
-        payload: authorization
+        payload: authorization,
     };
-}
+};
 
 export const changeToken: TSimpleActionFC<string> = (newToken: string) => {
     return {
         type: CHANGE_USER_TOKEN,
-        payload: newToken
+        payload: newToken,
     };
-}
+};
 
 export const changeId: TSimpleActionFC<string> = (newId: string) => {
     return {
         type: CHANGE_USER_ID,
-        payload: newId
+        payload: newId,
     };
-}
+};
 
 export const changeName: TSimpleActionFC<string> = (newName: string) => {
     return {
         type: CHANGE_USER_NAME,
-        payload: newName
+        payload: newName,
     };
-}
+};
 
-export const changeUserInformation: TSimpleActionFC<IChangeUserObject> = (newUserObj: IChangeUserObject) => {
+export const changeUserInformation: TSimpleActionFC<IChangeUserObject> = (
+    newUserObj: IChangeUserObject
+) => {
     return {
         type: CHANGE_USER_INFO,
-        payload: newUserObj
+        payload: newUserObj,
     };
-}
+};
 
 export const changeUserToken: TSimpleActionFC<string> = (newToken: string) => {
     return {
         type: CHANGE_USER_REFRESHTOKEN,
-        payload: newToken
+        payload: newToken,
     };
-}
+};
 
 export const addUserLearnedWord: TSimpleActionFC<string> = (idWord: string) => {
     return {
         type: ADD_USER_LEARNED,
-        payload: idWord
+        payload: idWord,
     };
-}
+};
 
-export const removeUserLearnedWord: TSimpleActionFC<string> = (idWord: string) => {
+export const removeUserLearnedWord: TSimpleActionFC<string> = (
+    idWord: string
+) => {
     return {
         type: REMOVE_USER_LEARNED,
-        payload: idWord
+        payload: idWord,
     };
-}
+};
 
-export const addUserDifficultWord: TSimpleActionFC<string> = (idWord: string) => {
+export const addUserDifficultWord: TSimpleActionFC<string> = (
+    idWord: string
+) => {
     return {
         type: ADD_USER_DIFFICULT,
-        payload: idWord
+        payload: idWord,
     };
-}
+};
 
-export const removeUserDifficultWord: TSimpleActionFC<string> = (idWord: string) => {
+export const removeUserDifficultWord: TSimpleActionFC<string> = (
+    idWord: string
+) => {
     return {
         type: REMOVE_USER_DIFFICULT,
-        payload: idWord
+        payload: idWord,
     };
-}
-
+};

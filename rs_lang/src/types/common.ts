@@ -1,53 +1,97 @@
 import { TSoundPlay } from "./book";
+import { ILocalStoragUser } from "./form";
 import { IAction } from "./redux";
 
 export type TSimpleFunction = () => void;
-export type TSimpleTypeFunction<T> = (el: T) => void;
 export type TSimpleActionFC<T> = (el: T) => IAction;
+export type TSimpleTypeFunction<T> = (el: T) => void;
 
 export type TCheckValue = (
     value: number,
     comparisonValue: number,
     varient: "more" | "less"
 ) => boolean;
+export type TCheckInputValue = (
+    val: string,
+    RegEx: RegExp
+) => RegExpMatchArray | null;
+export type TValidateString = (name: string) => string | null;
+export type TCheckFormErrors = (
+    textEmail: string,
+    cbEmail: (st: string) => void,
+    textPassword: string,
+    cbPassword: (st: string) => void,
+    textName?: string,
+    cbName?: (st: string) => void
+) => boolean;
+export type TSaveLocalSettings = (
+    name: string,
+    infoObj: ILocalStoragUser
+) => void;
 
+export type TValidateLocalObj = (
+    obj: object,
+    arrayKeys: Array<string>
+) => boolean;
+export type TCheckLocalObj = (
+    name: string,
+    arrayKeys: Array<string>
+) => null | ILocalStoragUser;
 
+export interface SectionProps {
+    nameClass: string;
+    children?: JSX.Element | Array<JSX.Element> | string | null;
+}
 
-/* tabs start */
+export interface PeopleCardProps {
+    name: string;
+    activity: string;
+    githubLink: string;
+    imgLink: string;
+}
+
+export interface ButtonProps {
+    children: JSX.Element | Array<JSX.Element> | string;
+    nameClass?: string;
+    onclick?: TSimpleFunction;
+}
+
+export interface INavigationPages {
+    navClassShow: boolean;
+    clickMenu: TSimpleFunction;
+    authorization: boolean;
+    vocabularyCategory: number | string;
+    vocabularyPage: number | string;
+    statisticTab: number | string;
+}
+
+/* tabs end */
 export type TTabClickFC = (id: number) => void;
 
 export interface ITabInfoObj {
     id: number;
     text: string | number;
+    link: string;
 }
 
 export interface ITabsListProps {
-    tabsInfo: Array<ITabInfoObj>;
+    listItems: Array<ITabInfoObj>;
+    fildCheckActive: number;
     tabClick: TTabClickFC;
-    activeTab: number;
+    children?: JSX.Element | Array<JSX.Element> | null;
 }
 
-export interface ITabsItemProps {
-    children: JSX.Element | Array<JSX.Element> | string;
-    key: string | number;
-    onclick: TTabClickFC;
-    id: number;
-    nameClass?: string;
+export interface ITabItem {
+    pageNumber: number;
+    fildCheckActive: number;
+    pageLink: string;
+    clickFunction: TTabClickFC;
+    textLink?: string | number;
 }
-/* tabs end */
-
 
 export interface IAudioProps {
     audioSrc: string;
     playAudio: boolean;
     changeCategory: TSoundPlay;
 }
-
-
-export interface INavigationPages {
-    navClassShow: boolean;
-    clickMenu: TSimpleFunction;
-    authorization: boolean;
-    vocabularyCategory: number;
-    vocabularyPage: number;
-}
+/* tabs start */
