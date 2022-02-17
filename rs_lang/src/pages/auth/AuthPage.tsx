@@ -15,14 +15,16 @@ import { IAction, IState } from "../../types/redux";
 import { IChangeUserObject, IFormPageProps } from "../../types/form";
 
 import "./index.scss";
+import { changeVocabularyCategory } from "../../store/actions/actionsPages";
 
-const AuthPage = ({ name, authorization, changeUser }: IFormPageProps) => {
+const AuthPage = ({ name, authorization, changeUser, changeCategory }: IFormPageProps) => {
     const location = useLocation();
     if (authorization) {
         return (
             <ApiContextConsumer>
                 {(serviceApi) => (
                     <LogOutContent
+                        changeCategory={changeCategory}
                         name={name}
                         changeUser={changeUser}
                         serviceApi={serviceApi}
@@ -62,6 +64,9 @@ const mapDispatchToProps = (dispatch: Dispatch<IAction>) => {
     return {
         changeUser: (objInfoUser: IChangeUserObject) => {
             dispatch(changeUserInformation(objInfoUser));
+        },
+        changeCategory: (id: number) => {
+            dispatch(changeVocabularyCategory(id));
         },
     };
 };

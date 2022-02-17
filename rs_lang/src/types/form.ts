@@ -1,4 +1,5 @@
 import ServiceApi from "../services/services";
+import { TSimpleTypeFunction } from "./common";
 import { IUserWordsInformation } from "./redux";
 
 export type TFormSubmitFC = (event: React.FormEvent<HTMLFormElement>) => void;
@@ -11,12 +12,14 @@ export interface IChangeUserObject {
     refreshToken: string;
     authorization: boolean;
     wordsSettings: IUserWordsInformation;
+    time: number;
 }
 
 export interface IFormPageProps {
     name: string;
     authorization: boolean;
     changeUser: TСhangeUserInfo;
+    changeCategory: TSimpleTypeFunction<number>;
 }
 
 export interface ILogUserProps {
@@ -26,6 +29,7 @@ export interface ILogUserProps {
 
 export interface ILogOut extends ILogUserProps {
     name: string;
+    changeCategory: TSimpleTypeFunction<number>;
 }
 
 export interface ILabelForm {
@@ -44,6 +48,5 @@ export interface FormInfoProps {
 /* localstorage start */
 export interface ILocalStoragUser extends IChangeUserObject {
     email: string;
-    time?: number;
 }
 /* localstorage end */

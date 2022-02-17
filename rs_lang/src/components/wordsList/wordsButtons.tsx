@@ -13,7 +13,7 @@ import {
 } from "../../store/actions/actionsUser";
 import { IWordItemProps, TSoundButtonClick } from "../../types/book";
 import { IAction, IState } from "../../types/redux";
-import button from "../button";
+import ButtonEl from "../button";
 
 const WordsItem = ({
     serviceApi,
@@ -183,8 +183,8 @@ const WordsItem = ({
                 <span>{textExampleTranslate}</span>
             </p>
 
-            <div className="buttons__wrap">
-                {(showTwoButtons || showDifficultButton) && (
+            {showTwoButtons && (
+                <div className="buttons__wrap">
                     <button
                         className="button__card"
                         onClick={() => changeDifficult(id)}
@@ -192,9 +192,6 @@ const WordsItem = ({
                     >
                         {difficultButtonText}
                     </button>
-                )}
-
-                {(showTwoButtons || showLearnedButton) && (
                     <button
                         className="button__card"
                         onClick={() => changeLearned(id)}
@@ -202,8 +199,28 @@ const WordsItem = ({
                     >
                         {leanedButtonText}
                     </button>
-                )}
-            </div>
+                </div>
+            )}
+
+            {showDifficultButton && (
+                <button
+                    className="button__card"
+                    onClick={() => changeDifficult(id)}
+                    disabled={loading}
+                >
+                    {difficultButtonText}
+                </button>
+            )}
+
+            {showLearnedButton && (
+                <button
+                    className="button__card"
+                    onClick={() => changeLearned(id)}
+                    disabled={loading}
+                >
+                    {leanedButtonText}
+                </button>
+            )}
         </li>
     );
 };

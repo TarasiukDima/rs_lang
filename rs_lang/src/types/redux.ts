@@ -31,6 +31,7 @@ export interface IUserState {
     refreshToken: string;
     authorization: boolean;
     wordsSettings: IUserWordsInformation;
+    time: number;
 }
 
 export interface IState {

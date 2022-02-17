@@ -24,33 +24,35 @@ const WordsList = ({ bookListInfoArr }: IWordsListProps) => {
         }
     };
 
-    // const data = async () => {
-    //     const result = await getUserAggregatedWords(
-    //         "620638e3978b5a001610858a",
-    //         `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMDYzOGUzOTc4YjVhMDAxNjEwODU4YSIsImlhdCI6MTY0NDc4NTUxMiwiZXhwIjoxNjQ0Nzk5OTEyfQ.lTA43-_JtcVDFkFHMH2LSRXATZ3cRWS8NFa7FQfVgn0`,
-    //     );
-    //     console.log(result);
-
-    //     return result
-    // }
-    // console.log(data());
-
     const listClassNames =
         countLearnedEl >= 20 ? "words__list learned__list" : "words__list";
 
     return (
         <ul className={listClassNames}>
             {bookListInfoArr.map((bookItemInfo: IWordItemObj) => {
+                let idItem = "";
+                let endProps = {};
+                if (bookItemInfo.id) {
+                    const { id, ...end } = bookItemInfo;
+                    idItem = id;
+                    endProps = { ...end };
+                } else {
+                    const { _id, ...end } = bookItemInfo;
+                    idItem = _id as string;
+                    endProps = { ...end };
+                }
+
                 return (
-                    <ApiContextConsumer key={bookItemInfo.id}>
+                    <ApiContextConsumer key={idItem}>
                         {(serviceApi) => (
                             <WordsItem
                                 changeCountLearnedItems={
                                     changeCountLearnedItems
                                 }
+                                id={idItem}
                                 setCoutnSecond={setCoutnSecond}
                                 serviceApi={serviceApi}
-                                {...bookItemInfo}
+                                {...endProps as Omit<IWordItemObj, "id">}
                             />
                         )}
                     </ApiContextConsumer>

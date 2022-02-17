@@ -150,8 +150,6 @@ export const saveSettingsLocalStorage: TSaveLocalSettings = (
     name: string,
     infoObj: ILocalStoragUser
 ): void => {
-    const date = new Date();
-    infoObj.time = date.getTime();
     const stringObj: string = JSON.stringify(infoObj);
     localStorage.setItem(name, stringObj);
 };

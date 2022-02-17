@@ -60,9 +60,10 @@ export interface INavigationPages {
     navClassShow: boolean;
     clickMenu: TSimpleFunction;
     authorization: boolean;
-    vocabularyCategory: number | string;
-    vocabularyPage: number | string;
-    statisticTab: number | string;
+    vocabularyCategory: number;
+    vocabularyHiddenTab: number;
+    vocabularyPage: number;
+    statisticTab: number;
 }
 
 /* tabs end */

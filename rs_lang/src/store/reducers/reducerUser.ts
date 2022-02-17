@@ -1,4 +1,3 @@
-import { stringify } from "querystring";
 import { LOCASTORAGE__NAME_USER } from "../../helpers/consts";
 import { USER_LOCAL_KEYS } from "../../helpers/settings";
 import { checkSettingsLocalStorage } from "../../helpers/utils";
@@ -25,12 +24,14 @@ const INITIAL_STATE = (): IUserState => {
         refreshToken: "",
         authorization: false,
         wordsSettings: {},
+        time: 0,
     };
 
     const answer = checkSettingsLocalStorage(
         LOCASTORAGE__NAME_USER,
         USER_LOCAL_KEYS
     ) as ILocalStoragUser;
+
     if (answer) {
         return {
             id: answer.id,
@@ -39,6 +40,7 @@ const INITIAL_STATE = (): IUserState => {
             refreshToken: answer.refreshToken,
             authorization: answer.authorization,
             wordsSettings: answer.wordsSettings,
+            time: answer.time || 0,
         };
     }
 
@@ -80,15 +82,17 @@ const reducerUser = (state: IUserState = INITIAL_STATE(), action: IAction) => {
             };
 
         case CHANGE_USER_INFO:
-            const { id, name, token, authorization, wordsSettings } =
+            const { id, name, token, time, refreshToken, authorization, wordsSettings } =
                 payload as IChangeUserObject;
             return {
                 ...state,
                 id: id,
                 name: name,
                 token: token,
+                refreshToken: refreshToken,
                 authorization: authorization,
                 wordsSettings: wordsSettings,
+                time: time,
             };
 
         case ADD_USER_LEARNED:

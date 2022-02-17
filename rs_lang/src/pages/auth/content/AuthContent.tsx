@@ -72,7 +72,7 @@ const AuthContent = ({ changeUser, serviceApi }: ILogUserProps) => {
             return stopSubmit("");
         }
 
-        const { id, errorText } = await serviceApi.createUser({
+        const { data: {id}, errorText } = await serviceApi.createUser({
             name: nameText,
             email: emailText,
             password: passwordText,
@@ -82,7 +82,7 @@ const AuthContent = ({ changeUser, serviceApi }: ILogUserProps) => {
             return stopSubmit(errorText);
         }
 
-        const { token, errorLoginText, refreshToken } =
+        const { data: {refreshToken, token}, errorText: errorLoginText } =
             await serviceApi.logInUser({
                 email: emailText,
                 password: passwordText,
@@ -92,11 +92,12 @@ const AuthContent = ({ changeUser, serviceApi }: ILogUserProps) => {
             return stopSubmit(errorLoginText);
         }
 
-        const userWords = await serviceApi.getUserAllWords();
-        if (userWords.errorUserWords) {
-            return stopSubmit(userWords.errorUserWords);
+        const {data: userWords, errorText: errorUserWords} = await serviceApi.getUserAllWords();
+        if (errorUserWords) {
+            return stopSubmit(errorUserWords);
         }
 
+        const date = new Date().getTime();
         const refreshUserObj: IChangeUserObject = {
             id: id,
             name: nameText,
@@ -104,9 +105,10 @@ const AuthContent = ({ changeUser, serviceApi }: ILogUserProps) => {
             refreshToken: refreshToken,
             authorization: true,
             wordsSettings: {},
+            time: date,
         };
 
-        userWords.words.forEach(({ wordId, optional }) => {
+        userWords.forEach(({ wordId, optional }) => {
             refreshUserObj.wordsSettings[wordId] = optional;
         });
 

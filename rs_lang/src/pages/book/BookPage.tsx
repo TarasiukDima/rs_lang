@@ -15,10 +15,10 @@ import BookLearnedContent from "./BookLearnedContent";
 
 const BookPage = ({ vocabularyCategory, vocabularyPage }: IBookPageProps) => {
     const hiddenCatActive = vocabularyCategory === NUMBER_HIDDEN_CATEGORY;
-    const titleText = hiddenCatActive ? "Список, изучаемых слов" : "Словарь";
+    const titleText = hiddenCatActive ? "Список слов" : "Учебник";
 
     return (
-        <SectionContent nameClass="book__section">
+        <SectionContent nameClass={`book__section section__${vocabularyCategory}`}>
             <h1 className="title">{titleText}</h1>
 
             <BookCategories />

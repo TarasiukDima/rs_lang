@@ -2,7 +2,7 @@ import React from "react";
 import { ButtonProps } from "../../types/common";
 import "./index.scss";
 
-const ButtonEl = ({ nameClass = "", children, onclick }: ButtonProps) => {
+const ButtonEl = ({ nameClass = "", children, onclick}: ButtonProps) => {
     const classesText = nameClass ? "button " + nameClass : "button";
 
     return (

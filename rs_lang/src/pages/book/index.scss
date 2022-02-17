@@ -2,5 +2,59 @@
 @import "../../scss/mixins";
 
 .book__section {
+    flex-grow: 1;
+    height: 100%;
     padding: 70px 0;
+}
+.section__0 {
+    background-color: $wordsSection0;
+}
+
+.section__1 {
+    background-color: $wordsSection1;
+
+    .title {
+        color: $whiteColor;
+    }
+}
+
+.section__2 {
+    background-color: $wordsSection2;
+
+    .title {
+        color: $whiteColor;
+    }
+}
+
+.section__3 {
+    background-color: $wordsSection3;
+}
+
+.section__4 {
+    background-color: $wordsSection4;
+
+    .title {
+        color: $whiteColor;
+    }
+}
+
+.section__5 {
+    background-color: $wordsSection5;
+
+    .title {
+        color: $whiteColor;
+    }
+}
+
+.section__6 {
+    background-color: $wordsSection6;
+
+    .title {
+        color: $whiteColor;
+    }
+}
+
+.text__center {
+    text-align: center;
+    color: $whiteColor;
 }

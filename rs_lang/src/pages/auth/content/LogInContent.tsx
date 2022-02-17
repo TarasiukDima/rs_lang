@@ -53,35 +53,33 @@ const LogInContent = ({ changeUser, serviceApi }: ILogUserProps) => {
         }
 
         const {
-            errorLoginText,
-            token,
-            userId: id,
-            refreshToken,
-            name,
+            data,
+            errorText,
         } = await serviceApi.logInUser({
             email: emailText,
             password: passwordText,
         });
 
-        if (errorLoginText) {
-            return stopSubmit(errorLoginText);
+        if (errorText) {
+            return stopSubmit(errorText);
         }
 
-        const userWords = await serviceApi.getUserAllWords();
-        if (userWords.errorUserWords) {
-            return stopSubmit(userWords.errorUserWords);
+        const {data: userWords, errorText: errorUserWords} = await serviceApi.getUserAllWords();
+        if (errorUserWords) {
+            return stopSubmit(errorUserWords);
         }
-
+        const date = new Date().getTime();
         const refreshUserObj: IChangeUserObject = {
-            id: id,
-            name: name,
-            token: token,
-            refreshToken: refreshToken,
+            id: data.userId,
+            name: data.name,
+            token: data.token,
+            refreshToken: data.refreshToken,
             authorization: true,
             wordsSettings: {},
+            time: date,
         };
 
-        userWords.words.forEach(({ wordId, optional }) => {
+        userWords.forEach(({ wordId, optional }) => {
             refreshUserObj.wordsSettings[wordId] = optional;
         });
 
@@ -92,7 +90,7 @@ const LogInContent = ({ changeUser, serviceApi }: ILogUserProps) => {
 
         changeUser(refreshUserObj);
         saveSettingsLocalStorage(LOCASTORAGE__NAME_USER, objInfo);
-        stopSubmit(errorLoginText);
+        stopSubmit("");
     };
 
     return (

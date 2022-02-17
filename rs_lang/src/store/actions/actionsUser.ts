@@ -29,6 +29,13 @@ export const changeToken: TSimpleActionFC<string> = (newToken: string) => {
     };
 };
 
+export const changeRefreshToken: TSimpleActionFC<string> = (newToken: string) => {
+    return {
+        type: CHANGE_USER_REFRESHTOKEN,
+        payload: newToken,
+    };
+};
+
 export const changeId: TSimpleActionFC<string> = (newId: string) => {
     return {
         type: CHANGE_USER_ID,
@@ -52,12 +59,7 @@ export const changeUserInformation: TSimpleActionFC<IChangeUserObject> = (
     };
 };
 
-export const changeUserToken: TSimpleActionFC<string> = (newToken: string) => {
-    return {
-        type: CHANGE_USER_REFRESHTOKEN,
-        payload: newToken,
-    };
-};
+
 
 export const addUserLearnedWord: TSimpleActionFC<string> = (idWord: string) => {
     return {

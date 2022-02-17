@@ -2,7 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 
-import { PageLinks } from "../../helpers/consts";
+import { NUMBER_HIDDEN_CATEGORY, PageLinks } from "../../helpers/consts";
+import {
+    hiddenCategoriesTabsInfo,
+    statisticTabsInfo,
+} from "../../helpers/settings";
 import { INavigationPages } from "../../types/common";
 import { IState } from "../../types/redux";
 
@@ -14,17 +18,23 @@ const NavigationPages = ({
     authorization,
     vocabularyCategory,
     vocabularyPage,
+    vocabularyHiddenTab,
     statisticTab,
 }: INavigationPages) => {
+    // vocabulary
+    const vocabularyLink =
+        vocabularyCategory === NUMBER_HIDDEN_CATEGORY
+            ? hiddenCategoriesTabsInfo[vocabularyHiddenTab].link
+            : `${PageLinks.bookPage}${vocabularyCategory + 1}/${
+                  vocabularyPage + 1
+              }`;
+
     const HeaderLinks = [
         { link: PageLinks.mainPage, textLink: "Главная" },
         { link: PageLinks.gamesPage, textLink: "Игры" },
+        { link: vocabularyLink, textLink: "Словарь" },
         {
-            link: `${PageLinks.bookPage}${vocabularyCategory}/${vocabularyPage}`,
-            textLink: "Словарь",
-        },
-        {
-            link: `${PageLinks.statisticPage}${statisticTab}`,
+            link: statisticTabsInfo[statisticTab].link,
             textLink: "Статистика",
         },
     ];
@@ -58,11 +68,17 @@ const NavigationPages = ({
 
 const mapStateToProps = ({
     user: { authorization },
-    pages: { vocabularyCategory, vocabularyPage, statisticTab },
+    pages: {
+        vocabularyCategory,
+        vocabularyPage,
+        statisticTab,
+        vocabularyHiddenTab,
+    },
 }: IState) => ({
     authorization,
     vocabularyCategory,
     vocabularyPage,
+    vocabularyHiddenTab,
     statisticTab,
 });
 

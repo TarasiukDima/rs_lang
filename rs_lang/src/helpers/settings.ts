@@ -103,13 +103,12 @@ export const statisticTabsInfo: Array<ITabInfoObj> = [
 
 /* localstorage user keys end */
 export const USER_LOCAL_KEYS = [
-    "name",
     "id",
-    "token",
+    "name",
     "token",
     "refreshToken",
     "authorization",
-    "time",
     "wordsSettings",
+    "time",
 ];
 /* localstorage user keys end */

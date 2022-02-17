@@ -4,7 +4,7 @@ import { LOCASTORAGE__NAME_USER } from "../../../helpers/consts";
 import { removeSettingsLocalStorage } from "../../../helpers/utils";
 import { ILogOut } from "../../../types/form";
 
-const LogOutContent = ({ name, changeUser, serviceApi }: ILogOut) => {
+const LogOutContent = ({ name, changeUser, changeCategory, serviceApi }: ILogOut) => {
     const logOutUser = () => {
         changeUser({
             id: "",
@@ -13,7 +13,10 @@ const LogOutContent = ({ name, changeUser, serviceApi }: ILogOut) => {
             refreshToken: "",
             authorization: false,
             wordsSettings: {},
+            time: -10000000,
         });
+
+        changeCategory(0);
 
         serviceApi.logOut();
         removeSettingsLocalStorage(LOCASTORAGE__NAME_USER);

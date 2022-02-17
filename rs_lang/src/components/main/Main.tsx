@@ -17,18 +17,9 @@ const Main: FC = () => {
                 <Route path={PageLinks.gamesPage} element={<GamesPage />} />
                 <Route path={PageLinks.gameSprintPage} element={<OneGame />} />
                 <Route path={PageLinks.gameAudioPage} element={<OneGame />} />
-                <Route
-                    path={PageLinks.bookPage + ":categoryid/:pageid"}
-                    element={<BookPage />}
-                />
-                <Route
-                    path={PageLinks.vocabularyPage + ":categoryid"}
-                    element={<BookPage />}
-                />
-                <Route
-                    path={PageLinks.statisticPage + ":tabid"}
-                    element={<StatisticPage />}
-                />
+                <Route path={PageLinks.bookPage + ":categoryid/:pageid"} element={<BookPage />} />
+                <Route path={PageLinks.vocabularyPage + ":categoryid"} element={<BookPage />} />
+                <Route path={PageLinks.statisticPage + ":tabid"} element={<StatisticPage />}/>
                 <Route path={PageLinks.authPage} element={<AuthPage />} />
                 <Route path={PageLinks.loginPage} element={<AuthPage />} />
                 <Route path="*" element={<ErrorPage />} />

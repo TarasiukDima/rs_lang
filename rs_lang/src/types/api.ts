@@ -45,7 +45,7 @@ export interface IApiUserInfo {
     token: string;
     userId: string;
     refreshToken: string;
-    time: boolean;
+    time?: number;
 }
 
 export interface IUserLogInForm {
@@ -58,8 +58,8 @@ export interface IUserCreateForm extends IUserLogInForm {
 }
 
 export interface IApiWordsObj {
-    words: Array<IWordItemObj>;
-    errorWordsText: null | string;
+    data: Array<IWordItemObj>;
+    errorText: null | string;
 }
 
 export interface IWordOptionObj {

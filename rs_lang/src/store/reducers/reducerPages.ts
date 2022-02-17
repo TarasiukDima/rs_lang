@@ -13,8 +13,6 @@ import {
 } from "../actions/actionsPages";
 
 const INITIAL_STATE = (): IPagesState => {
-    console.log(localStorage.getItem(LOCASTORAGE__VOC_CAT));
-
     const category = Number(localStorage.getItem(LOCASTORAGE__VOC_CAT)) || 0;
     const page = Number(localStorage.getItem(LOCASTORAGE__VOC_PAG)) || 0;
     const hiddenTab =

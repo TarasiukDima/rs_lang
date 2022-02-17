@@ -1,4 +1,9 @@
-import { LOCASTORAGE__NAME_USER, URL_DATA } from "../helpers/consts";
+import {
+    COUNT_TOKEN_REFRESH,
+    COUNT_TOKEN_WORK,
+    LOCASTORAGE__NAME_USER,
+    URL_DATA,
+} from "../helpers/consts";
 import { USER_LOCAL_KEYS } from "../helpers/settings";
 import { checkSettingsLocalStorage } from "../helpers/utils";
 import {
@@ -42,10 +47,9 @@ class ServiceApi {
         refreshToken,
         time,
     }: IApiUserInfo) => {
-        const date = new Date().getTime();
-        console.log(date);
-
-        this.time = time ? date : 0;
+        if (time) {
+            this.time = time;
+        }
         this.token = token;
         this.refreshToken = refreshToken;
         this.idUser = userId;
@@ -81,7 +85,6 @@ class ServiceApi {
             LOCASTORAGE__NAME_USER,
             USER_LOCAL_KEYS
         ) as ILocalStoragUser;
-        console.log(answer);
 
         if (answer) {
             this.time = answer.time || 0;
@@ -107,49 +110,81 @@ class ServiceApi {
         });
     };
 
+    public checkTimeToken = () => {
+        const now = new Date().getTime();
+        const timeOutToken = now - COUNT_TOKEN_WORK > this.time;
+        const timeAuthorization = now - COUNT_TOKEN_REFRESH > this.time;
+
+        console.log("now", now);
+        console.log("time", this.time);
+        console.log("minus", now - this.time);
+
+        return {
+            tokenTimeOut: timeOutToken,
+            authorizationTimeOut: timeAuthorization,
+        };
+    };
+    public clearInfo = () => {
+        this.changeUserInfo({
+            time: 0,
+            token: "",
+            refreshToken: "",
+            userId: "",
+        });
+    };
+
     /* user start */
     public createUser = async (user: IUserCreateForm) => {
         const data = JSON.stringify(user);
         return await this.getData(ApiUrls.createUser, "POST", data)
             .then((data) => {
                 return {
-                    ...data,
+                    data: data,
                     errorText: null,
                 };
             })
             .catch((error) => {
                 console.error(error);
-                return { id: null, errorText: ErrorMessages.createUser };
+                return { data: null, errorText: ErrorMessages.createUser };
             });
     };
 
-    public getToken = async () => {
+    public getNewToken = async () => {
         const urlString = `${ApiUrls.createUser}/${this.idUser}/${ApiUrls.tokens}`;
-        return await this.getData(urlString).catch((error) =>
-            console.error(error, ErrorMessages.getToken)
-        );
-    };
-
-    public logInUser = async (user: IUserLogInForm) => {
-        const data = JSON.stringify(user);
-
-        return await this.getData(ApiUrls.signInUser, "POST", data)
+        return await this.getData(urlString, "GET")
             .then((data) => {
-                this.changeUserInfo({
-                    token: data.token,
-                    userId: data.userId,
-                    refreshToken: data.refreshToken,
-                    time: true,
-                });
-
+                console.log(data);
                 return {
-                    ...data,
-                    errorLoginText: null,
+                    data: data,
+                    errorText: null,
                 };
             })
             .catch((error) => {
                 console.error(error);
-                return { errorLoginText: ErrorMessages.authorization };
+                return { data: null, errorText: ErrorMessages.getToken };
+            });
+    };
+
+    public logInUser = async (user: IUserLogInForm) => {
+        const data = JSON.stringify(user);
+        return await this.getData(ApiUrls.signInUser, "POST", data)
+            .then((data) => {
+                const date = new Date().getTime();
+                this.changeUserInfo({
+                    token: data.token,
+                    userId: data.userId,
+                    refreshToken: data.refreshToken,
+                    time: date,
+                });
+
+                return {
+                    data: data,
+                    errorText: null,
+                };
+            })
+            .catch((error) => {
+                console.error(error);
+                return { data: null, errorText: ErrorMessages.authorization };
             });
     };
 
@@ -158,7 +193,7 @@ class ServiceApi {
             token: "",
             userId: "",
             refreshToken: "",
-            time: false,
+            time: 0,
         });
     };
     /* user end */
@@ -173,13 +208,13 @@ class ServiceApi {
         return await this.getData(urlString)
             .then((words) => {
                 return {
-                    words: words,
-                    errorWordsText: null,
+                    data: words,
+                    errorText: null,
                 };
             })
             .catch((error) => {
                 console.error(error);
-                return { errorWordsText: ErrorMessages.getWords, words: [] };
+                return { errorText: ErrorMessages.getWords, data: [] };
             });
     };
     /* words end */
@@ -190,13 +225,13 @@ class ServiceApi {
         return await this.getData(url, "GET", "")
             .then((data) => {
                 return {
-                    words: [...data],
-                    errorUserWords: null,
+                    data: [...data],
+                    errorText: null,
                 };
             })
             .catch((error) => {
                 console.error(error);
-                return { errorUserWords: ErrorMessages.getUserAllWords };
+                return { errorText: ErrorMessages.getUserAllWords, data: [] };
             });
     };
 
@@ -215,13 +250,13 @@ class ServiceApi {
         )
             .then((data) => {
                 return {
-                    ...data,
-                    errorUserWords: null,
+                    data: data,
+                    errorText: null,
                 };
             })
             .catch((error) => {
                 console.error(error);
-                return { errorUserWords: ErrorMessages.createUserWord };
+                return { data: null, errorText: ErrorMessages.createUserWord };
             });
     };
 
@@ -241,13 +276,13 @@ class ServiceApi {
         )
             .then((data) => {
                 return {
-                    ...data,
-                    errorUserWords: null,
+                    data: data,
+                    errorText: null,
                 };
             })
             .catch((error) => {
                 console.error(error);
-                return { errorUserWords: ErrorMessages.updateUserWord };
+                return { data: null, errorText: ErrorMessages.updateUserWord };
             });
     };
 
@@ -259,13 +294,13 @@ class ServiceApi {
         )
             .then((data) => {
                 return {
-                    ...data,
-                    errorUserWords: null,
+                    data: data,
+                    errorText: null,
                 };
             })
             .catch((error) => {
                 console.error(error);
-                return { errorUserWords: ErrorMessages.deleteUserWord };
+                return { data: null, errorText: ErrorMessages.deleteUserWord };
             });
     };
 
@@ -274,31 +309,42 @@ class ServiceApi {
         return await this.getData(url, "GET", "")
             .then((data) => {
                 return {
-                    ...data,
-                    errorUserWords: null,
+                    data: data,
+                    errorText: null,
                 };
             })
             .catch((error) => {
                 console.error(error);
-                return { errorUserWords: ErrorMessages.getUserWord };
+                return { data: null, errorText: ErrorMessages.getUserWord };
             });
     };
     /* user words end */
 
     /* user agregates start */
-    public getUserAggregatedWords = async () => {
-        const url = `${ApiUrls.createUser}/${this.idUser}/${ApiUrls.aggregatedWords}`;
-        return await this.getData(url, "GET", "")
+    public getUserAggregatedWords = async (varient: number) => {
+        const filter =
+            varient === 0
+                ? encodeURI(
+                    '{ "$and": [{"userWord.difficulty":"normal", "userWord.optional.difficult":true}]}'
+                )
+                : encodeURI(
+                    '{ "$and": [{"userWord.difficulty":"normal", "userWord.optional.learned":true}]}'
+                );
+
+        const url = `${ApiUrls.createUser}/${this.idUser}/${ApiUrls.aggregatedWords}?filter=${filter}&wordsPerPage=3600`;
+
+        return await this.getData(url, "GET")
             .then((data) => {
                 return {
-                    ...data,
-                    errorUserWords: null,
+                    data: data,
+                    errorText: null,
                 };
             })
             .catch((error) => {
                 console.error(error);
                 return {
-                    errorUserWords: ErrorMessages.getUserAggregatedWords,
+                    data: null,
+                    errorText: ErrorMessages.getUserAggregatedWords,
                 };
             });
     };
@@ -310,13 +356,16 @@ class ServiceApi {
         return await this.getData(url, "GET", "")
             .then((data) => {
                 return {
-                    ...data,
-                    errorUserWords: null,
+                    data: data,
+                    errorText: null,
                 };
             })
             .catch((error) => {
                 console.error(error);
-                return { errorUserWords: ErrorMessages.getUseStatistics };
+                return {
+                    data: null,
+                    errorText: ErrorMessages.getUseStatistics,
+                };
             });
     };
 
@@ -325,14 +374,15 @@ class ServiceApi {
         return await this.getData(url, "PUT", JSON.stringify(optionsUpdate))
             .then((data) => {
                 return {
-                    ...data,
-                    errorUserWords: null,
+                    data: data,
+                    errorText: null,
                 };
             })
             .catch((error) => {
                 console.error(error);
                 return {
-                    errorUserWords: ErrorMessages.ulpdateUseStatistics,
+                    data: null,
+                    errorText: ErrorMessages.ulpdateUseStatistics,
                 };
             });
     };
@@ -344,13 +394,13 @@ class ServiceApi {
         return await this.getData(url, "GET", "")
             .then((data) => {
                 return {
-                    ...data,
-                    errorUserWords: null,
+                    data: data,
+                    errorText: null,
                 };
             })
             .catch((error) => {
                 console.error(error);
-                return { errorUserWords: ErrorMessages.getUseSettings };
+                return { data: null, errorText: ErrorMessages.getUseSettings };
             });
     };
 
@@ -359,13 +409,16 @@ class ServiceApi {
         return await this.getData(url, "PUT", JSON.stringify(optionsUpdate))
             .then((data) => {
                 return {
-                    ...data,
-                    errorUserWords: null,
+                    data: data,
+                    errorText: null,
                 };
             })
             .catch((error) => {
                 console.error(error);
-                return { errorUserWords: ErrorMessages.updateUseSettings };
+                return {
+                    edata: null,
+                    rrorText: ErrorMessages.updateUseSettings,
+                };
             });
     };
     /* user settings end */

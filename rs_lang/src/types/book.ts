@@ -24,6 +24,7 @@ export interface IWordItemObj {
     textExampleTranslate: string;
     textMeaningTranslate: string;
     wordTranslate: string;
+    _id?: string;
 }
 
 export interface IBookContentProps {
@@ -46,6 +47,8 @@ export interface IWordItemProps extends IWordItemObj {
 
     serviceApi: ServiceApi;
 
+    vocabularyCategory: number;
+    vocabularyHiddenTab: number;
     token: string;
     userID: string;
     wordsSettings: IUserWordsInformation;
@@ -83,5 +86,6 @@ export interface IBookCategoriesProps {
 
 export interface IBookLearnProps {
     authorization: boolean;
+    vocabularyHiddenTab: number;
     serviceApi: ServiceApi;
 }

@@ -5,6 +5,9 @@ export const URL_DATA_FILES =
 export const SPRINT_GAME_TIME = 60;
 export const COUNT_PAGE = 29;
 
+export const COUNT_TOKEN_REFRESH = 86400000;
+export const COUNT_TOKEN_WORK = 16200000;
+
 export const PREV_PAGINGATION_TEXT = "&#171;";
 export const NEXT_PAGINGATION_TEXT = "&#187;";
 
@@ -31,7 +34,7 @@ export enum PageLinks {
 }
 
 export const NUMBER_HIDDEN_CATEGORY = 6;
-export const NAME_HIDDEN_CATEGORY = "Сложные слова";
+export const NAME_HIDDEN_CATEGORY = "Список слов";
 
 /* forms start */
 export const submitRegistrText = "Зарегистрироваться";

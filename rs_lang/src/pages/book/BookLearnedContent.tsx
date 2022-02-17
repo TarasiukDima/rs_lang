@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Loader from "../../components/loader";
 import WordsList from "../../components/wordsList";
@@ -9,22 +9,27 @@ import { IState } from "../../types/redux";
 const BookLearnedContent = ({
     authorization,
     serviceApi,
+    vocabularyHiddenTab,
 }: IBookLearnProps) => {
     const [loadingData, setLoadingData] = useState(false);
     const [bookListData, setBookListData] = useState([] as Array<IWordItemObj>);
 
-    // const getData = async () => {
-    //     setLoadingData(true);
-    //     const {words, errorWordsText} = await serviceApi.getWords(
-    //         vocabularyCategory,
-    //         vocabularyPage
-    //     );
-    //     setBookListData(words);
-    //     setLoadingData(false);
-    // };
+    const getData = async () => {
+        setLoadingData(true);
+        const { data, errorText } = await serviceApi.getUserAggregatedWords(vocabularyHiddenTab);
+        if (errorText) {
+            setLoadingData(false);
+            return errorText;
+        }
+        setBookListData(data[0].paginatedResults);
+        setLoadingData(false);
+    };
 
-    if (!authorization) return <h3>Авторизируйтесь</h3>
+    useEffect(() => {
+        getData();
+    }, [vocabularyHiddenTab]);
 
+    if (!authorization) return <h3 className="text__center">Авторизируйтесь</h3>;
     return (
         <>
             {loadingData ? (
@@ -37,9 +42,11 @@ const BookLearnedContent = ({
 };
 
 const mapStateToProps = ({
-    user: {authorization}
+    user: { authorization },
+    pages: {vocabularyHiddenTab}
 }: IState) => ({
     authorization,
+    vocabularyHiddenTab,
 });
 
 export default connect(mapStateToProps)(BookLearnedContent)
