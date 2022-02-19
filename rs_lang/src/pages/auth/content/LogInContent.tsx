@@ -11,6 +11,7 @@ import {
     checkFormErrors,
     saveSettingsLocalStorage,
 } from "../../../helpers/utils";
+import ApiContextWrapper from "../../../hoc/ApiContextWrapper";
 import {
     IChangeUserObject,
     ILocalStoragUser,
@@ -136,4 +137,5 @@ const LogInContent = ({ changeUser, serviceApi }: ILogUserProps) => {
     );
 };
 
-export default LogInContent;
+
+export default ApiContextWrapper(LogInContent);

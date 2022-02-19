@@ -2,13 +2,12 @@ import React, { FC } from "react";
 import { Provider } from "react-redux";
 import store from './store/store'
 import ServiceApi from "./services/services";
-import { ApiContextConsumer, ApiContextProvider } from "./services/servicesContext";
+import { ApiContextProvider } from "./services/servicesContext";
 
 import Header from "./components/header";
-import CheckAuthorization from "./checkAuthorization";
 import Main from "./components/main";
 import Footer from "./components/footer";
-import AudioGame from "./components/audioGame";
+import AudioPlayer from "./components/audioPlayer";
 
 import './App.scss';
 
@@ -20,15 +19,10 @@ const App: FC = () => {
         <Provider store={store}>
             <Header />
             <ApiContextProvider value={serviceApi}>
-                {/* <ApiContextConsumer>
-                    {(serviceApi) => <CheckAuthorization serviceApi={serviceApi} />
-                    }
-                </ApiContextConsumer> */}
-
                 <Main />
             </ApiContextProvider>
             <Footer />
-            <AudioGame />
+            <AudioPlayer />
         </Provider>
     );
 };

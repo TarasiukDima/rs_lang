@@ -1,11 +1,13 @@
 import { combineReducers, createStore, StoreEnhancer } from "redux";
 
 import reducerAudio from "./reducers/reducerAudio";
+import reducerGame from "./reducers/reducerGame";
 import reducerUser from "./reducers/reducerUser";
 import reducerPages from "./reducers/reducerPages";
 
 export const rootReducer = combineReducers({
     user: reducerUser,
+    game: reducerGame,
     audio: reducerAudio,
     pages: reducerPages,
 });

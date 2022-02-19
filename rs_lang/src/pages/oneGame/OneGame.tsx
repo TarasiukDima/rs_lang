@@ -1,37 +1,84 @@
-import React from "react";
+import React, { Dispatch } from "react";
+import { connect } from "react-redux";
 import { useLocation } from "react-router-dom";
 import AudioGame from "../../components/audioGame";
 import SectionContent from "../../components/section";
 import SprintGame from "../../components/sprintGame";
 import { PageLinks } from "../../helpers/consts";
+import {
+    changeGameCategory,
+    changeGamePage,
+} from "../../store/actions/actionsGame";
+import { IOneGameProps } from "../../types/game";
+import { IAction, IState } from "../../types/redux";
+import ChooseCategoryGame from "./ChooseCategoryGame";
 
 import "./index.scss";
 
-const OneGame = () => {
-    const location = useLocation();
-    let gameTitle = "";
-    let needGame = <div>Данной игры нет</div>;
+const OneGame = ({
+    gamePage,
+    gameCategory,
+    changeGameCat,
+    changeGamePage,
+}: IOneGameProps) => {
+    const { pathname } = useLocation();
+    let gameTitle = "Данной игры нет";
+    let needGame = "not game";
 
-    switch (location.pathname) {
+    switch (pathname) {
         case PageLinks.gameSprintPage:
-            needGame = <SprintGame />;
+            needGame = "sprint";
             gameTitle = "Спринт";
             break;
         case PageLinks.gameAudioPage:
-            needGame = <AudioGame />;
+            needGame = "audio";
             gameTitle = "Аудиовызов";
             break;
         default:
             break;
     }
 
-    return (
-        <SectionContent nameClass="games__section">
-            <h1 className="title">{gameTitle}</h1>
+    const changeCateAndPage = (idCat: number) => {
+        changeGameCat(idCat);
+        changeGamePage(29);
+    };
 
-            {needGame}
+    const showChoose = gameCategory === null;
+    const showAudioGame = !showChoose && needGame === "audio";
+    const showSprintGame = !showChoose && needGame === "sprint";
+
+
+
+    return (
+         <SectionContent nameClass="games__section">
+            {showChoose ? (
+                <ChooseCategoryGame
+                    gameTitle={gameTitle}
+                    changeCateAndPage={changeCateAndPage}
+                />
+            ) : <></>}
+
+
+            {showAudioGame ? <AudioGame /> : <></>}
+            {showSprintGame ? <SprintGame /> : <></>}
         </SectionContent>
     );
 };
 
-export default OneGame;
+const mapStateToProps = ({ game: { gamePage, gameCategory } }: IState) => ({
+    gamePage,
+    gameCategory,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<IAction>) => {
+    return {
+        changeGameCat: (id: number | null) => {
+            dispatch(changeGameCategory(id));
+        },
+        changeGamePage: (id: number | null) => {
+            dispatch(changeGamePage(id));
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(OneGame);

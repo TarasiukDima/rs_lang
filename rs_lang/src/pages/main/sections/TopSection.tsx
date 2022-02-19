@@ -33,7 +33,7 @@ const TopSection = () => {
                     <span data-text={mainTitleText2}>{mainTitleText2}</span>
                 </h1>
 
-                <ButtonEl onclick={registrationPageShow}>Регистрация</ButtonEl>
+                <ButtonEl nameClass="shadow__button" onclick={registrationPageShow}>Регистрация</ButtonEl>
             </div>
         </SectionContent>
     );

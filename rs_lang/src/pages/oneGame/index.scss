@@ -1,2 +1,20 @@
 @import "../../scss/variebles";
 @import "../../scss/mixins";
+
+.game__choose__text {
+    text-align: center;
+    margin: 30px auto;
+    font-size: 28px;
+    color: $dark;
+}
+
+
+.games__section .categories__item .button {
+    &:hover {
+        background: $orangeRedColor;
+    }
+    span {
+        box-shadow: none;
+    }
+}
+

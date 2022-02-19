@@ -13,7 +13,7 @@ const ErrorPage = () => {
                 К сожалению данной страницы не существует!
             </p>
 
-            <Link className="button" to={PageLinks.mainPage}>
+            <Link className="button shadow__button" to={PageLinks.mainPage}>
                 <span>На главную</span>
             </Link>
         </SectionContent>

@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { SPRINT_GAME_TIME } from "../../helpers/consts";
 import "./index.scss";
 
-const Timer = () => {
-    const [time, setTime] = useState(SPRINT_GAME_TIME);
+interface ITimerProps {
+    timeTimer: number;
+}
+
+const Timer = ({ timeTimer }: ITimerProps) => {
+    const [time, setTime] = useState(timeTimer);
 
     // useEffect(() => {
     //     const timeId = setInterval(() => {

@@ -1,51 +1,63 @@
 /* colors start */
-$scrollbarTrack: #e4e4e4;
-$scrollbarThumb: #411f26;
-$bgColor1: #333c54;
-$bgColor2: #fff;
-
 $withOutColor: transparent;
 $whiteColor: #fff;
 $black: #000;
-$burgerColor: #d27230;
-$footerLinks: #e2d4c4;
-$linksHover: #d27230;
+$dark: #411f26;
+$middleBlue: #394689;
+$middleDarkBlue: #333c54;
+$darkBlue: #30364a;
+$orangeRedColor: #FF512F;
+$orangeColor: #d27230;
+$orangeLight: #F09819;
+$grey: #6e6e6e;
+$greyLight: #707070;
+$brownLight: #e2d4c4;
 
-$contentBg: #e2d4c4;
+$bgColor1: $middleDarkBlue;
+$bgColor2: $whiteColor;
+
+$scrollbarTrack: #e4e4e4;
+$scrollbarThumb: $dark;
+
+$burgerColor: $orangeColor;
+$footerLinks: $brownLight;
+$linksHover: $orangeColor;
+
+$contentBg: $brownLight;
 $whiteBg: #f6f6f6;
-$mainTitle: #411f26;
+$mainTitle: $dark;
 $fonText1: #c4d0ee;
 $fonText2: #eae8db;
 
 
 $buttonBgColor1: #757b92;
-$buttonBgColor2: #30364a;
+$buttonBgColor2: $darkBlue;
 $buttonShadowColor: rgba(57, 70, 137, 0.8);
 
 $cardShadowColor: rgba(132, 132, 133, 0.4);
-$cardShadowColorHover: rgba(112, 112, 112, 0.8);
-$cardImgBg1: #F09819;
-$cardImgBg2: #FF512F;
+$cardShadowColorHover: transparentize($greyLight, 0.2);
+$cardImgBg1: $orangeLight;
+$cardImgBg2: $orangeRedColor;
 
-$authInfoBorder: rgba(112, 112, 112, 0.8);
-$submitBth: #30364a;
-$submitBthHover: #FF512F;
+$authInfoBorder: transparentize($greyLight, 0.2);
+$submitBth: $darkBlue;
+$submitBthHover: $orangeRedColor;
 $submitBthShadow: rgba(31, 31, 31, 0.9);
-$formFileRound: #6e6e6e;
-$formFileName: #FF512F;
+$formFileRound: $grey;
+$formFileName: $orangeRedColor;
 
-$errorTitleColor: #FF512F;
+$errorTitleColor: $orangeRedColor;
 
-$gameShadow: 2px 2px 10px rgba(112, 112, 112, 0.8);
+$gameShadow: 2px 2px 10px transparentize($greyLight, 0.2);
 $gameNameShadow: 0 0 1px $black,  0 1px 2px $black, 1px 2px 3px $black;
 $gameNameShadow2: 0 1px 1px $black,  0 2px 2px $black, 1px 3px 2px $black,
 0 5px 2px $black,  0 6px 2px $black, 1px 8px 2px $black;
 $gameDarkFon: rgba(57, 70, 137, 0.8);
-$gameHoverName: #FF512F;
+$gameHoverName: $orangeRedColor;
 
-$tabBg: #30364a;
-$activeTabBg: #F09819;
-$tabShadow: 2px 2px 6px rgba(112, 112, 112, 0.7);
+$tabBg: $darkBlue;
+$activeTabBg: $orangeLight;
+$tabShadow: 2px 2px 6px transparentize($greyLight, 0.3);
 
 
 $wordsSection0: $withOutColor;
@@ -56,16 +68,16 @@ $wordsSection4: #890ea8;
 $wordsSection5: #07b1db;
 $wordsSection6: #44080b;
 
-$wordBg: rgba(255, 255, 255, 0.85);
+$wordBg: transparentize($whiteColor, 0.15);
 $wordShadow: inset 0 0 20px rgba(14, 14, 14, 0.5);
 $wordTranslateColor: #535353;
 $wordBorder: 3px solid rgba(109, 109, 109, 0.3);
-$wordMiniTitle: #394689;
-$wordButtonHelpersBg: #394689;
-$wordButtonHelpersBgHover: #FF512F;
+$wordMiniTitle: $middleBlue;
+$wordButtonHelpersBg: $middleBlue;
+$wordButtonHelpersBgHover: $orangeRedColor;
 $learnAllItemShadow: 0 0 15px rgba(0, 255, 34, 0.671);
 
-$paginationActiveBg: #333c54;
+$paginationActiveBg: $middleDarkBlue;
 
 $loaderColor: #0a69aa;
 $loaderColor2: rgba(7,171, 204, 0.2);
@@ -73,12 +85,12 @@ $loaderColor3: rgba(7,171, 204, 0.5);
 $loaderColor4: rgba(7,171, 204, 0.7);
 
 $statisticBoxshadow: inset 0 0 20px rgba(14, 14, 14, 0.4);
-$statisticTitleColor: #333c54;
-$statisticListColor: #6e6e6e;
+$statisticTitleColor: $middleDarkBlue;
+$statisticListColor: $grey;
 
-$timerColor: #394689;
+$timerColor: $middleBlue;
 
-$errorText: rgb(255, 0, 0);
+$errorText: #ff0000;
 
 $userNameColor: #928980;
 

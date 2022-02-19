@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Loader from "../../components/loader";
 import WordsList from "../../components/wordsList";
+import ApiContextWrapper from "../../hoc/ApiContextWrapper";
 
 import { IBookLearnProps, IWordItemObj } from "../../types/book";
 import { IState } from "../../types/redux";
@@ -49,4 +50,5 @@ const mapStateToProps = ({
     vocabularyHiddenTab,
 });
 
-export default connect(mapStateToProps)(BookLearnedContent)
+
+export default connect(mapStateToProps)(ApiContextWrapper(BookLearnedContent))

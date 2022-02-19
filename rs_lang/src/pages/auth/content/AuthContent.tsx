@@ -1,4 +1,4 @@
-import React, { RefObject, useRef, useState } from "react";
+import React, { FC, RefObject, useRef, useState } from "react";
 import FormInfo from "../../../components/formInfo";
 import LabelForm from "../../../components/label";
 import {
@@ -11,6 +11,7 @@ import {
     checkFormErrors,
     saveSettingsLocalStorage,
 } from "../../../helpers/utils";
+import ApiContextWrapper from "../../../hoc/ApiContextWrapper";
 import {
     IChangeUserObject,
     ILocalStoragUser,
@@ -18,7 +19,7 @@ import {
     TFormSubmitFC,
 } from "../../../types/form";
 
-const AuthContent = ({ changeUser, serviceApi }: ILogUserProps) => {
+const AuthContent: FC<ILogUserProps> = ({ changeUser, serviceApi }: ILogUserProps): JSX.Element => {
     const [errorName, setErrorName] = useState("");
     const [errorEmail, setErrorEmail] = useState("");
     const [errorPassword, setErrorPassword] = useState("");
@@ -175,4 +176,4 @@ const AuthContent = ({ changeUser, serviceApi }: ILogUserProps) => {
     );
 };
 
-export default AuthContent;
+export default ApiContextWrapper(AuthContent);

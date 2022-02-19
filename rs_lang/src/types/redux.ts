@@ -2,12 +2,18 @@ import { IChangeUserObject } from "./form";
 
 export interface IAction {
     type: string;
-    payload: number | string | boolean | IChangeUserObject;
+    payload: number | string | boolean | IChangeUserObject | null;
 }
 
 export interface IAudioState {
     audioSrc: string;
     playAudio: boolean;
+}
+
+export interface IGameState {
+    game: boolean;
+    gameCategory: null | number;
+    gamePage: null | number;
 }
 
 export interface IPagesState {
@@ -35,6 +41,7 @@ export interface IUserState {
 }
 
 export interface IState {
+    game: IGameState;
     user: IUserState;
     audio: IAudioState;
     pages: IPagesState;

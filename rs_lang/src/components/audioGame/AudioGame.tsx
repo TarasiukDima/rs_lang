@@ -1,39 +1,31 @@
-import React, { Dispatch, RefObject, useEffect, useRef } from "react";
+import React, { Dispatch, FC, useState } from "react";
 import { connect } from "react-redux";
+import { SPRINT_GAME_TIME } from "../../helpers/consts";
+import ApiContextWrapper from "../../hoc/ApiContextWrapper";
 import { changeAudioPlay } from "../../store/actions/actionsAudio";
-import { IAudioProps } from "../../types/common";
+import { IAudioGameProps } from "../../types/game";
 import { IAction, IState } from "../../types/redux";
+import Timer from "../timer";
+import AudioGameBlock from "./AudioGameBlock";
 
 import "./index.scss";
 
-const AudioGame = ({ audioSrc, playAudio, changeCategory }: IAudioProps) => {
-    const audioRef = useRef() as RefObject<HTMLAudioElement>;
-
-    useEffect(() => {
-        startPlay();
-        return () => changeCategory(false);
-    }, [audioSrc, playAudio]);
-
-    const endPlay = () => {
-        changeCategory(false);
-    };
-
-    const startPlay = () => {
-        const { current: player } = audioRef;
-
-        if (player && playAudio) {
-            (player as HTMLAudioElement).play();
-        }
-    };
+const AudioGame: FC<IAudioGameProps> = ({ serviceApi }: IAudioGameProps) => {
+    const [points, setPoints] = useState(0);
+    console.log(serviceApi);
 
     return (
-        <audio
-            className="audio__page"
-            src={audioSrc}
-            ref={audioRef}
-            onCanPlay={() => startPlay()}
-            onEnded={() => endPlay()}
-        />
+        <>
+        <div className="sprint__game_head">
+            <Timer timeTimer={SPRINT_GAME_TIME} />
+
+            <p className="total__poinst">
+                Очки: <span>{points}</span>
+            </p>
+        </div>
+
+        <AudioGameBlock />
+    </>
     );
 };
 
@@ -50,4 +42,4 @@ const mapDispatchToProps = (dispatch: Dispatch<IAction>) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AudioGame);
+export default connect(mapStateToProps, mapDispatchToProps)(ApiContextWrapper(AudioGame));

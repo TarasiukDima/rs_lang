@@ -13,6 +13,7 @@ import {
 } from "../../store/actions/actionsUser";
 import { IWordItemProps, TSoundButtonClick } from "../../types/book";
 import { IAction, IState } from "../../types/redux";
+import ButtonEl from "../button";
 import button from "../button";
 
 const WordsItem = ({
@@ -66,10 +67,10 @@ const WordsItem = ({
     useEffect(() => {
         setCoutnSecond(true);
 
-        learned && difficult
+        learned
             ? changeCountLearnedItems(+1)
             : changeCountLearnedItems(-1);
-    }, [learned, difficult]);
+    }, [learned]);
 
     const clickButton: TSoundButtonClick = (audio: string) => {
         changeSrcSong(audio);
@@ -185,23 +186,24 @@ const WordsItem = ({
 
             <div className="buttons__wrap">
                 {(showTwoButtons || showDifficultButton) && (
-                    <button
-                        className="button__card"
-                        onClick={() => changeDifficult(id)}
-                        disabled={loading}
+                    <ButtonEl
+                        nameClass="button__card"
+                        onclick={() => changeDifficult(id)}
+                        disable={loading}
                     >
                         {difficultButtonText}
-                    </button>
+                    </ButtonEl>
                 )}
 
+
                 {(showTwoButtons || showLearnedButton) && (
-                    <button
-                        className="button__card"
-                        onClick={() => changeLearned(id)}
-                        disabled={loading}
+                    <ButtonEl
+                        nameClass="button__card"
+                        onclick={() => changeLearned(id)}
+                        disable={loading}
                     >
                         {leanedButtonText}
-                    </button>
+                    </ButtonEl>
                 )}
             </div>
         </li>

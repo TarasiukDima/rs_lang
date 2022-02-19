@@ -1,3 +1,4 @@
+import ServiceApi from "../services/services";
 import { TSoundPlay } from "./book";
 import { ILocalStoragUser } from "./form";
 import { IAction } from "./redux";
@@ -5,6 +6,7 @@ import { IAction } from "./redux";
 export type TSimpleFunction = () => void;
 export type TSimpleActionFC<T> = (el: T) => IAction;
 export type TSimpleTypeFunction<T> = (el: T) => void;
+export type TSimplePromiseFC = () => Promise<void>;
 
 export type TCheckValue = (
     value: number,
@@ -51,9 +53,10 @@ export interface PeopleCardProps {
 }
 
 export interface ButtonProps {
-    children: JSX.Element | Array<JSX.Element> | string;
+    children: JSX.Element | Array<JSX.Element> | string | number;
     nameClass?: string;
-    onclick?: TSimpleFunction;
+    onclick?: TSimpleFunction | TSimplePromiseFC;
+    disable?: boolean;
 }
 
 export interface INavigationPages {
@@ -88,11 +91,5 @@ export interface ITabItem {
     pageLink: string;
     clickFunction: TTabClickFC;
     textLink?: string | number;
-}
-
-export interface IAudioProps {
-    audioSrc: string;
-    playAudio: boolean;
-    changeCategory: TSoundPlay;
 }
 /* tabs start */

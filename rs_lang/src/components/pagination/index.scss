@@ -5,7 +5,7 @@
     @include dflex(center, stretch);
 
     flex-wrap: wrap;
-    margin-top: 30px;
+    margin: 30px auto;
 
     .pagination__item {
         margin: 5px;

@@ -1,6 +1,6 @@
 import React from "react";
+import GamesList from "../../components/gamesList/GamesList";
 import SectionContent from "../../components/section";
-import GamesList from "./GamesList";
 import "./index.scss";
 
 const GamesPage = () => {
@@ -8,7 +8,7 @@ const GamesPage = () => {
         <SectionContent nameClass="games__section">
             <h1 className="title">Игры</h1>
 
-            <GamesList />
+            <GamesList category={ null }  page={ null }/>
         </SectionContent>
     );
 };

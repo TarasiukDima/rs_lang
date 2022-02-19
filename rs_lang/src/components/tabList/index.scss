@@ -17,6 +17,10 @@
         box-shadow: $tabShadow;
         color: $whiteColor;
         background-color: $tabBg;
+
+        &:not(:disabled):hover {
+            background-color: $orangeRedColor;
+        }
     }
 
     .categories__item_link.active {

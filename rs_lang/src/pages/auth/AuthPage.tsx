@@ -17,40 +17,31 @@ import { IChangeUserObject, IFormPageProps } from "../../types/form";
 import "./index.scss";
 import { changeVocabularyCategory } from "../../store/actions/actionsPages";
 
-const AuthPage = ({ name, authorization, changeUser, changeCategory }: IFormPageProps) => {
+const AuthPage = ({
+    name,
+    authorization,
+    changeUser,
+    changeCategory,
+}: IFormPageProps) => {
     const location = useLocation();
-    if (authorization) {
-        return (
-            <ApiContextConsumer>
-                {(serviceApi) => (
-                    <LogOutContent
-                        changeCategory={changeCategory}
-                        name={name}
-                        changeUser={changeUser}
-                        serviceApi={serviceApi}
-                    />
-                )}
-            </ApiContextConsumer>
-        );
-    }
 
     return (
         <SectionContent nameClass="authorization__section">
-            <ApiContextConsumer>
-                {(serviceApi) =>
-                    location.pathname === PageLinks.loginPage ? (
-                        <LogInContent
-                            changeUser={changeUser}
-                            serviceApi={serviceApi}
-                        />
+            {authorization
+                ? (
+                    <LogOutContent
+                        name={name}
+                        changeCategory={changeCategory}
+                        changeUser={changeUser}
+                    />
+                )
+                : location.pathname === PageLinks.loginPage
+                    ? (
+                        <LogInContent changeUser={changeUser} />
                     ) : (
-                        <AuthContent
-                            changeUser={changeUser}
-                            serviceApi={serviceApi}
-                        />
+                        <AuthContent changeUser={changeUser} />
                     )
-                }
-            </ApiContextConsumer>
+            }
         </SectionContent>
     );
 };

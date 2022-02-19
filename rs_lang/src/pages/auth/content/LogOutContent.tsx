@@ -1,10 +1,10 @@
-import React from "react";
-import SectionContent from "../../../components/section";
+import React, { FC } from "react";
 import { LOCASTORAGE__NAME_USER } from "../../../helpers/consts";
 import { removeSettingsLocalStorage } from "../../../helpers/utils";
+import ApiContextWrapper from "../../../hoc/ApiContextWrapper";
 import { ILogOut } from "../../../types/form";
 
-const LogOutContent = ({ name, changeUser, changeCategory, serviceApi }: ILogOut) => {
+const LogOutContent: FC<ILogOut> = ({ name, changeUser, changeCategory, serviceApi }: ILogOut) => {
     const logOutUser = () => {
         changeUser({
             id: "",
@@ -23,18 +23,19 @@ const LogOutContent = ({ name, changeUser, changeCategory, serviceApi }: ILogOut
     };
 
     return (
-        <SectionContent nameClass="authorization__section">
+        <>
             <h1 className="title">Вы авторизованы</h1>
 
             <p className="user__name">
                 <span>Ваш ник:</span> <span className="user__nik">{name}</span>
             </p>
 
-            <button className="button logout__button" onClick={logOutUser}>
+            <button className="button shadow__button logout__button" onClick={logOutUser}>
                 <span>Выйти</span>
             </button>
-        </SectionContent>
+        </>
     );
 };
 
-export default LogOutContent;
+
+export default ApiContextWrapper(LogOutContent);

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Loader from "../../components/loader";
 import WordsList from "../../components/wordsList";
+import ApiContextWrapper from "../../hoc/ApiContextWrapper";
 
 import { IApiWordsObj } from "../../types/api";
 import { IBookContentProps, IWordItemObj } from "../../types/book";
@@ -49,4 +50,4 @@ const mapStateToProps = ({
     vocabularyPage,
 });
 
-export default connect(mapStateToProps)(BookWordsContent);
+export default connect(mapStateToProps)(ApiContextWrapper(BookWordsContent));

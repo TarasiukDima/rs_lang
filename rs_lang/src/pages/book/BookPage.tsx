@@ -12,6 +12,7 @@ import { IBookPageProps } from "../../types/book";
 
 import "./index.scss";
 import BookLearnedContent from "./BookLearnedContent";
+import GamesList from "../../components/gamesList/GamesList";
 
 const BookPage = ({ vocabularyCategory, vocabularyPage }: IBookPageProps) => {
     const hiddenCatActive = vocabularyCategory === NUMBER_HIDDEN_CATEGORY;
@@ -23,21 +24,23 @@ const BookPage = ({ vocabularyCategory, vocabularyPage }: IBookPageProps) => {
 
             <BookCategories />
 
-            <ApiContextConsumer>
-                {(serviceApi) =>
-                    hiddenCatActive ? (
-                        <BookLearnedContent serviceApi={serviceApi} />
-                    ) : (
-                        <BookWordsContent serviceApi={serviceApi} />
-                    )
-                }
-            </ApiContextConsumer>
+            {
+                hiddenCatActive ? (
+                    <BookLearnedContent/>
+                ) : (
+                    <BookWordsContent/>
+                )
+            }
 
             {!hiddenCatActive ? (
-                <PaginationPage
-                    activePage={vocabularyPage}
-                    countPages={COUNT_PAGE}
-                />
+                <>
+                    <PaginationPage
+                        activePage={vocabularyPage}
+                        countPages={COUNT_PAGE}
+                    />
+
+                    <GamesList category={vocabularyCategory} page={vocabularyPage}/>
+                </>
             ) : <></>}
         </SectionContent>
     );
