@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ITimerProps } from "../../types/game";
-import "./index.scss";
 
+import "./index.scss";
 
 
 const Timer = ({ timeTimer, cbEnd }: ITimerProps) => {

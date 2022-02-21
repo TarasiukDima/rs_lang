@@ -1,6 +1,7 @@
 import React from "react";
 import GamesList from "../../components/gamesList/GamesList";
 import SectionContent from "../../components/section";
+
 import "./index.scss";
 
 const GamesPage = () => {

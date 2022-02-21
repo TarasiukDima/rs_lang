@@ -4,7 +4,7 @@ import {
     TSimpleTypeFunction,
 } from "./common";
 import ServiceApi from "../services/services";
-import { IUserWordKeys, IUserWordsInformation } from "./redux";
+import { ISTATDayFields, ISTATOptions, IUserWordKeys, IUserWordsInformation } from "./redux";
 
 export type TSoundButtonClick = (audio: string) => void;
 export type TSoundPlay = (audio: boolean) => void;
@@ -65,6 +65,11 @@ export interface IWordItemProps extends IWordItemObj {
     removeDifficult: TSimpleTypeFunction<string>;
     addWordInfo: TSimpleTTypesFC<string, IUserWordKeys>;
     updateWordGameState: TSimpleTTypesFC<string, Partial<IUserWordKeys>>;
+
+    learnedWords: number;
+    optional: ISTATOptions;
+    changeCountAllLearnedStatistic: TSimpleTypeFunction<number>;
+    changeDateStatistic: TSimpleTTypesFC<string, ISTATDayFields>;
 
     key?: number | string;
 }

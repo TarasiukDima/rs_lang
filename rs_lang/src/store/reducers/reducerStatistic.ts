@@ -1,13 +1,14 @@
 import { LOCASTORAGE__USER_STATISTIC } from "../../helpers/consts";
 import {
     IAction,
+    ISTATGameFields,
     IStatisticGameState,
-    IStatisticInfoObjState,
-    IWordStatisticUpdate,
+    ISTATChangeDayOptions,
 } from "../../types/redux";
 import {
     CHANGE_COUNT_ALL_LEARNED_WORDS,
     CHANGE_COUNT_ALL_STATISTIC,
+    CLEAR_STATISTIC,
     UPDATE_AUDIO_GAME_STATISTIC,
     UPDATE_SPRINT_GAME_STATISTIC,
     UPDATE_WORD_STATISTIC,
@@ -22,17 +23,21 @@ const INITIAL_STATE = (): IStatisticGameState => {
             wordStatistics: {},
             gameStatistics: {
                 sprint: {
+                    lastDate: "",
                     wrongAnswers: 0,
                     correctAnswers: 0,
                     longestSeries: 0,
                     learnedWords: 0,
+                    countNewWords: 0,
                     points: 0,
                 },
                 audio: {
+                    lastDate: "",
                     wrongAnswers: 0,
                     correctAnswers: 0,
                     longestSeries: 0,
                     learnedWords: 0,
+                    countNewWords: 0,
                 },
             },
         },
@@ -82,6 +87,34 @@ const reducerStatistic = (
     };
 
     switch (type) {
+        case CLEAR_STATISTIC:
+            return {
+                ...state,
+                learnedWords: 0,
+                optional: {
+                    wordStatistics: {},
+                    gameStatistics: {
+                        sprint: {
+                            lastDate: "",
+                            wrongAnswers: 0,
+                            correctAnswers: 0,
+                            longestSeries: 0,
+                            learnedWords: 0,
+                            countNewWords: 0,
+                            points: 0,
+                        },
+                        audio: {
+                            lastDate: "",
+                            wrongAnswers: 0,
+                            correctAnswers: 0,
+                            longestSeries: 0,
+                            learnedWords: 0,
+                            countNewWords: 0,
+                        },
+                    },
+                },
+            };
+
         case CHANGE_COUNT_ALL_STATISTIC:
             return payload as IStatisticGameState;
 
@@ -92,7 +125,7 @@ const reducerStatistic = (
             };
 
         case UPDATE_WORD_STATISTIC:
-            const { date, options } = payload as IWordStatisticUpdate;
+            const { date, options } = payload as ISTATChangeDayOptions;
             console.log("newState", newState, "options", options);
             if (newState.optional.wordStatistics[date]) {
                 newState.optional.wordStatistics[date] = {
@@ -109,7 +142,7 @@ const reducerStatistic = (
         case UPDATE_SPRINT_GAME_STATISTIC:
             newState.optional.gameStatistics.sprint = {
                 ...state.optional.gameStatistics.sprint,
-                ...(payload as IStatisticInfoObjState),
+                ...(payload as ISTATGameFields),
             };
 
             return newState;
@@ -117,7 +150,7 @@ const reducerStatistic = (
         case UPDATE_AUDIO_GAME_STATISTIC:
             newState.optional.gameStatistics.audio = {
                 ...state.optional.gameStatistics.audio,
-                ...(payload as IStatisticInfoObjState),
+                ...(payload as ISTATGameFields),
             };
 
             return newState;

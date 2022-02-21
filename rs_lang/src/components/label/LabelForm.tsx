@@ -1,5 +1,6 @@
 import React from "react";
 import { ILabelForm } from "../../types/form";
+
 import "./index.scss";
 
 const LabelForm = ({ nameClass, errorText, children }: ILabelForm) => {

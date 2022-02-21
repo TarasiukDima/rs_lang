@@ -183,21 +183,24 @@ export const checkSettingsLocalStorage: TCheckLocalObj = (
 };
 /* locastorage end */
 
-
 /* return random number include max start */
-export const randInt = (max: number, min: number) => Math.floor(Math.random() * (max - min + 1)) + min;
+export const randInt = (max: number, min: number) =>
+    Math.floor(Math.random() * (max - min + 1)) + min;
 /* return random number include max end */
 
-
 /* array random indexes start */
-export const randomArrayNumbers = (countElements: number, maxNumber: number, excludeNumber?: number) => {
+export const randomArrayNumbers = (
+    countElements: number,
+    maxNumber: number,
+    excludeNumber?: number
+) => {
     if (maxNumber === 0 || countElements === 0) return [];
 
     const indexSet = new Set();
 
     while (indexSet.size < countElements) {
         const ind: number = randInt(maxNumber, 0);
-        if (excludeNumber && excludeNumber > -1 && ind === excludeNumber ) {
+        if (excludeNumber && excludeNumber > -1 && ind === excludeNumber) {
             continue;
         }
         indexSet.add(ind);

@@ -72,8 +72,6 @@ const LogInContent = ({ changeUser, serviceApi }: ILogUserProps) => {
             return stopSubmit(errorUserWords);
         }
         const date = new Date().getTime();
-        /////////////////
-        //TODO: check countNewWords: 0,
         const refreshUserObj: IChangeUserObject = {
             id: data.userId,
             name: data.name,

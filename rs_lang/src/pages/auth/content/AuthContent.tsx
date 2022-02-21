@@ -6,7 +6,6 @@ import ApiContextWrapper from "../../../hoc/ApiContextWrapper";
 import {
     AuthFormText,
     LOCASTORAGE__NAME_USER,
-    LOCASTORAGE__USER_STATISTIC,
     PageLinks,
     submitRegistrText,
 } from "../../../helpers/consts";

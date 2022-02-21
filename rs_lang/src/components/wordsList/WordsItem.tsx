@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import ButtonEl from "../button";
 
-import { NUMBER_HIDDEN_CATEGORY, URL_DATA_FILES } from "../../helpers/consts";
+import { LOCASTORAGE__NAME_USER, LOCASTORAGE__USER_STATISTIC, NUMBER_HIDDEN_CATEGORY, URL_DATA_FILES } from "../../helpers/consts";
 import {
     changeAudioPlay,
     changeAudioSrc,
@@ -17,11 +17,11 @@ import {
     updateUserWord,
 } from "../../store/actions/actionsUser";
 import { IWordItemProps, TSoundButtonClick } from "../../types/book";
-import {
-    IAction,
-    IState,
-    IUserWordKeys,
-} from "../../types/redux";
+import { IAction, ISTATDayFields, IState, ISTATOptions, IUserWordKeys } from "../../types/redux";
+import { changeAllLearnedWords, updateAllWordStatistic } from "../../store/actions/actionsStatistic";
+import { checkSettingsLocalStorage, saveSettingsLocalStorage } from "../../helpers/utils";
+import { USER_LOCAL_KEYS } from "../../helpers/settings";
+import { ILocalStoragUser } from "../../types/form";
 
 const WordsItem = ({
     serviceApi,
@@ -55,6 +55,12 @@ const WordsItem = ({
     removeDifficult,
     addWordInfo,
     updateWordGameState,
+
+
+    learnedWords,
+    optional,
+    changeCountAllLearnedStatistic,
+    changeDateStatistic,
 }: IWordItemProps) => {
     const wordInLearned = wordsSettings[id] ? wordsSettings[id].learned : false;
     const wordInDifficult = wordsSettings[id]
@@ -79,24 +85,95 @@ const WordsItem = ({
         learned ? changeCountLearnedItems(+1) : changeCountLearnedItems(-1);
     }, [learned]);
 
-    const clickButton: TSoundButtonClick = (audio: string) => {
+    const soundAudio: TSoundButtonClick = (audio: string) => {
         changeSrcSong(audio);
         changePlay(true);
     };
 
-
     const playSong = () => {
-        clickButton(audioPlayList[activeSong]);
+        soundAudio(audioPlayList[activeSong]);
         activeSong + 1 === 3 ? setActiveSong(0) : setActiveSong(activeSong + 1);
     };
+
+    const changeStatisticWord = async (
+        isLearnedButton: boolean,
+        isAddOperation: boolean
+    ) => {
+        if (!authorization || !isLearnedButton) return;
+
+        const dateObj = new Date();
+        const keyWordStatistic = `${dateObj.getFullYear()}, ${dateObj.getMonth()}, ${dateObj.getDate()}`;
+        const newOptions: ISTATOptions = JSON.parse(JSON.stringify(optional));
+        const isLearnedOperation = isAddOperation ? 1 : 0;
+        const datStatistic: ISTATDayFields = {
+            wrongAnswers: 0,
+            correctAnswers: 0,
+            longestSeries: 0,
+            learnedWords: isLearnedOperation,
+            countNewWords: 0,
+        }
+
+        let newLearnedWOrds = learnedWords;
+
+        if (isAddOperation && isLearnedButton) {
+            newLearnedWOrds = newLearnedWOrds +1;
+        }
+
+        if (keyWordStatistic in optional.wordStatistics) {
+            datStatistic.wrongAnswers = optional.wordStatistics[keyWordStatistic].wrongAnswers;
+            datStatistic.correctAnswers = optional.wordStatistics[keyWordStatistic].correctAnswers;
+            datStatistic.longestSeries = optional.wordStatistics[keyWordStatistic].longestSeries;
+            datStatistic.learnedWords = optional.wordStatistics[keyWordStatistic].learnedWords + 1;
+            datStatistic.countNewWords = optional.wordStatistics[keyWordStatistic].countNewWords;
+        }
+        newOptions.wordStatistics[keyWordStatistic] = datStatistic;
+
+        changeCountAllLearnedStatistic(newLearnedWOrds);
+        changeDateStatistic(keyWordStatistic, datStatistic);
+
+        const newStatisticState = {
+            learnedWords: newLearnedWOrds,
+            optional: newOptions
+        }
+
+        saveSettingsLocalStorage(LOCASTORAGE__USER_STATISTIC, newStatisticState)
+        return await serviceApi.updateUseStatistics(newStatisticState);
+    }
 
     const changeWordInformtion = async (
         operatiionType: "add" | "remove",
         varient: "learned" | "difficult"
     ) => {
         if (!authorization) return;
+        const isLearnedButton = varient === "learned";
+        const isAddOperation = operatiionType === "add";
 
-        const addStateWord = operatiionType === "add";
+        /// not time this is very bad
+        const newObjForSave = {
+            id: "0",
+            name: "0",
+            token: "0",
+            refreshToken: "0",
+            authorization: false,
+            wordsSettings: {},
+            time: 0,
+            countNewWords:  0,
+        }
+        const localStorageObjUser = checkSettingsLocalStorage(
+            LOCASTORAGE__NAME_USER,
+            USER_LOCAL_KEYS
+        ) as ILocalStoragUser;
+
+        if (localStorageObjUser) {
+            newObjForSave.id =  localStorageObjUser.id;
+            newObjForSave.name =  localStorageObjUser.name;
+            newObjForSave.token =  localStorageObjUser.token;
+            newObjForSave.refreshToken =  localStorageObjUser.refreshToken;
+            newObjForSave.authorization =  localStorageObjUser.authorization;
+            newObjForSave.wordsSettings =  localStorageObjUser.wordsSettings;
+            newObjForSave.time =  localStorageObjUser.time || 0;
+            newObjForSave.countNewWords =  localStorageObjUser.countNewWords || 0;
+        }
 
         const optionsObj = {
             userId: userID,
@@ -111,8 +188,10 @@ const WordsItem = ({
             token,
         };
 
-        if (varient === "learned") {
-            optionsObj.wordOptions.learned = addStateWord;
+        changeStatisticWord(isLearnedButton, isAddOperation);
+
+        if (isLearnedButton) {
+            optionsObj.wordOptions.learned = isAddOperation;
             optionsObj.wordOptions.difficult = wordsSettings[id]
                 ? wordsSettings[id].difficult
                 : false;
@@ -120,21 +199,25 @@ const WordsItem = ({
             optionsObj.wordOptions.learned = wordsSettings[id]
                 ? wordsSettings[id].learned
                 : false;
-            optionsObj.wordOptions.difficult = addStateWord;
+            optionsObj.wordOptions.difficult = isAddOperation;
         }
 
         if (id in wordsSettings) {
-            if (varient === "learned") {
-                addStateWord ? addLearned(id) : removeLearned(id);
+            if (isLearnedButton) {
+                isAddOperation ? addLearned(id) : removeLearned(id);
             } else {
-                addStateWord ? addDifficult(id) : removeDifficult(id);
+                isAddOperation ? addDifficult(id) : removeDifficult(id);
             }
 
             optionsObj.wordOptions.game = wordsSettings[id].game;
+            localStorageObjUser.wordsSettings[id] = optionsObj.wordOptions;
+            saveSettingsLocalStorage(LOCASTORAGE__NAME_USER, localStorageObjUser);
             updateWordGameState(id, optionsObj.wordOptions);
             return await serviceApi.updateUserWord(optionsObj);
         }
 
+        localStorageObjUser.wordsSettings[id] = optionsObj.wordOptions;
+        saveSettingsLocalStorage(LOCASTORAGE__NAME_USER, localStorageObjUser);
         addWordInfo(optionsObj.wordId, optionsObj.wordOptions);
         return await serviceApi.createUserWord(optionsObj);
     };
@@ -226,6 +309,7 @@ const WordsItem = ({
 const mapStateToProps = ({
     user: { authorization, id, wordsSettings, token },
     pages: { vocabularyHiddenTab, vocabularyCategory },
+    statistic: {learnedWords, optional}
 }: IState) => ({
     token,
     vocabularyCategory,
@@ -233,6 +317,9 @@ const mapStateToProps = ({
     authorization,
     wordsSettings,
     vocabularyHiddenTab,
+
+    learnedWords,
+    optional
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<IAction>) => {
@@ -260,6 +347,14 @@ const mapDispatchToProps = (dispatch: Dispatch<IAction>) => {
         },
         updateWordGameState: (id: string, options: Partial<IUserWordKeys>) => {
             dispatch(updateUserWord(id, options));
+        },
+
+
+        changeCountAllLearnedStatistic: (count:number) => {
+            dispatch(changeAllLearnedWords(count));
+        },
+        changeDateStatistic: (date: string, options: ISTATDayFields) => {
+            dispatch(updateAllWordStatistic(date, options));
         },
     };
 };

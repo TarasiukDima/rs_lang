@@ -16,6 +16,7 @@ import {
     CHANGE_USER_WORD_CURRENT_ANSWER_COUNT,
     CHANGE_USER_WORD_GAME,
     CHANGE_USER_WORD_WRNONG_ANSWER_COUNT,
+    CLEAR_AUTHORIZATION,
     REMOVE_USER_DIFFICULT,
     REMOVE_USER_LEARNED,
     UPDATE_USER_WORD,
@@ -38,6 +39,8 @@ const INITIAL_STATE = (): IUserState => {
         USER_LOCAL_KEYS
     ) as ILocalStoragUser;
 
+    console.log(answer);
+
     if (answer) {
         return {
             id: answer.id,
@@ -58,6 +61,19 @@ const reducerUser = (state: IUserState = INITIAL_STATE(), action: IAction) => {
     const { type, payload } = action;
 
     switch (type) {
+        case CLEAR_AUTHORIZATION:
+            return {
+                ...state,
+                id: "",
+                name: "",
+                token: "",
+                refreshToken: "",
+                authorization: false,
+                wordsSettings: {},
+                time: 0,
+                countNewWords: 0,
+            };
+
         case CHANGE_AUTHORIZATION:
             return {
                 ...state,

@@ -6,15 +6,17 @@ import { IWordsListProps, IWordItemObj } from "../../types/book";
 import { TSimpleTypeFunction } from "../../types/common";
 
 import "./index.scss";
+import { WORDS_PER_PAGE } from "../../helpers/consts";
 
 const WordsList = ({ bookListInfoArr }: IWordsListProps) => {
-    const [countLearnedEl, setCountLearnedEl] = useState(bookListInfoArr.length);
+    const [countLearnedEl, setCountLearnedEl] = useState(WORDS_PER_PAGE);
     const [coutnSecond, setCoutnSecond] = useState(false);
     if (!bookListInfoArr.length) return null;
 
     const changeCountLearnedItems: TSimpleTypeFunction<number> = (
         count: number
     ): void => {
+
         if (coutnSecond) {
             setCountLearnedEl((countLearnedEl) => countLearnedEl + count);
         }
@@ -25,7 +27,7 @@ const WordsList = ({ bookListInfoArr }: IWordsListProps) => {
     };
 
     const listClassNames =
-        countLearnedEl >= 20 ? "words__list learned__list" : "words__list";
+        countLearnedEl >= WORDS_PER_PAGE ? "words__list learned__list" : "words__list";
 
     return (
         <ul className={listClassNames}>
@@ -52,7 +54,7 @@ const WordsList = ({ bookListInfoArr }: IWordsListProps) => {
                                 id={idItem}
                                 setCoutnSecond={setCoutnSecond}
                                 serviceApi={serviceApi}
-                                {...endProps as Omit<IWordItemObj, "id">}
+                                {...(endProps as Omit<IWordItemObj, "id">)}
                             />
                         )}
                     </ApiContextConsumer>

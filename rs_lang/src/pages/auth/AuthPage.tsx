@@ -9,20 +9,16 @@ import LogOutContent from "./content/LogOutContent";
 
 import { PageLinks } from "../../helpers/consts";
 import { changeUserInformation } from "../../store/actions/actionsUser";
-import { changeVocabularyCategory } from "../../store/actions/actionsPages";
 
-import { IAction, IState, IStatisticGameState } from "../../types/redux";
+import { IAction, IState } from "../../types/redux";
 import { IChangeUserObject, IFormPageProps } from "../../types/form";
 
 import "./index.scss";
-import { changeAllStatistic } from "../../store/actions/actionsStatistic";
 
 const AuthPage = ({
     name,
     authorization,
     changeUser,
-    changeCategory,
-    updateAllStatistic,
 }: IFormPageProps) => {
     const location = useLocation();
 
@@ -32,9 +28,7 @@ const AuthPage = ({
                 ? (
                     <LogOutContent
                         name={name}
-                        changeCategory={changeCategory}
                         changeUser={changeUser}
-                        updateAllStatistic={updateAllStatistic}
                     />
                 )
                 : location.pathname === PageLinks.loginPage
@@ -57,12 +51,6 @@ const mapDispatchToProps = (dispatch: Dispatch<IAction>) => {
     return {
         changeUser: (objInfoUser: IChangeUserObject) => {
             dispatch(changeUserInformation(objInfoUser));
-        },
-        changeCategory: (id: number) => {
-            dispatch(changeVocabularyCategory(id));
-        },
-        updateAllStatistic: (newState: IStatisticGameState) => {
-            dispatch(changeAllStatistic(newState));
         },
     };
 };

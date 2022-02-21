@@ -1,18 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
-import { ApiContextConsumer } from "../../services/servicesContext";
 import SectionContent from "../../components/section";
 import PaginationPage from "../../components/pagination";
 import BookCategories from "../../components/bookCategories";
 import BookWordsContent from "./BookWordsContent";
+import BookLearnedContent from "./BookLearnedContent";
+import GamesList from "../../components/gamesList/GamesList";
 
 import { COUNT_PAGE, NUMBER_HIDDEN_CATEGORY } from "../../helpers/consts";
 import { IState } from "../../types/redux";
 import { IBookPageProps } from "../../types/book";
 
 import "./index.scss";
-import BookLearnedContent from "./BookLearnedContent";
-import GamesList from "../../components/gamesList/GamesList";
 
 const BookPage = ({ vocabularyCategory, vocabularyPage }: IBookPageProps) => {
     const hiddenCatActive = vocabularyCategory === NUMBER_HIDDEN_CATEGORY;

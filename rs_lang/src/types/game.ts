@@ -1,9 +1,18 @@
 import ServiceApi from "../services/services";
 import { IWordItemObj, TSoundPlay } from "./book";
-import { TActionFC, TSimpleFunction, TSimpleTTypesFC, TSimpleTypeFunction } from "./common";
-import { IStatisticGameState, IStatisticInfoObjState, IStatisticOptional, IUserWordKeys, IUserWordsInformation } from "./redux";
+import {
+    TSimpleFunction,
+    TSimpleTTypesFC,
+    TSimpleTypeFunction,
+} from "./common";
+import {
+    IStatisticGameState,
+    ISTATOptions,
+    IUserWordKeys,
+    IUserWordsInformation,
+} from "./redux";
 
-export type TSoundGameButton  = (audio: string, local: boolean) => void;
+export type TSoundGameButton = (audio: string, local: boolean) => void;
 
 export interface IGameListProps {
     gameOnePage: boolean;
@@ -26,7 +35,8 @@ export interface IGamCategoryPage {
     gamePage: number | null;
 }
 
-export interface IOneGamePageProps extends Pick<IGamCategoryPage, "gameCategory"> {
+export interface IOneGamePageProps
+    extends Pick<IGamCategoryPage, "gameCategory"> {
     changeGameCat: TSimpleTypeFunction<null | number>;
     changeGamePage: TSimpleTypeFunction<null | number>;
 }
@@ -35,7 +45,6 @@ export interface IChooseProps {
     gameTitle: string;
     changeCateAndPage: TSimpleTypeFunction<number>;
 }
-
 
 export interface IAudioPlayerProps {
     audioSrc: string;
@@ -57,7 +66,7 @@ export interface IOneGameBodyProps {
     token: string;
     id: string;
     learnedWords: number;
-    optional:IStatisticOptional;
+    optional: ISTATOptions;
     serviceApi: ServiceApi;
     data: Array<IWordItemObj>;
     wordsSettings: IUserWordsInformation;
@@ -72,15 +81,12 @@ export interface IOneGameBodyProps {
     updateAllStatistic: TSimpleTypeFunction<IStatisticGameState>;
 }
 
-
-
 export interface IOneGameHeadProps {
     countRightAnswer: number;
     points: number;
     pointsCoefficient: number;
     setTimeOutGame: TSimpleTypeFunction<boolean>;
 }
-
 
 export interface IQuestionProps {
     needGame: string;
@@ -105,13 +111,13 @@ export interface IGameResultProps {
     currentAnswers: Array<IAnswerObj>;
     restartGame: TSimpleFunction;
     serviceApi: ServiceApi;
+    countNewWords: number;
     countLearnedWords: number;
     maxLineCurrentAnswers: number;
     playSong: TSoundGameButton;
 
-
     learnedWords: number;
-    optional:IStatisticOptional;
+    optional: ISTATOptions;
     updateAllStatistic: TSimpleTypeFunction<IStatisticGameState>;
 }
 export interface IResultList {

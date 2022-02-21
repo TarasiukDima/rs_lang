@@ -6,7 +6,12 @@ import { IAction, IState } from "../../types/redux";
 
 import "./index.scss";
 
-const AudioPlayer: FC<IAudioPlayerProps> = ({ audioSrc, playAudio, changeCategory }: IAudioPlayerProps) => {
+
+const AudioPlayer: FC<IAudioPlayerProps> = ({
+    audioSrc,
+    playAudio,
+    changeCategory,
+}: IAudioPlayerProps) => {
     const audioRef = useRef() as RefObject<HTMLAudioElement>;
 
     useEffect(() => {

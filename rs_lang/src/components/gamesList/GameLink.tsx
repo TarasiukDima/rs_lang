@@ -1,6 +1,7 @@
 import React, { Dispatch } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+
 import {
     changeGameCategory,
     changeGamePage,
@@ -8,6 +9,7 @@ import {
 } from "../../store/actions/actionsGame";
 import { IGameProps } from "../../types/game";
 import { IAction } from "../../types/redux";
+
 
 const GameLink = ({
     gameImg,
@@ -19,9 +21,7 @@ const GameLink = ({
     changeGameCat,
     changeGamePage,
     changeVarientGame,
-
 }: IGameProps) => {
-
     const changeGameState = () => {
         changeGameCat(category);
         changeGamePage(page);
@@ -37,7 +37,6 @@ const GameLink = ({
         </li>
     );
 };
-
 
 const mapStateToProps = () => ({});
 

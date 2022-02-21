@@ -2,6 +2,7 @@ import React, { Dispatch } from "react";
 import { connect } from "react-redux";
 import TabList from "../../components/tabList";
 import TabItem from "../../components/tabList/TabItem";
+
 import { hiddenCategoriesTabsInfo, tabsBookInfo } from "../../helpers/settings";
 import {
     LOCASTORAGE__VOC_CAT,
@@ -16,6 +17,7 @@ import {
 
 import { IBookCategoriesProps } from "../../types/book";
 import { IAction, IState } from "../../types/redux";
+
 
 const BookCategories = ({
     authorization,
@@ -54,7 +56,7 @@ const BookCategories = ({
                 ) : null}
             </TabList>
 
-            {(authorization && vocabularyCategory === NUMBER_HIDDEN_CATEGORY) ? (
+            {authorization && vocabularyCategory === NUMBER_HIDDEN_CATEGORY ? (
                 <TabList
                     listItems={hiddenCategoriesTabsInfo}
                     tabClick={changeHiddenCategoryLink}

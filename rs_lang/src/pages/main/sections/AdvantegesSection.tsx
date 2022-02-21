@@ -1,6 +1,6 @@
 import React from "react";
 import SectionContent from "../../../components/section";
-import CardItem from "../../../components/cardItem";
+import CardItem from "../../../components/advantegestem";
 import { advantegesInfoArr } from "../../../helpers/settings";
 
 const AdvantegesSection = () => {

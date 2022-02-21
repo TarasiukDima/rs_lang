@@ -13,6 +13,7 @@ import "./index.scss";
 const StatisticPage = ({ authorization }: IStatisticPageProps) => {
     const loading = false;
 
+
     if (!authorization) {
         return (
             <SectionContent nameClass="statistic__section">

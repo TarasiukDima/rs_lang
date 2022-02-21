@@ -1,7 +1,8 @@
-import { TActionFC, TSimpleActionFC } from "../../types/common";
+import { TActionFC, TClearState, TSimpleActionFC } from "../../types/common";
 import { IChangeUserObject } from "../../types/form";
-import { IUserWordKeys, IUserWordsInformation } from "../../types/redux";
+import { IUserWordKeys } from "../../types/redux";
 
+export const CLEAR_AUTHORIZATION = "CLEAR_AUTHORIZATION";
 export const CHANGE_AUTHORIZATION = "CHANGE_AUTHORIZATION";
 export const CHANGE_USER_TOKEN = "CHANGE_USER_TOKEN";
 export const CHANGE_USER_REFRESHTOKEN = "CHANGE_USER_REFRESHTOKEN";
@@ -18,6 +19,13 @@ export const REMOVE_USER_DIFFICULT = "REMOVE_USER_DIFFICULT";
 export const CHANGE_USER_WORD_CURRENT_ANSWER_COUNT = "CHANGE_USER_WORD_CURRENT_ANSWER_COUNT";
 export const CHANGE_USER_WORD_WRNONG_ANSWER_COUNT = "CHANGE_USER_WORD_WRNONG_ANSWER_COUNT";
 export const CHANGE_USER_WORD_GAME = "CHANGE_USER_WORD_GAME";
+
+export const clearUserState: TClearState = () => {
+    return {
+        type: CLEAR_AUTHORIZATION,
+        payload: null,
+    };
+};
 
 export const changeAuthorization: TSimpleActionFC<boolean> = (
     authorization: boolean

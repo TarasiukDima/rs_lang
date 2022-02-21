@@ -1,5 +1,5 @@
 import ServiceApi from "../services/services";
-import { TSimpleTypeFunction } from "./common";
+import { TSimpleFunction, TSimpleTypeFunction } from "./common";
 import { IStatisticGameState, IUserWordsInformation } from "./redux";
 
 export type TFormSubmitFC = (event: React.FormEvent<HTMLFormElement>) => void;
@@ -20,8 +20,6 @@ export interface IFormPageProps {
     name: string;
     authorization: boolean;
     changeUser: TСhangeUserInfo;
-    changeCategory: TSimpleTypeFunction<number>;
-    updateAllStatistic: TSimpleTypeFunction<IStatisticGameState>;
 }
 
 export interface ILogUserProps {
@@ -31,8 +29,7 @@ export interface ILogUserProps {
 
 export interface ILogOut extends ILogUserProps {
     name: string;
-    changeCategory: TSimpleTypeFunction<number>;
-    updateAllStatistic: TSimpleTypeFunction<IStatisticGameState>;
+    clearAllState: TSimpleFunction;
 }
 
 export interface ILabelForm {

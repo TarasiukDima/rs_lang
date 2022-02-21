@@ -13,14 +13,14 @@ export interface IAction {
         | IWordCountInfo
         | IWordAddInfo
         | IWordUpdateInfo
-        | IWordStatisticUpdate
-        | IStatisticInfoObjState
+        | ISTATChangeDayOptions
+        | ISTATGameFields
         | IStatisticGameState;
 }
 
-export interface IWordStatisticUpdate {
+export interface ISTATChangeDayOptions {
     date: string;
-    options: IStatisticInfoObjState;
+    options: ISTATDayFields;
 }
 
 export interface IWordCountInfo {
@@ -82,26 +82,39 @@ export interface IUserState {
     countNewWords: number;
 }
 
-export interface IStatisticInfoObjState {
+
+
+export interface ISTATCommonOpt {
     wrongAnswers: number;
     correctAnswers: number;
     longestSeries: number;
     learnedWords: number;
+}
+
+export interface ISTATDayFields extends ISTATCommonOpt {
+    countNewWords: number;
+}
+
+export interface ISTATGameFields extends ISTATDayFields {
+    lastDate: string;
     points?: number;
 }
-export interface IStatisticOptional {
-    wordStatistics: {
-        [key: string]: IStatisticInfoObjState;
-    };
+
+export interface ISTATWords {
+    [key: string]: ISTATDayFields;
+}
+
+export interface ISTATOptions {
+    wordStatistics: ISTATWords;
     gameStatistics: {
-        sprint: IStatisticInfoObjState;
-        audio: IStatisticInfoObjState;
+        sprint: ISTATGameFields;
+        audio: ISTATGameFields;
     };
 }
 
 export interface IStatisticGameState {
     learnedWords: number;
-    optional: IStatisticOptional;
+    optional: ISTATOptions;
 }
 
 export interface IState {

@@ -5,10 +5,12 @@ export const URL_DATA_FILES =
 export const SPRINT_GAME_TIME = 60;
 export const COUNT_PAGE = 29;
 export const ANSWER_POINT = 10;
-export const MIN_COUNT_QUESTIONS_FOR_GAME = 3;
+export const MIN_COUNT_QUESTIONS_FOR_GAME = 4;
 export const COUNT_BUTTONS_FOR_QUESTIONS = 4;
 export const COUNT_MAX_SPRINT_GAME_QUESTIONS = 60;
 export const COUNT_MAX_AUDIO_GAME_QUESTIONS = 20;
+export const WORDS_PER_PAGE = 20;
+
 
 export const GAME_COUNT_ANSWERS_STAR = 4;
 

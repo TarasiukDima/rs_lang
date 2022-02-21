@@ -1,5 +1,6 @@
 import React from "react";
 import { CardProps } from "../../types/book";
+
 import "./index.scss";
 
 const CardItem = ({

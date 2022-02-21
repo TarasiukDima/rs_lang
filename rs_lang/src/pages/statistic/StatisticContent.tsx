@@ -1,31 +1,56 @@
-import React, { Dispatch, useState } from "react";
+import React, { Dispatch, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import GameStatistic from "../../components/gameStatistic";
+
 import TabList from "../../components/tabList";
-import { LOCASTORAGE__STATISTIC_PAG, PageLinks } from "../../helpers/consts";
+import Loader from "../../components/loader";
+import StatisticBlocksInfo from "./StatisticBlocksInfo";
+import ApiContextWrapper from "../../hoc/ApiContextWrapper";
+
+import {
+    LOCASTORAGE__STATISTIC_PAG,
+    LOCASTORAGE__USER_STATISTIC,
+} from "../../helpers/consts";
 import { statisticTabsInfo } from "../../helpers/settings";
 import { changeStatisticTab } from "../../store/actions/actionsPages";
 import { IAction, IState } from "../../types/redux";
 import {
-    IDayStatistic,
-    IGameDayStatistic,
+    IStatisticBlocksInfoData,
     IStatisticContentProps,
 } from "../../types/statistic";
+import { saveSettingsLocalStorage } from "../../helpers/utils";
 
 const StatisticContent = ({
     statisticTab,
     changeTab,
+    serviceApi,
 }: IStatisticContentProps) => {
-    const dayStatistic: IDayStatistic = {
-        countsWords: 15,
-        answersPersent: 89,
+    const [loadingData, setLoadingData] = useState(true);
+    const [errorTextData, setErrorTextData] = useState("");
+    const [statisticUserData, setStatisticUserData] = useState(
+        {} as IStatisticBlocksInfoData
+    );
+
+    const getData = async () => {
+        const { data, errorText } = await serviceApi.getUseStatistics();
+        if (!errorText) {
+            setStatisticUserData(data);
+            if ("learnedWords" in data && "optional" in data) {
+                const { learnedWords, optional } = data;
+                saveSettingsLocalStorage(LOCASTORAGE__USER_STATISTIC, {
+                    learnedWords,
+                    optional,
+                });
+            }
+        } else {
+            setErrorTextData(errorText);
+        }
+
+        setLoadingData(false);
     };
 
-    const gameDayStatistic: IGameDayStatistic = {
-        countsWords: 10,
-        answersPersent: 90,
-        bestSeries: 8,
-    };
+    useEffect(() => {
+        getData();
+    }, []);
 
     const changeHiddenCategoryLink = (id: number) => {
         changeTab(id);
@@ -34,41 +59,24 @@ const StatisticContent = ({
 
     return (
         <div className="statistic__content">
-            <TabList
-                fildCheckActive={statisticTab}
-                listItems={statisticTabsInfo}
-                tabClick={changeHiddenCategoryLink}
-            />
+            {loadingData ? (
+                <Loader />
+            ) : errorTextData ? (
+                <p>404</p>
+            ) : (
+                <>
+                    <TabList
+                        fildCheckActive={statisticTab}
+                        listItems={statisticTabsInfo}
+                        tabClick={changeHiddenCategoryLink}
+                    />
 
-            <div className="game__statistic_wrap">
-                <GameStatistic
-                    blockTitle={statisticTabsInfo[statisticTab].text}
-                >
-                    <li className="statistic__list_item">
-                        Количество изученных слов:{" "}
-                        <span>{gameDayStatistic.countsWords}</span>
-                    </li>
-                    <li className="statistic__list_item">
-                        Процент правильных ответов:{" "}
-                        <span>{gameDayStatistic.answersPersent}%</span>
-                    </li>
-                    <li className="statistic__list_item">
-                        Лучшая серия:{" "}
-                        <span>{gameDayStatistic.bestSeries}</span>
-                    </li>
-                </GameStatistic>
-
-                <GameStatistic blockTitle="Статистика за день">
-                    <li className="statistic__list_item">
-                        Общее количество изученных слов за день:{" "}
-                        <span>{dayStatistic.countsWords}</span>
-                    </li>
-                    <li className="statistic__list_item">
-                        Процент правильных ответов за день:{" "}
-                        <span>{dayStatistic.answersPersent}%</span>
-                    </li>
-                </GameStatistic>
-            </div>
+                    <StatisticBlocksInfo
+                        activeTab={statisticTab}
+                        data={statisticUserData}
+                    />
+                </>
+            )}
         </div>
     );
 };
@@ -85,4 +93,7 @@ const mapDispatchToProps = (dispatch: Dispatch<IAction>) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(StatisticContent);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ApiContextWrapper(StatisticContent));

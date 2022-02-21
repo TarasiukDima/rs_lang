@@ -1,8 +1,15 @@
 import React from "react";
 import { ButtonProps } from "../../types/common";
+
 import "./index.scss";
 
-const ButtonEl = ({ nameClass = "", children, onclick, disable = false}: ButtonProps) => {
+
+const ButtonEl = ({
+    nameClass = "",
+    children,
+    onclick,
+    disable = false,
+}: ButtonProps) => {
     const classesText = nameClass ? "button " + nameClass : "button";
 
     return (

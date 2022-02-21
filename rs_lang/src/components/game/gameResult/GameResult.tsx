@@ -15,9 +15,10 @@ import { changeAllStatistic } from "../../../store/actions/actionsStatistic";
 import { IGameResultProps } from "../../../types/game";
 import {
     IAction,
+    ISTATDayFields,
     IState,
+    ISTATGameFields,
     IStatisticGameState,
-    IStatisticInfoObjState,
 } from "../../../types/redux";
 
 import wonSound from "../../../assets/audio/won.mp3";
@@ -33,6 +34,7 @@ const GameResult = ({
     serviceApi,
     playSong,
 
+    countNewWords,
     countLearnedWords,
     maxLineCurrentAnswers,
 
@@ -43,21 +45,20 @@ const GameResult = ({
     updateAllStatistic,
 }: IGameResultProps) => {
     const isAudioGame = needGame === "audio";
+    const date = new Date();
+    const keyWordStatistic = `${date.getFullYear()}, ${date.getMonth() + 1}, ${date.getDate()}`;
 
-    const createOptionsStatisticObj = (
-        objKey: IStatisticInfoObjState,
-        needSavePoints: boolean
-    ) => {
-        const options: IStatisticInfoObjState = {
+
+    const createCoomonObj = (
+        objKey: ISTATDayFields | ISTATGameFields,
+    ): Omit<ISTATGameFields, "lastDate"> => {
+        const options: Omit<ISTATGameFields, "lastDate"> = {
             wrongAnswers: wrongAnswers.length,
             correctAnswers: currentAnswers.length,
             longestSeries: maxLineCurrentAnswers,
             learnedWords: countLearnedWords,
+            countNewWords: countNewWords,
         };
-
-        if (needSavePoints) {
-            options.points = points;
-        }
 
         if (
             typeof objKey === "object" &&
@@ -73,32 +74,72 @@ const GameResult = ({
                 maxLineCurrentAnswers > objKey.longestSeries
                     ? maxLineCurrentAnswers
                     : objKey.longestSeries;
+        }
 
-            if (needSavePoints && objKey.points) {
-                options.points =
-                    points > objKey.points ? points : objKey.points;
+        return options;
+    };
+
+    const createGameOptionsObj = (
+        objKey: ISTATGameFields,
+        needSavePoints: boolean,
+    ): ISTATGameFields => {
+        const options: ISTATGameFields = {
+            ...createCoomonObj(objKey),
+            lastDate: keyWordStatistic,
+        };
+
+        if (
+            typeof objKey === "object" &&
+            objKey !== null &&
+            "wrongAnswers" in objKey &&
+            "correctAnswers" in objKey
+        ) {
+            if (objKey.lastDate === keyWordStatistic) {
+                options.countNewWords = objKey.countNewWords + countNewWords;
             }
+        }
+
+        if (needSavePoints) {
+            const oldPoints = objKey.points || 0;
+            options.points =
+                points > oldPoints ? points : oldPoints;
+        }
+
+        return options;
+    };
+
+    const createDayOptionsObj = (
+        objKey: ISTATDayFields
+    ):  ISTATDayFields => {
+        const options: ISTATDayFields = {
+            ...createCoomonObj(objKey),
+        };
+        if (
+            typeof objKey === "object" &&
+            objKey !== null &&
+            "countNewWords" in objKey
+        ) {
+            options.countNewWords =
+                countNewWords > objKey.countNewWords ? countNewWords : objKey.countNewWords;
         }
         return options;
     };
 
     const updateStatistic = async () => {
         const newLearnedCount = learnedWords + countLearnedWords;
-        const date = new Date();
-        const keyWordStatistic = `${date.getFullYear()}, ${date.getMonth()}, ${date.getDate()}`;
 
-        const audioOptions = createOptionsStatisticObj(
+        const audioOptions = createGameOptionsObj(
             optional["gameStatistics"]["audio"],
             false
         );
-        const sprintOptions = createOptionsStatisticObj(
+        const sprintOptions = createGameOptionsObj(
             optional["gameStatistics"]["sprint"],
             true
         );
-        const dayStatistic = createOptionsStatisticObj(
-            optional["wordStatistics"][keyWordStatistic],
-            false
+        const dayStatistic = createDayOptionsObj(
+            optional["wordStatistics"][keyWordStatistic]
         );
+
         const newStatistic = {
             learnedWords: newLearnedCount,
             optional: {
@@ -120,6 +161,7 @@ const GameResult = ({
             newStatistic.optional.gameStatistics.sprint = sprintOptions;
         }
         updateAllStatistic(newStatistic);
+
         saveSettingsLocalStorage(LOCASTORAGE__USER_STATISTIC, newStatistic);
         await serviceApi.updateUseStatistics(newStatistic);
     };

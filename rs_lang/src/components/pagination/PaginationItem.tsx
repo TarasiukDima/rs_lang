@@ -13,7 +13,6 @@ import { TSimpleTypeFunction } from "../../types/common";
 import { IPaginationItemProps } from "../../types/pagination";
 import { IAction, IState } from "../../types/redux";
 
-
 const PaginationItem = ({
     vocabularyPage,
     numberPage,

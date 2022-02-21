@@ -3,12 +3,14 @@ import { NavigateFunction, useNavigate } from "react-router-dom";
 
 import SectionContent from "../../../components/section";
 import ButtonEl from "../../../components/button";
-import topImg from "../../../assets/img/topImg.png";
+
 import {
     mainTitleText1,
     mainTitleText2,
     PageLinks,
 } from "../../../helpers/consts";
+
+import topImg from "../../../assets/img/topImg.png";
 
 const TopSection = () => {
     const navigation: NavigateFunction = useNavigate();

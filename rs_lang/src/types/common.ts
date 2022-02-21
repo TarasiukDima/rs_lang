@@ -2,6 +2,7 @@ import { ILocalStoragUser } from "./form";
 import { IAction, IStatisticGameState } from "./redux";
 
 export type TSimpleFunction = () => void;
+export type TClearState = () => IAction;
 export type TSimpleActionFC<T> = (el: T) => IAction;
 export type TActionFC<T, P> = (el: T, el2: P) => IAction;
 export type TSimpleTypeFunction<T> = (el: T) => void;

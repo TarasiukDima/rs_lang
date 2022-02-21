@@ -10,6 +10,7 @@ import {
     CHANGE_STATISTIC_TAB,
     CHANGE_VOCABULARY_CATEGORY,
     CHANGE_VOCABULARY_PAGE,
+    CLEAR_VOCABULARY,
 } from "../actions/actionsPages";
 
 const INITIAL_STATE = (): IPagesState => {
@@ -34,6 +35,14 @@ const reducerPages = (
     const { type, payload } = action;
 
     switch (type) {
+        case CLEAR_VOCABULARY:
+            return {
+                ...state,
+                vocabularyCategory: 0,
+                vocabularyPage: 0,
+                vocabularyHiddenTab: 0,
+                statisticTab: 0,
+            };
         case CHANGE_VOCABULARY_CATEGORY:
             return {
                 ...state,

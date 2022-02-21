@@ -52,6 +52,7 @@ const GameBodyBlock = ({
     const [maxCountRightAnswer, setMaxCountRightAnswer] = useState(0);
     const [timeOutGame, setTimeOutGame] = useState(false);
     const [countLearnedWords, setCountLearnedWords] = useState(0);
+    const [countNewWords, setCountNewWords] = useState(0);
 
     const [loadingData, setLoadingData] = useState(true);
     const [answersChoices, setAnswersChoices] = useState([] as Array<string>);
@@ -75,14 +76,15 @@ const GameBodyBlock = ({
 
     const restartGame = () => {
         setQuestionNumber(0);
-        setWrongAnswers(() => []);
-        setCurrentAnswers(() => []);
-        setTimeOutGame(() => false);
+        setWrongAnswers([]);
+        setCurrentAnswers([]);
+        setTimeOutGame(false);
         setPointsCoefficient(1);
         setPoints(0);
-        setCountRightAnswer(() => 0);
-        setMaxCountRightAnswer(() => 0);
-        setCountLearnedWords(() => 0);
+        setCountRightAnswer(0);
+        setMaxCountRightAnswer(0);
+        setCountLearnedWords(0);
+        setCountNewWords(0);
     };
 
     const playSong: TSoundGameButton = (audio: string, local: boolean) => {
@@ -157,11 +159,16 @@ const GameBodyBlock = ({
                 }
             }
 
+            if (wordsSettings[wordId].game === false) {
+                setCountNewWords((count) => count + 1);
+            }
             checkIsNewLearnedWord(wordId, optionsObj.wordOptions);
             updateWordGameState(wordId, optionsObj.wordOptions);
             await serviceApi.updateUserWord(optionsObj);
+            return;
         }
 
+        setCountNewWords((count) => count + 1);
         checkIsNewLearnedWord(wordId, optionsObj.wordOptions);
         addWordInfo(wordId, optionsObj.wordOptions);
         await serviceApi.createUserWord(optionsObj);
@@ -178,6 +185,14 @@ const GameBodyBlock = ({
         );
     };
 
+    const updateCountAnswers = (newValue: number) => {
+        setCountRightAnswer(newValue);
+
+        if (newValue > maxCountRightAnswer) {
+            setMaxCountRightAnswer(newValue);
+        }
+    };
+
     const updateComponentState = (resultAnswer: boolean) => {
         const { id, audio, word, wordTranslate } = data[questionNumber];
         const urlAnswer = resultAnswer ? currentSound : wrongSound;
@@ -190,16 +205,16 @@ const GameBodyBlock = ({
         };
 
         if (resultAnswer) {
-            setCountRightAnswer((count) => count + 1);
+            updateCountAnswers(countRightAnswer + 1);
 
             if (countRightAnswer === GAME_COUNT_ANSWERS_STAR - 1) {
-                setPointsCoefficient(() => 2);
+                setPointsCoefficient(2);
             }
             if (countRightAnswer === 2 * GAME_COUNT_ANSWERS_STAR - 1) {
-                setPointsCoefficient(() => 3);
+                setPointsCoefficient(3);
             }
             if (countRightAnswer === 3 * GAME_COUNT_ANSWERS_STAR - 1) {
-                setPointsCoefficient(() => 4);
+                setPointsCoefficient(4);
             }
 
             const answerPoint = ANSWER_POINT * pointsCoefficient;
@@ -207,14 +222,12 @@ const GameBodyBlock = ({
             setPoints((point) => point + answerPoint);
             setCurrentAnswers((oldArr) => [...oldArr, answerQuetsionObj]);
         } else {
-            setCountRightAnswer(() => 0);
-            setPointsCoefficient(() => 1);
+            updateCountAnswers(0);
+            setPointsCoefficient(1);
             setWrongAnswers((oldArr) => [...oldArr, answerQuetsionObj]);
         }
 
-        if (countRightAnswer > maxCountRightAnswer) {
-            setMaxCountRightAnswer(() => countRightAnswer);
-        }
+        console.log('countRightAnswer',countRightAnswer, 'maxCountRightAnswer', maxCountRightAnswer);
 
         playSong(urlAnswer, true);
         setQuestionNumber((number) => number + 1);
@@ -240,6 +253,7 @@ const GameBodyBlock = ({
                 wrongAnswers={wrongAnswers}
                 serviceApi={serviceApi}
                 currentAnswers={currentAnswers}
+                countNewWords={countNewWords}
                 countLearnedWords={countLearnedWords}
                 maxLineCurrentAnswers={maxCountRightAnswer}
             />

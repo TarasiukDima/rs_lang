@@ -111,5 +111,6 @@ export const USER_LOCAL_KEYS = [
     "wordsSettings",
     "time",
     "countNewWords",
+    "email",
 ];
 /* localstorage user keys end */
