@@ -1,8 +1,8 @@
 import { IAction, IGameState } from "../../types/redux";
-import { CHANGE_GAME_CATEGORY, CHANGE_GAME_PAGE } from "../actions/actionsGame";
+import { CHANGE_GAME_CATEGORY, CHANGE_GAME_ONE_PAGE, CHANGE_GAME_PAGE } from "../actions/actionsGame";
 
 const INITIAL_STATE: IGameState = {
-    game: false,
+    gameOnePage: false,
     gameCategory: null,
     gamePage: null,
 };
@@ -20,6 +20,11 @@ const reducerGame = (state: IGameState = INITIAL_STATE, action: IAction) => {
             return {
                 ...state,
                 gamePage: payload as null | number,
+            };
+        case CHANGE_GAME_ONE_PAGE:
+            return {
+                ...state,
+                gameOnePage: payload as boolean,
             };
 
         default:

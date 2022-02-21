@@ -1,0 +1,9 @@
+@import "../../scss/variebles";
+@import "../../scss/mixins";
+
+
+.buttons__wrap {
+    @include dflex(center, stretch);
+
+    flex-wrap: wrap;
+}

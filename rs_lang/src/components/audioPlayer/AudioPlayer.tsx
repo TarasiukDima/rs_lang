@@ -12,7 +12,7 @@ const AudioPlayer: FC<IAudioPlayerProps> = ({ audioSrc, playAudio, changeCategor
     useEffect(() => {
         startPlay();
         return () => changeCategory(false);
-    }, [audioSrc, playAudio]);
+    }, [playAudio]);
 
     const endPlay = () => {
         changeCategory(false);

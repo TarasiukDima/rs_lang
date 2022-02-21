@@ -4,12 +4,14 @@ import reducerAudio from "./reducers/reducerAudio";
 import reducerGame from "./reducers/reducerGame";
 import reducerUser from "./reducers/reducerUser";
 import reducerPages from "./reducers/reducerPages";
+import reducerStatistic from "./reducers/reducerStatistic";
 
 export const rootReducer = combineReducers({
     user: reducerUser,
     game: reducerGame,
     audio: reducerAudio,
     pages: reducerPages,
+    statistic: reducerStatistic,
 });
 
 type WindowWithDevTools = Window & {

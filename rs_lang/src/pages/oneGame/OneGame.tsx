@@ -1,26 +1,24 @@
 import React, { Dispatch } from "react";
 import { connect } from "react-redux";
 import { useLocation } from "react-router-dom";
-import AudioGame from "../../components/audioGame";
 import SectionContent from "../../components/section";
-import SprintGame from "../../components/sprintGame";
+import ChooseCategoryGame from "./ChooseCategoryGame";
+import Game from "../../components/game";
 import { PageLinks } from "../../helpers/consts";
 import {
     changeGameCategory,
     changeGamePage,
 } from "../../store/actions/actionsGame";
-import { IOneGameProps } from "../../types/game";
+import { IOneGamePageProps } from "../../types/game";
 import { IAction, IState } from "../../types/redux";
-import ChooseCategoryGame from "./ChooseCategoryGame";
 
 import "./index.scss";
 
 const OneGame = ({
-    gamePage,
     gameCategory,
     changeGameCat,
     changeGamePage,
-}: IOneGameProps) => {
+}: IOneGamePageProps) => {
     const { pathname } = useLocation();
     let gameTitle = "Данной игры нет";
     let needGame = "not game";
@@ -44,10 +42,6 @@ const OneGame = ({
     };
 
     const showChoose = gameCategory === null;
-    const showAudioGame = !showChoose && needGame === "audio";
-    const showSprintGame = !showChoose && needGame === "sprint";
-
-
 
     return (
          <SectionContent nameClass="games__section">
@@ -56,17 +50,12 @@ const OneGame = ({
                     gameTitle={gameTitle}
                     changeCateAndPage={changeCateAndPage}
                 />
-            ) : <></>}
-
-
-            {showAudioGame ? <AudioGame /> : <></>}
-            {showSprintGame ? <SprintGame /> : <></>}
+            ) : <Game needGame={ needGame }/>}
         </SectionContent>
     );
 };
 
-const mapStateToProps = ({ game: { gamePage, gameCategory } }: IState) => ({
-    gamePage,
+const mapStateToProps = ({ game: { gameCategory } }: IState) => ({
     gameCategory,
 });
 

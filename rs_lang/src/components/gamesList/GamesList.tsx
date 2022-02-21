@@ -6,11 +6,11 @@ import { IGameListProps } from "../../types/game";
 
 import "./index.scss"
 
-const GamesList = ({ category, page }: IGameListProps) => {
+const GamesList = ({ category, page, gameOnePage }: IGameListProps) => {
     return (
         <ul className="list__games">
             {gamesInfo.map((gameInfo) => (
-                <GameLink key={gameInfo.pageLink} {...gameInfo} category={category} page={page}/>
+                <GameLink key={gameInfo.pageLink} {...gameInfo} category={category} page={page} gameOnePage={gameOnePage}/>
             ))}
         </ul>
     );

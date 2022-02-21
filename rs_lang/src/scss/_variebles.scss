@@ -12,6 +12,7 @@ $orangeLight: #F09819;
 $grey: #6e6e6e;
 $greyLight: #707070;
 $brownLight: #e2d4c4;
+$green: #0b993a;
 
 $bgColor1: $middleDarkBlue;
 $bgColor2: $whiteColor;
@@ -52,7 +53,7 @@ $gameShadow: 2px 2px 10px transparentize($greyLight, 0.2);
 $gameNameShadow: 0 0 1px $black,  0 1px 2px $black, 1px 2px 3px $black;
 $gameNameShadow2: 0 1px 1px $black,  0 2px 2px $black, 1px 3px 2px $black,
 0 5px 2px $black,  0 6px 2px $black, 1px 8px 2px $black;
-$gameDarkFon: rgba(57, 70, 137, 0.8);
+$gameDarkFon: transparentize($middleBlue, 0.2);
 $gameHoverName: $orangeRedColor;
 
 $tabBg: $darkBlue;
@@ -75,7 +76,7 @@ $wordBorder: 3px solid rgba(109, 109, 109, 0.3);
 $wordMiniTitle: $middleBlue;
 $wordButtonHelpersBg: $middleBlue;
 $wordButtonHelpersBgHover: $orangeRedColor;
-$learnAllItemShadow: 0 0 15px rgba(0, 255, 34, 0.671);
+$learnAllItemShadow: 0 0 15px rgba(0, 255, 34, 0.8);
 
 $paginationActiveBg: $middleDarkBlue;
 
@@ -94,6 +95,8 @@ $errorText: #ff0000;
 
 $userNameColor: #928980;
 
+$gameBlockShadow: 0 0 10px transparentize($black, 0.5);
+$gameBlockBorder: 4px solid transparentize($black, 0.5);
 /* colors end */
 
 
@@ -121,5 +124,6 @@ $loaderAnimationShadow6: -30px 30px 0 0;
 $loaderAnimationShadow7: -40px 0 0 0;
 
 $timerSize: 60px;
+$timerLineSize: 52px;
 /* values end */
 

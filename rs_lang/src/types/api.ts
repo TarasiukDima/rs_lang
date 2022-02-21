@@ -62,6 +62,11 @@ export interface IApiWordsObj {
     errorText: null | string;
 }
 
+export interface IApiGameWordsObj {
+    data: Array<Array<IWordItemObj>>;
+    errorText: null | string;
+}
+
 export interface IWordOptionObj {
     learned: boolean;
     difficult: boolean;
@@ -75,11 +80,6 @@ export interface IUserWordOptionObj {
 
 export interface ICreateUserWord extends IUserWordOptionObj {
     wordOptions: IWordOptionObj;
-}
-
-export interface IStatisticData {
-    learnedWords: number;
-    optional: {};
 }
 
 export interface ISettingsData {

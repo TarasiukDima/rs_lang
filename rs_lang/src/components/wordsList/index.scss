@@ -156,6 +156,11 @@
 }
 
 .learned__list {
+    padding: 30px 20px 10px;
+    background-color: $whiteBg;
+    border-radius: $borderRadius;
+    box-shadow: inset 0 0 20px transparentize($bgColor1, 0.1);
+
     .word__item {
         box-shadow: $learnAllItemShadow;
     }

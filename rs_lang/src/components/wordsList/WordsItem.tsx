@@ -1,5 +1,8 @@
 import React, { Dispatch, useEffect, useState } from "react";
 import { connect } from "react-redux";
+
+import ButtonEl from "../button";
+
 import { NUMBER_HIDDEN_CATEGORY, URL_DATA_FILES } from "../../helpers/consts";
 import {
     changeAudioPlay,
@@ -8,13 +11,17 @@ import {
 import {
     addUserDifficultWord,
     addUserLearnedWord,
+    addUserWord,
     removeUserDifficultWord,
     removeUserLearnedWord,
+    updateUserWord,
 } from "../../store/actions/actionsUser";
 import { IWordItemProps, TSoundButtonClick } from "../../types/book";
-import { IAction, IState } from "../../types/redux";
-import ButtonEl from "../button";
-import button from "../button";
+import {
+    IAction,
+    IState,
+    IUserWordKeys,
+} from "../../types/redux";
 
 const WordsItem = ({
     serviceApi,
@@ -46,15 +53,13 @@ const WordsItem = ({
     removeLearned,
     addDifficult,
     removeDifficult,
+    addWordInfo,
+    updateWordGameState,
 }: IWordItemProps) => {
     const wordInLearned = wordsSettings[id] ? wordsSettings[id].learned : false;
     const wordInDifficult = wordsSettings[id]
         ? wordsSettings[id].difficult
         : false;
-    const [loading, setLoading] = useState(false);
-    const [activeSong, setActiveSong] = useState(0);
-    const [difficult, setDifficult] = useState(wordInDifficult);
-    const [learned, setLearned] = useState(wordInLearned);
     const audioPlayList = [audio, audioMeaning, audioExample];
     const difficultTabActive = vocabularyHiddenTab === 0;
     const hiddenCatActive = vocabularyCategory === NUMBER_HIDDEN_CATEGORY;
@@ -64,18 +69,21 @@ const WordsItem = ({
     const showLearnedButton =
         hiddenCatActive && authorization && !difficultTabActive;
 
+    const [loading, setLoading] = useState(false);
+    const [activeSong, setActiveSong] = useState(0);
+    const [difficult, setDifficult] = useState(wordInDifficult);
+    const [learned, setLearned] = useState(wordInLearned);
+
     useEffect(() => {
         setCoutnSecond(true);
-
-        learned
-            ? changeCountLearnedItems(+1)
-            : changeCountLearnedItems(-1);
+        learned ? changeCountLearnedItems(+1) : changeCountLearnedItems(-1);
     }, [learned]);
 
     const clickButton: TSoundButtonClick = (audio: string) => {
         changeSrcSong(audio);
         changePlay(true);
     };
+
 
     const playSong = () => {
         clickButton(audioPlayList[activeSong]);
@@ -86,18 +94,25 @@ const WordsItem = ({
         operatiionType: "add" | "remove",
         varient: "learned" | "difficult"
     ) => {
+        if (!authorization) return;
+
+        const addStateWord = operatiionType === "add";
+
         const optionsObj = {
             userId: userID,
             wordId: id,
             wordOptions: {
                 learned: false,
                 difficult: false,
+                countCurrentAnswer: 0,
+                countWrongAnswer: 0,
+                game: false,
             },
             token,
         };
 
         if (varient === "learned") {
-            optionsObj.wordOptions.learned = operatiionType === "add";
+            optionsObj.wordOptions.learned = addStateWord;
             optionsObj.wordOptions.difficult = wordsSettings[id]
                 ? wordsSettings[id].difficult
                 : false;
@@ -105,41 +120,39 @@ const WordsItem = ({
             optionsObj.wordOptions.learned = wordsSettings[id]
                 ? wordsSettings[id].learned
                 : false;
-            optionsObj.wordOptions.difficult = operatiionType === "add";
+            optionsObj.wordOptions.difficult = addStateWord;
         }
 
         if (id in wordsSettings) {
+            if (varient === "learned") {
+                addStateWord ? addLearned(id) : removeLearned(id);
+            } else {
+                addStateWord ? addDifficult(id) : removeDifficult(id);
+            }
+
+            optionsObj.wordOptions.game = wordsSettings[id].game;
+            updateWordGameState(id, optionsObj.wordOptions);
             return await serviceApi.updateUserWord(optionsObj);
         }
 
+        addWordInfo(optionsObj.wordId, optionsObj.wordOptions);
         return await serviceApi.createUserWord(optionsObj);
     };
 
-    const changeDifficult = async (id: string) => {
+    const changeDifficult = async () => {
         setLoading(true);
-
-        if (difficult) {
-            await changeWordInformtion("remove", "difficult");
-            removeDifficult(id);
-        } else {
-            await changeWordInformtion("add", "difficult");
-            addDifficult(id);
-        }
+        difficult
+            ? await changeWordInformtion("remove", "difficult")
+            : await changeWordInformtion("add", "difficult");
         setDifficult((difficult) => !difficult);
         setLoading(false);
     };
 
-    const changeLearned = async (id: string) => {
+    const changeLearned = async () => {
         setLoading(true);
-
-        if (learned) {
-            await changeWordInformtion("remove", "learned");
-            removeLearned(id);
-        } else {
-            await changeWordInformtion("add", "learned");
-            addLearned(id);
-        }
-
+        learned
+            ? await changeWordInformtion("remove", "learned")
+            : await changeWordInformtion("add", "learned");
         setLearned((learned) => !learned);
         setLoading(false);
     };
@@ -156,6 +169,7 @@ const WordsItem = ({
     const difficultButtonText = difficult
         ? "Убрать из сложных"
         : "Добавить в сложные";
+
     const leanedButtonText = learned
         ? "Убрать из изученных"
         : "Добавить в изученные";
@@ -188,18 +202,17 @@ const WordsItem = ({
                 {(showTwoButtons || showDifficultButton) && (
                     <ButtonEl
                         nameClass="button__card"
-                        onclick={() => changeDifficult(id)}
+                        onclick={changeDifficult}
                         disable={loading}
                     >
                         {difficultButtonText}
                     </ButtonEl>
                 )}
 
-
                 {(showTwoButtons || showLearnedButton) && (
                     <ButtonEl
                         nameClass="button__card"
-                        onclick={() => changeLearned(id)}
+                        onclick={changeLearned}
                         disable={loading}
                     >
                         {leanedButtonText}
@@ -241,6 +254,12 @@ const mapDispatchToProps = (dispatch: Dispatch<IAction>) => {
         },
         removeDifficult: (id: string) => {
             dispatch(removeUserDifficultWord(id));
+        },
+        addWordInfo: (id: string, options: IUserWordKeys) => {
+            dispatch(addUserWord(id, options));
+        },
+        updateWordGameState: (id: string, options: Partial<IUserWordKeys>) => {
+            dispatch(updateUserWord(id, options));
         },
     };
 };

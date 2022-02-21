@@ -1,10 +1,10 @@
 import {
-    TSimpleActionFC,
     TSimpleFunction,
+    TSimpleTTypesFC,
     TSimpleTypeFunction,
 } from "./common";
 import ServiceApi from "../services/services";
-import { IUserWordsInformation } from "./redux";
+import { IUserWordKeys, IUserWordsInformation } from "./redux";
 
 export type TSoundButtonClick = (audio: string) => void;
 export type TSoundPlay = (audio: boolean) => void;
@@ -63,6 +63,8 @@ export interface IWordItemProps extends IWordItemObj {
     removeLearned: TSimpleTypeFunction<string>;
     addDifficult: TSimpleTypeFunction<string>;
     removeDifficult: TSimpleTypeFunction<string>;
+    addWordInfo: TSimpleTTypesFC<string, IUserWordKeys>;
+    updateWordGameState: TSimpleTTypesFC<string, Partial<IUserWordKeys>>;
 
     key?: number | string;
 }

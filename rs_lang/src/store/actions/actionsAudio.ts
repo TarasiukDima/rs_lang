@@ -3,6 +3,7 @@ import { TSimpleActionFC } from "../../types/common";
 import { IAction } from "../../types/redux";
 
 export const CHANGE_AUDIO_SRC = "CHANGE_AUDIO_SRC";
+export const CHANGE_AUDIO_LOCAL_SRC = "CHANGE_AUDIO_LOCAL_SRC";
 export const CHANGE_AUDIO_PLAY = "CHANGE_AUDIO_PLAY";
 
 export const changeAudioSrc: TSimpleActionFC<string> = (
@@ -11,6 +12,14 @@ export const changeAudioSrc: TSimpleActionFC<string> = (
     return {
         type: CHANGE_AUDIO_SRC,
         payload: URL_DATA_FILES + song,
+    };
+};
+export const changeAudioLocalSrc: TSimpleActionFC<string> = (
+    song: string
+): IAction => {
+    return {
+        type: CHANGE_AUDIO_LOCAL_SRC,
+        payload: song,
     };
 };
 

@@ -1,9 +1,12 @@
 import React, { FC, RefObject, useRef, useState } from "react";
 import FormInfo from "../../../components/formInfo";
 import LabelForm from "../../../components/label";
+import ApiContextWrapper from "../../../hoc/ApiContextWrapper";
+
 import {
     AuthFormText,
     LOCASTORAGE__NAME_USER,
+    LOCASTORAGE__USER_STATISTIC,
     PageLinks,
     submitRegistrText,
 } from "../../../helpers/consts";
@@ -11,7 +14,6 @@ import {
     checkFormErrors,
     saveSettingsLocalStorage,
 } from "../../../helpers/utils";
-import ApiContextWrapper from "../../../hoc/ApiContextWrapper";
 import {
     IChangeUserObject,
     ILocalStoragUser,
@@ -107,6 +109,7 @@ const AuthContent: FC<ILogUserProps> = ({ changeUser, serviceApi }: ILogUserProp
             authorization: true,
             wordsSettings: {},
             time: date,
+            countNewWords: 0,
         };
 
         userWords.forEach(({ wordId, optional }) => {

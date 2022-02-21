@@ -1,8 +1,11 @@
 import React, { RefObject, useRef, useState } from "react";
 import FormInfo from "../../../components/formInfo";
 import LabelForm from "../../../components/label";
+import ApiContextWrapper from "../../../hoc/ApiContextWrapper";
+
 import {
     LOCASTORAGE__NAME_USER,
+    LOCASTORAGE__USER_STATISTIC,
     LoginFormText,
     PageLinks,
     submitLoginText,
@@ -11,7 +14,6 @@ import {
     checkFormErrors,
     saveSettingsLocalStorage,
 } from "../../../helpers/utils";
-import ApiContextWrapper from "../../../hoc/ApiContextWrapper";
 import {
     IChangeUserObject,
     ILocalStoragUser,
@@ -70,6 +72,8 @@ const LogInContent = ({ changeUser, serviceApi }: ILogUserProps) => {
             return stopSubmit(errorUserWords);
         }
         const date = new Date().getTime();
+        /////////////////
+        //TODO: check countNewWords: 0,
         const refreshUserObj: IChangeUserObject = {
             id: data.userId,
             name: data.name,
@@ -78,6 +82,7 @@ const LogInContent = ({ changeUser, serviceApi }: ILogUserProps) => {
             authorization: true,
             wordsSettings: {},
             time: date,
+            countNewWords: 0,
         };
 
         userWords.forEach(({ wordId, optional }) => {
@@ -88,6 +93,14 @@ const LogInContent = ({ changeUser, serviceApi }: ILogUserProps) => {
             ...refreshUserObj,
             email: emailText,
         };
+
+        if (Object.keys(refreshUserObj.wordsSettings).length > 0) {
+            const { data: statistic } = await serviceApi.getUseStatistics();
+
+            if (statistic) {
+                saveSettingsLocalStorage(LOCASTORAGE__USER_STATISTIC, statistic);
+            }
+        }
 
         changeUser(refreshUserObj);
         saveSettingsLocalStorage(LOCASTORAGE__NAME_USER, objInfo);

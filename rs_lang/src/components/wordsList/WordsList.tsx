@@ -8,7 +8,7 @@ import { TSimpleTypeFunction } from "../../types/common";
 import "./index.scss";
 
 const WordsList = ({ bookListInfoArr }: IWordsListProps) => {
-    const [countLearnedEl, setCountLearnedEl] = useState(20);
+    const [countLearnedEl, setCountLearnedEl] = useState(bookListInfoArr.length);
     const [coutnSecond, setCoutnSecond] = useState(false);
     if (!bookListInfoArr.length) return null;
 

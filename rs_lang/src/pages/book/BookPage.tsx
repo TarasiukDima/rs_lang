@@ -39,7 +39,7 @@ const BookPage = ({ vocabularyCategory, vocabularyPage }: IBookPageProps) => {
                         countPages={COUNT_PAGE}
                     />
 
-                    <GamesList category={vocabularyCategory} page={vocabularyPage}/>
+                    <GamesList category={vocabularyCategory} page={vocabularyPage} gameOnePage={true}/>
                 </>
             ) : <></>}
         </SectionContent>

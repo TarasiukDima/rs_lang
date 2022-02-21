@@ -8,7 +8,7 @@ const GamesPage = () => {
         <SectionContent nameClass="games__section">
             <h1 className="title">Игры</h1>
 
-            <GamesList category={ null }  page={ null }/>
+            <GamesList category={ null }  page={ null } gameOnePage={false}/>
         </SectionContent>
     );
 };

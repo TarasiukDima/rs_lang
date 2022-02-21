@@ -4,6 +4,13 @@ export const URL_DATA_FILES =
 
 export const SPRINT_GAME_TIME = 60;
 export const COUNT_PAGE = 29;
+export const ANSWER_POINT = 10;
+export const MIN_COUNT_QUESTIONS_FOR_GAME = 3;
+export const COUNT_BUTTONS_FOR_QUESTIONS = 4;
+export const COUNT_MAX_SPRINT_GAME_QUESTIONS = 60;
+export const COUNT_MAX_AUDIO_GAME_QUESTIONS = 20;
+
+export const GAME_COUNT_ANSWERS_STAR = 4;
 
 export const COUNT_TOKEN_REFRESH = 86400000;
 export const COUNT_TOKEN_WORK = 16200000;
@@ -12,6 +19,7 @@ export const PREV_PAGINGATION_TEXT = "&#171;";
 export const NEXT_PAGINGATION_TEXT = "&#187;";
 
 export const LOCASTORAGE__NAME_USER = "user_data";
+export const LOCASTORAGE__USER_STATISTIC = "resuts_game";
 export const LOCASTORAGE__VOC_CAT = "book_category";
 export const LOCASTORAGE__VOC_PAG = "book_page";
 export const LOCASTORAGE__VOC_HIDDEN_TAB = "book_tab";

@@ -1,6 +1,6 @@
 import ServiceApi from "../services/services";
 import { TSimpleTypeFunction } from "./common";
-import { IUserWordsInformation } from "./redux";
+import { IStatisticGameState, IUserWordsInformation } from "./redux";
 
 export type TFormSubmitFC = (event: React.FormEvent<HTMLFormElement>) => void;
 export type TСhangeUserInfo = (newObj: IChangeUserObject) => void;
@@ -13,6 +13,7 @@ export interface IChangeUserObject {
     authorization: boolean;
     wordsSettings: IUserWordsInformation;
     time: number;
+    countNewWords: number;
 }
 
 export interface IFormPageProps {
@@ -20,6 +21,7 @@ export interface IFormPageProps {
     authorization: boolean;
     changeUser: TСhangeUserInfo;
     changeCategory: TSimpleTypeFunction<number>;
+    updateAllStatistic: TSimpleTypeFunction<IStatisticGameState>;
 }
 
 export interface ILogUserProps {
@@ -30,6 +32,7 @@ export interface ILogUserProps {
 export interface ILogOut extends ILogUserProps {
     name: string;
     changeCategory: TSimpleTypeFunction<number>;
+    updateAllStatistic: TSimpleTypeFunction<IStatisticGameState>;
 }
 
 export interface ILabelForm {
@@ -48,5 +51,6 @@ export interface FormInfoProps {
 /* localstorage start */
 export interface ILocalStoragUser extends IChangeUserObject {
     email: string;
+    countNewWords: number;
 }
 /* localstorage end */

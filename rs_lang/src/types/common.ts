@@ -1,11 +1,11 @@
-import ServiceApi from "../services/services";
-import { TSoundPlay } from "./book";
 import { ILocalStoragUser } from "./form";
-import { IAction } from "./redux";
+import { IAction, IStatisticGameState } from "./redux";
 
 export type TSimpleFunction = () => void;
 export type TSimpleActionFC<T> = (el: T) => IAction;
+export type TActionFC<T, P> = (el: T, el2: P) => IAction;
 export type TSimpleTypeFunction<T> = (el: T) => void;
+export type TSimpleTTypesFC<T, P> = (el: T, el2: P) => void;
 export type TSimplePromiseFC = () => Promise<void>;
 
 export type TCheckValue = (
@@ -28,7 +28,7 @@ export type TCheckFormErrors = (
 ) => boolean;
 export type TSaveLocalSettings = (
     name: string,
-    infoObj: ILocalStoragUser
+    infoObj: ILocalStoragUser | IStatisticGameState
 ) => void;
 
 export type TValidateLocalObj = (

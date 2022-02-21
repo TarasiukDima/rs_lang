@@ -9,18 +9,19 @@ import { checkSettingsLocalStorage } from "../helpers/utils";
 import {
     ApiUrls,
     ErrorMessages,
+    IApiGameWordsObj,
     IApiOptions,
     IApiUserInfo,
     IApiWordsObj,
     ICreateUserWord,
     IHeaders,
     ISettingsData,
-    IStatisticData,
     IUserCreateForm,
     IUserLogInForm,
     TOptionsMethods,
 } from "../types/api";
 import { ILocalStoragUser } from "../types/form";
+import { IStatisticGameState } from "../types/redux";
 
 class ServiceApi {
     time: number;
@@ -217,6 +218,36 @@ class ServiceApi {
                 return { errorText: ErrorMessages.getWords, data: [] };
             });
     };
+
+    public getGameWords = async (group: number, page: number, varient: boolean): Promise<IApiGameWordsObj | IApiWordsObj> => {
+        const requests = [];
+        const groupNumber = group ? group : 0;
+        let pageNumber = page ? page : 29;
+
+        if (varient) {
+            return await this.getWords(group, page);
+        }
+
+        while (pageNumber >= 0) {
+            const urlString = `${
+                URL_DATA + ApiUrls.words
+            }?group=${groupNumber}&page=${pageNumber}`;
+            requests.push(fetch(urlString));
+            pageNumber--;
+        }
+        return await Promise.all(requests)
+            .then(responses => Promise.all(responses.map(r => r.json())))
+            .then((data) => {
+                return {
+                    data: data,
+                    errorText: null,
+                };
+            })
+            .catch((error) => {
+                console.error(error);
+                return { errorText: ErrorMessages.getWords, data: [] };
+            });
+    };
     /* words end */
 
     /* user words start */
@@ -325,11 +356,11 @@ class ServiceApi {
         const filter =
             varient === 0
                 ? encodeURI(
-                    '{ "$and": [{"userWord.difficulty":"normal", "userWord.optional.difficult":true}]}'
-                )
+                      '{ "$and": [{"userWord.difficulty":"normal", "userWord.optional.difficult":true}]}'
+                  )
                 : encodeURI(
-                    '{ "$and": [{"userWord.difficulty":"normal", "userWord.optional.learned":true}]}'
-                );
+                      '{ "$and": [{"userWord.difficulty":"normal", "userWord.optional.learned":true}]}'
+                  );
 
         const url = `${ApiUrls.createUser}/${this.idUser}/${ApiUrls.aggregatedWords}?filter=${filter}&wordsPerPage=3600`;
 
@@ -369,10 +400,12 @@ class ServiceApi {
             });
     };
 
-    public ulpdateUseStatistics = async (optionsUpdate: IStatisticData) => {
+    public updateUseStatistics = async (optionsUpdate: IStatisticGameState) => {
         const url = `${ApiUrls.createUser}/${this.idUser}/${ApiUrls.statistics}`;
         return await this.getData(url, "PUT", JSON.stringify(optionsUpdate))
             .then((data) => {
+                console.log('updateUseStatistics', data);
+
                 return {
                     data: data,
                     errorText: null,

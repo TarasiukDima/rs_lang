@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import {
     changeGameCategory,
     changeGamePage,
+    changeVarientGamePage,
 } from "../../store/actions/actionsGame";
 import { IGameProps } from "../../types/game";
 import { IAction } from "../../types/redux";
@@ -13,13 +14,18 @@ const GameLink = ({
     pageLink,
     linkName,
     category,
+    gameOnePage,
     page,
     changeGameCat,
     changeGamePage,
+    changeVarientGame,
+
 }: IGameProps) => {
+
     const changeGameState = () => {
         changeGameCat(category);
         changeGamePage(page);
+        changeVarientGame(gameOnePage);
     };
 
     return (
@@ -42,6 +48,9 @@ const mapDispatchToProps = (dispatch: Dispatch<IAction>) => {
         },
         changeGamePage: (id: number | null) => {
             dispatch(changeGamePage(id));
+        },
+        changeVarientGame: (varient: boolean) => {
+            dispatch(changeVarientGamePage(varient));
         },
     };
 };

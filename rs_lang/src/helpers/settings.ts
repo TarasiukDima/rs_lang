@@ -110,5 +110,6 @@ export const USER_LOCAL_KEYS = [
     "authorization",
     "wordsSettings",
     "time",
+    "countNewWords",
 ];
 /* localstorage user keys end */

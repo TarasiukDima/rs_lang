@@ -40,6 +40,7 @@ const CheckAuthorization = ({
             authorization: false,
             wordsSettings: {},
             time: 0,
+            countNewWords: 0,
         });
         return null;
     }
