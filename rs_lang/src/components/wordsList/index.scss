@@ -1,0 +1,232 @@
+@import "../../scss/variebles";
+@import "../../scss/mixins";
+
+.words__list {
+    @include dflex(center, stretch);
+
+    flex-wrap: wrap;
+    margin-top: 30px;
+
+    .word__item {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        width: 48%;
+        margin: 0 1% 20px;
+        padding: 30px 20px;
+        border-radius: $wordBorderRadius;
+        color: $black;
+        background-position: center center;
+        background-size: cover;
+        overflow: hidden;
+
+        &:before {
+            @include psevdo();
+
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-shadow: $wordShadow;
+            background-color: $wordBg;
+        }
+    }
+
+    .word__item.learned .item__name:before {
+        right: 0;
+        background-image: url(../../assets/svg/ok.svg);
+        opacity: 1;
+    }
+
+    .word__item.difficult .item__name:after {
+        right: 45px;
+        background-image: url(../../assets/svg/heavy.svg);
+        opacity: 1;
+    }
+
+    .item__name {
+        position: relative;
+        z-index: 1;
+        font-family: "ComicSans", sans-serif;
+        font-size: 45px;
+        line-height: 1;
+        text-transform: uppercase;
+        color: $wordMiniTitle;
+
+        &:before,
+        &:after {
+            @include psevdo();
+
+            width: 35px;
+            height: 35px;
+            opacity: 0;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: contain;
+        }
+    }
+
+    .item__name_translate {
+        @include dflex(flex-start, center);
+
+        flex-wrap: wrap;
+        margin: 10px 0 20px;
+        padding-bottom: 5px;
+        line-height: 1.2;
+        border-bottom: $wordBorder;
+        color: $wordTranslateColor;
+    }
+
+    .name__text {
+        font-size: $appFontSize;
+        text-transform: uppercase;
+    }
+
+    .name__transcription {
+        margin: 0 15px;
+    }
+
+    .play__button {
+        width: 35px;
+        height: 35px;
+        background: url(../../assets/svg/audio.svg) no-repeat center center;
+        background-size: contain;
+    }
+
+    .play__button.active {
+        background: url(../../assets/svg/mute.svg) no-repeat center center;
+        background-size: contain;
+    }
+
+    .item__meaning,
+    .item__example {
+        font-size: 16px;
+        line-height: 1.3;
+
+        span {
+            display: block;
+        }
+
+        span ~ span {
+            margin-top: 5px;
+        }
+    }
+
+    .item__text_title {
+        font-weight: 500;
+        color: $wordMiniTitle;
+    }
+
+    .item__example {
+        flex-grow: 1;
+        margin-top: 20px;
+    }
+
+    .buttons__wrap {
+        @include dflex(center, stretch);
+
+        flex-wrap: wrap;
+        margin-top: 15px;
+    }
+
+    .button__card {
+        width: 48%;
+        margin: 1%;
+        padding: 0;
+        color: $whiteColor;
+        background-color: $wordButtonHelpersBg;
+
+        &:hover {
+            background-color: $wordButtonHelpersBgHover;
+
+            span {
+                box-shadow: none;
+            }
+        }
+
+        &:active {
+            box-shadow: inset 0 0 10px $black;
+
+            span {
+                box-shadow: none;
+            }
+        }
+
+    }
+}
+
+.learned__list {
+    padding: 30px 20px 10px;
+    background-color: $whiteBg;
+    border-radius: $borderRadius;
+    box-shadow: inset 0 0 20px transparentize($bgColor1, 0.1);
+
+    .word__item {
+        box-shadow: $learnAllItemShadow;
+    }
+}
+
+@include tablet() {
+    .words__list {
+        .word__item {
+            padding: 20px 15px;
+        }
+
+        .word__item.difficult .item__name:after {
+            right: 35px;
+        }
+
+        .item__name {
+            font-size: 35px;
+
+            &:before,
+            &:after {
+                width: 25px;
+                height: 25px;
+            }
+        }
+
+        .name__text {
+            font-size: 16px;
+        }
+
+        .button__card {
+            font-size: 14px;
+        }
+    }
+}
+
+@include smallTablet() {
+    .words__list {
+        .word__item {
+            width: 100%;
+            margin: 0 0 20px;
+        }
+    }
+}
+
+@include mobile() {
+    .words__list {
+        .item__name {
+            font-size: 28px;
+        }
+
+        .name__transcription {
+            margin: 0 5px;
+        }
+
+        .play__button {
+            width: 30px;
+            height: 30px;
+        }
+
+        .buttons__wrap {
+            margin-top: 0;
+        }
+
+        .button__card {
+            width: 100%;
+            margin: 10px 0 0;
+        }
+    }
+}

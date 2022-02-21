@@ -1,0 +1,31 @@
+@import "../../scss/variebles";
+@import "../../scss/mixins";
+
+
+
+
+.games__section {
+    .wrapper {
+        @include dflex(center, center);
+
+        flex-direction: column;
+    }
+
+    .categories__item .button {
+        &:hover {
+            background: $orangeRedColor;
+        }
+        span {
+            box-shadow: none;
+        }
+    }
+
+    .game__choose__text {
+        text-align: center;
+        margin: 30px auto;
+        font-size: 28px;
+        color: $dark;
+    }
+}
+
+

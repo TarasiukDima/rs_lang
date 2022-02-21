@@ -1,0 +1,12 @@
+@import "../../scss/variebles";
+@import "../../scss/mixins";
+
+.games__section {
+    padding: 70px 0;
+}
+
+@include mobile() {
+    .games__section {
+        padding: 40px 0;
+    }
+}

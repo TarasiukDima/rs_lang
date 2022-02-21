@@ -1,0 +1,147 @@
+@import "../../../scss/variebles";
+@import "../../../scss/mixins";
+
+
+.game__body {
+    width: max-content;
+    max-width: 100%;
+    min-width: 80%;
+    min-height: 250px;
+    padding: 45px;
+    border-radius: $smallBorderRadius;
+    background-color: $whiteBg;
+    box-shadow: inset 0 0 20px transparentize($black, 0.4);
+
+    .game__body_title {
+        text-align: center;
+        font-weight: bold;
+        font-size: 26px;
+        color: $middleBlue;
+        text-transform: uppercase;
+    }
+
+    .shadow__button {
+        width: max-content;
+        max-width: 100%;
+        margin: 20px auto 0;
+    }
+
+    .play__button_big {
+        position: relative;
+        z-index: 1;
+        width: 170px;
+        height: 170px;
+        border-radius: 50%;
+        background-color: transparentize($bgColor1, 0.8);
+
+        &:hover {
+            background-color: $bgColor1;
+
+            &:after {
+                filter: brightness(0) invert(100%);
+            }
+        }
+        &:active {
+            box-shadow: inset 0 0 20px $whiteColor;
+        }
+        &:after {
+            @include psevdo("", absolute, 50%, 1);
+
+            left: 50%;
+            width: 60%;
+            height: 60%;
+            background: url(../../../assets/svg/audio.svg) no-repeat center center;
+            background-size: contain;
+            transform: translate(-50%, -50%);
+            transition: 0.3s;
+            pointer-events: none;
+        }
+    }
+
+    .play__button_small {
+        width: 45px;
+        height: 45px;
+        margin: 30px auto 50px;
+        background: url(../../../assets/svg/audio.svg) no-repeat center center;
+        background-size: contain;
+    }
+
+    .sound__button {
+        margin: 30px auto 50px;
+    }
+
+    .buttons__wrap {
+        counter-reset: buttonsNumber;
+
+        .button__item {
+            counter-increment: buttonsNumber;
+            width: 46%;
+            max-width: 100%;
+            margin: 0 2% 15px;
+        }
+
+        .button {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            min-width: 180px;
+            padding: 0;
+            color: $whiteColor;
+            background-color: $buttonBgColor2;
+            span {
+                padding: 15px 10px;
+
+                &:before {
+                    content: counter(buttonsNumber) ". ";
+                    position: static;
+                    color: $orangeColor;
+                    pointer-events: none;
+                }
+            }
+        }
+    }
+
+    .sub__text {
+        font-size: 14px;
+        text-align: center;
+        color: $grey;
+    }
+}
+
+@include tablet() {
+    .game__body {
+        padding: 35px 15px;
+
+        .sound__button {
+            margin-bottom: 30px;
+        }
+    }
+
+}
+
+@include mobile() {
+    .game__body {
+        padding: 25px 10px;
+
+        .play__button_big {
+            width: 100px;
+            height: 100px;
+
+
+        }
+
+        .buttons__wrap {
+            .button__item {
+                width: 100%;
+                margin: 0 0 15px;
+            }
+
+            .button {
+                span {
+                    padding: 10px;
+                }
+            }
+        }
+    }
+}
+
