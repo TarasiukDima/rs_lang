@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/rs_lang/static/css/main.d5df0534.css",
-    "main.js": "/rs_lang/static/js/main.acc691c1.js",
+    "main.js": "/rs_lang/static/js/main.b0408f79.js",
     "static/media/RobotoMedium.otf": "/rs_lang/static/media/RobotoMedium.82995ea831be4f6dd136.otf",
     "static/media/RobotoBold.otf": "/rs_lang/static/media/RobotoBold.2f13a1e0ae216db4fe0e.otf",
     "static/media/RobotoRegular.otf": "/rs_lang/static/media/RobotoRegular.1fe59092367411c4f5ac.otf",
@@ -43,10 +43,10 @@
     "static/media/topBootomWawes.svg": "/rs_lang/static/media/topBootomWawes.3f9feb9e15ec8c920737.svg",
     "static/media/ok.svg": "/rs_lang/static/media/ok.a4edfad4136b4539ff6e.svg",
     "main.d5df0534.css.map": "/rs_lang/static/css/main.d5df0534.css.map",
-    "main.acc691c1.js.map": "/rs_lang/static/js/main.acc691c1.js.map"
+    "main.b0408f79.js.map": "/rs_lang/static/js/main.b0408f79.js.map"
   },
   "entrypoints": [
     "static/css/main.d5df0534.css",
-    "static/js/main.acc691c1.js"
+    "static/js/main.b0408f79.js"
   ]
 }
