@@ -97,22 +97,22 @@ const StatisticBlocksInfo = ({
     const sprintInfo = [
         {
             id: 4137457434545,
-            text: "Количество новых слов (за день): ",
+            text: "Количество новых слов за день: ",
             value: allTabsInfo.sprint.newCountsWords,
         },
         {
             id: 456345628990085,
-            text: "Количество изученных слов (за день): ",
+            text: "Количество изученных слов за день: ",
             value: allTabsInfo.sprint.countsWords,
         },
         {
             id: 45642345234554,
-            text: "Процент правильных ответов (за все время): ",
+            text: "Процент правильных ответов за день: ",
             value: allTabsInfo.sprint.currentAnswersPersent + "%",
         },
         {
             id: 5646879684,
-            text: "Лучшая серия (за все время): ",
+            text: "Лучшая серия за день: ",
             value: allTabsInfo.sprint.bestSeries,
         },
         {
@@ -125,22 +125,22 @@ const StatisticBlocksInfo = ({
     const audioInfo = [
         {
             id: 45246265,
-            text: "Количество новых слов (за день): ",
+            text: "Количество новых слов за день: ",
             value: allTabsInfo.audio.newCountsWords,
         },
         {
             id: 4573685,
-            text: "Количество изученных слов (за день): ",
+            text: "Количество изученных слов за день: ",
             value: allTabsInfo.audio.countsWords,
         },
         {
             id: 456454,
-            text: "Процент правильных ответов (за все время): ",
+            text: "Процент правильных ответов за день: ",
             value: allTabsInfo.audio.currentAnswersPersent + "%",
         },
         {
             id: 5646879684,
-            text: "Лучшая серия (за все время): ",
+            text: "Лучшая серия за день: ",
             value: allTabsInfo.audio.bestSeries,
         },
     ];
@@ -163,7 +163,7 @@ const StatisticBlocksInfo = ({
         },
         {
             id: 612342134,
-            text: "Лучшая серия: ",
+            text: "Лучшая серия за день: ",
             value: allTabsInfo.day.bestSeries,
         },
     ];

@@ -116,10 +116,6 @@ class ServiceApi {
         const timeOutToken = now - COUNT_TOKEN_WORK > this.time;
         const timeAuthorization = now - COUNT_TOKEN_REFRESH > this.time;
 
-        console.log("now", now);
-        console.log("time", this.time);
-        console.log("minus", now - this.time);
-
         return {
             tokenTimeOut: timeOutToken,
             authorizationTimeOut: timeAuthorization,

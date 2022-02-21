@@ -46,13 +46,58 @@ const GameResult = ({
 }: IGameResultProps) => {
     const isAudioGame = needGame === "audio";
     const date = new Date();
-    const keyWordStatistic = `${date.getFullYear()}, ${date.getMonth() + 1}, ${date.getDate()}`;
+    const keyWordStatistic = `${date.getFullYear()}, ${date.getMonth()}, ${date.getDate()}`;
 
+    const createGameOptionsObj = (
+        objKey: ISTATGameFields,
+        needSavePoints: boolean,
+    ): ISTATGameFields => {
+        const options: ISTATGameFields = {
+            wrongAnswers: wrongAnswers.length,
+            correctAnswers: currentAnswers.length,
+            longestSeries: maxLineCurrentAnswers,
+            learnedWords: countLearnedWords,
+            countNewWords: countNewWords,
+            lastDate: keyWordStatistic,
+        };
 
-    const createCoomonObj = (
-        objKey: ISTATDayFields | ISTATGameFields,
-    ): Omit<ISTATGameFields, "lastDate"> => {
-        const options: Omit<ISTATGameFields, "lastDate"> = {
+        if (
+            typeof objKey === "object" &&
+            objKey !== null &&
+            "wrongAnswers" in objKey &&
+            "correctAnswers" in objKey &&
+            objKey.lastDate === keyWordStatistic
+        ) {
+            options.wrongAnswers = objKey.wrongAnswers + wrongAnswers.length;
+            options.correctAnswers =
+                objKey.correctAnswers + currentAnswers.length;
+            options.longestSeries =
+                maxLineCurrentAnswers > objKey.longestSeries
+                    ? maxLineCurrentAnswers
+                    : objKey.longestSeries;
+
+            options.countNewWords = objKey.countNewWords + countNewWords;
+            options.learnedWords = objKey.learnedWords + countLearnedWords;
+        }
+
+        if (needSavePoints) {
+            const oldPoints = objKey.points || 0;
+
+            if (objKey.lastDate === keyWordStatistic) {
+                options.points =
+                    points > oldPoints ? points : oldPoints;
+            } else {
+                options.points = oldPoints;
+            }
+        }
+
+        return options;
+    };
+
+    const createDayOptionsObj = (
+        objKey: ISTATDayFields
+    ):  ISTATDayFields => {
+        const options: ISTATDayFields = {
             wrongAnswers: wrongAnswers.length,
             correctAnswers: currentAnswers.length,
             longestSeries: maxLineCurrentAnswers,
@@ -63,9 +108,10 @@ const GameResult = ({
         if (
             typeof objKey === "object" &&
             objKey !== null &&
-            "wrongAnswers" in objKey &&
-            "correctAnswers" in objKey
+            "countNewWords" in objKey
         ) {
+            console.log(objKey.learnedWords);
+
             options.wrongAnswers = objKey.wrongAnswers + wrongAnswers.length;
             options.correctAnswers =
                 objKey.correctAnswers + currentAnswers.length;
@@ -74,54 +120,10 @@ const GameResult = ({
                 maxLineCurrentAnswers > objKey.longestSeries
                     ? maxLineCurrentAnswers
                     : objKey.longestSeries;
+            options.countNewWords = objKey.countNewWords + countNewWords;
         }
+        console.log('fasle');
 
-        return options;
-    };
-
-    const createGameOptionsObj = (
-        objKey: ISTATGameFields,
-        needSavePoints: boolean,
-    ): ISTATGameFields => {
-        const options: ISTATGameFields = {
-            ...createCoomonObj(objKey),
-            lastDate: keyWordStatistic,
-        };
-
-        if (
-            typeof objKey === "object" &&
-            objKey !== null &&
-            "wrongAnswers" in objKey &&
-            "correctAnswers" in objKey
-        ) {
-            if (objKey.lastDate === keyWordStatistic) {
-                options.countNewWords = objKey.countNewWords + countNewWords;
-            }
-        }
-
-        if (needSavePoints) {
-            const oldPoints = objKey.points || 0;
-            options.points =
-                points > oldPoints ? points : oldPoints;
-        }
-
-        return options;
-    };
-
-    const createDayOptionsObj = (
-        objKey: ISTATDayFields
-    ):  ISTATDayFields => {
-        const options: ISTATDayFields = {
-            ...createCoomonObj(objKey),
-        };
-        if (
-            typeof objKey === "object" &&
-            objKey !== null &&
-            "countNewWords" in objKey
-        ) {
-            options.countNewWords =
-                countNewWords > objKey.countNewWords ? countNewWords : objKey.countNewWords;
-        }
         return options;
     };
 

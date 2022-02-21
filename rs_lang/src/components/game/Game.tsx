@@ -39,7 +39,6 @@ const Game = ({
                 COUNT_MAX_AUDIO_GAME_QUESTIONS,
                 arr.length - 1
             ).map((el) => arr[el as number]);
-            console.log("newArr", newArr);
 
             setBookListData(newArr);
             setLoadingData(false);

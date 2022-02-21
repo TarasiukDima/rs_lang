@@ -1,5 +1,9 @@
 import React, { RefObject, useEffect, useRef, useState } from "react";
-import { COUNT_BUTTONS_FOR_QUESTIONS, URL_DATA_FILES } from "../../../helpers/consts";
+
+import {
+    COUNT_BUTTONS_FOR_QUESTIONS,
+    URL_DATA_FILES,
+} from "../../../helpers/consts";
 import { randInt, randomArrayNumbers } from "../../../helpers/utils";
 import { IQuestionProps } from "../../../types/game";
 
@@ -15,7 +19,7 @@ const Question = ({
 
     const [loadingData, setLoadingData] = useState(true);
     const [answersQuestion, setAnswersQuestion] = useState([] as Array<string>);
-    const audioGame = needGame === 'audio';
+    const audioGame = needGame === "audio";
 
     const playWord = () => {
         audioWordRef?.current?.play();
@@ -45,7 +49,7 @@ const Question = ({
 
     const keyPressFunction = (event: KeyboardEvent) => {
         const number = +event.key;
-        const spacePress = event.code === 'Space';
+        const spacePress = event.code === "Space";
         if (isNaN(number) && !spacePress) return;
 
         if (number > 0 && number <= COUNT_BUTTONS_FOR_QUESTIONS) {
@@ -58,11 +62,9 @@ const Question = ({
         }
     };
 
-
     useEffect(() => {
         changeDataQuetsion();
     }, [questionInfo]);
-
 
     useEffect(() => {
         playWord();
@@ -76,14 +78,17 @@ const Question = ({
         };
     }, [answersQuestion]);
 
-    const soundButtonClass = audioGame ? "sound__button play__button_big" : "sound__button play__button_small";
-
+    const soundButtonClass = audioGame
+        ? "sound__button play__button_big"
+        : "sound__button play__button_small";
 
     return (
         <>
             {!loadingData && (
                 <div className="game__body">
-                    {!audioGame && <p className="game__body_title">{questionInfo.word}</p>}
+                    {!audioGame && (
+                        <p className="game__body_title">{questionInfo.word}</p>
+                    )}
 
                     <p className="game__body_title">
                         {questionInfo.wordTranslate}
@@ -107,7 +112,10 @@ const Question = ({
                         ))}
                     </div>
 
-                    <p className="sub__text">ответить можно как мышкой, так и клавиатурой (цифры 1-4, пробел для проигрывания слова)</p>
+                    <p className="sub__text">
+                        ответить можно как мышкой, так и клавиатурой (цифры 1-4,
+                        пробел для проигрывания слова)
+                    </p>
                 </div>
             )}
 

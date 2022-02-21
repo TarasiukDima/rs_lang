@@ -1,5 +1,3 @@
-// export type TSoundButtonClick = (audio1: string, audio2: string, audio3: string) => void;
-
 import ServiceApi from "../services/services";
 import { TSimpleTypeFunction } from "./common";
 import { IStatisticGameState } from "./redux";

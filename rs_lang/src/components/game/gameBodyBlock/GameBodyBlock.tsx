@@ -142,9 +142,6 @@ const GameBodyBlock = ({
                 if (countWrongAnswer >= 3) {
                     optionsObj.wordOptions.difficult = true;
                     optionsObj.wordOptions.learned = false;
-                } else {
-                    optionsObj.wordOptions.difficult =
-                        wordsSettings[wordId].difficult;
                 }
             } else {
                 optionsObj.wordOptions.countWrongAnswer = 0;
@@ -162,13 +159,17 @@ const GameBodyBlock = ({
             if (wordsSettings[wordId].game === false) {
                 setCountNewWords((count) => count + 1);
             }
+
             checkIsNewLearnedWord(wordId, optionsObj.wordOptions);
             updateWordGameState(wordId, optionsObj.wordOptions);
+            console.log(optionsObj);
+
             await serviceApi.updateUserWord(optionsObj);
             return;
         }
 
         setCountNewWords((count) => count + 1);
+
         checkIsNewLearnedWord(wordId, optionsObj.wordOptions);
         addWordInfo(wordId, optionsObj.wordOptions);
         await serviceApi.createUserWord(optionsObj);
@@ -226,8 +227,6 @@ const GameBodyBlock = ({
             setPointsCoefficient(1);
             setWrongAnswers((oldArr) => [...oldArr, answerQuetsionObj]);
         }
-
-        console.log('countRightAnswer',countRightAnswer, 'maxCountRightAnswer', maxCountRightAnswer);
 
         playSong(urlAnswer, true);
         setQuestionNumber((number) => number + 1);

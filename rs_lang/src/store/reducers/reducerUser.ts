@@ -2,7 +2,7 @@ import { LOCASTORAGE__NAME_USER } from "../../helpers/consts";
 import { USER_LOCAL_KEYS } from "../../helpers/settings";
 import { checkSettingsLocalStorage } from "../../helpers/utils";
 import { IChangeUserObject, ILocalStoragUser } from "../../types/form";
-import { IAction, IWordCountInfo, IUserState, IUserWordsInformation, IUserWordKeys, IWordAddInfo, IWordUpdateInfo } from "../../types/redux";
+import { IAction, IWordCountInfo, IUserState, IWordAddInfo, IWordUpdateInfo } from "../../types/redux";
 import {
     ADD_USER_DIFFICULT,
     ADD_USER_LEARNED,

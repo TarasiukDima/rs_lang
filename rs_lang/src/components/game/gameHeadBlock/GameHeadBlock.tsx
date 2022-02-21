@@ -1,29 +1,46 @@
 import React from "react";
 import Timer from "../../timer";
-import { ANSWER_POINT, GAME_COUNT_ANSWERS_STAR, SPRINT_GAME_TIME } from "../../../helpers/consts";
+
+import {
+    ANSWER_POINT,
+    GAME_COUNT_ANSWERS_STAR,
+    SPRINT_GAME_TIME,
+} from "../../../helpers/consts";
 import { IOneGameHeadProps } from "../../../types/game";
 
 import "./index.scss";
 
-const GameHeadBlock = ({ countRightAnswer, pointsCoefficient, setTimeOutGame, points }: IOneGameHeadProps) => {
-    const goodAnswersLine = countRightAnswer >= 3 * GAME_COUNT_ANSWERS_STAR ? " active" : "";
+const GameHeadBlock = ({
+    countRightAnswer,
+    pointsCoefficient,
+    setTimeOutGame,
+    points,
+}: IOneGameHeadProps) => {
+    const goodAnswersLine =
+        countRightAnswer >= 3 * GAME_COUNT_ANSWERS_STAR ? " active" : "";
     const countPointsForCurrentAnswer = ANSWER_POINT * pointsCoefficient;
 
     const questionCurrent1 =
-        (countRightAnswer >= 1 && countRightAnswer <= GAME_COUNT_ANSWERS_STAR - 1) ||
-        (countRightAnswer >= GAME_COUNT_ANSWERS_STAR + 1 && countRightAnswer <= 2 * GAME_COUNT_ANSWERS_STAR - 1) ||
+        (countRightAnswer >= 1 &&
+            countRightAnswer <= GAME_COUNT_ANSWERS_STAR - 1) ||
+        (countRightAnswer >= GAME_COUNT_ANSWERS_STAR + 1 &&
+            countRightAnswer <= 2 * GAME_COUNT_ANSWERS_STAR - 1) ||
         countRightAnswer >= 2 * GAME_COUNT_ANSWERS_STAR + 1
             ? " active"
             : "";
     const questionCurrent2 =
-        (countRightAnswer >= 2 && countRightAnswer <= GAME_COUNT_ANSWERS_STAR - 1) ||
-        (countRightAnswer >= GAME_COUNT_ANSWERS_STAR + 2 && countRightAnswer <= 2 * GAME_COUNT_ANSWERS_STAR - 1) ||
+        (countRightAnswer >= 2 &&
+            countRightAnswer <= GAME_COUNT_ANSWERS_STAR - 1) ||
+        (countRightAnswer >= GAME_COUNT_ANSWERS_STAR + 2 &&
+            countRightAnswer <= 2 * GAME_COUNT_ANSWERS_STAR - 1) ||
         countRightAnswer >= 2 * GAME_COUNT_ANSWERS_STAR + 2
             ? " active"
             : "";
     const questionCurrent3 =
         countRightAnswer > 2 &&
-        (countRightAnswer  === GAME_COUNT_ANSWERS_STAR - 1 || countRightAnswer  === 2 * GAME_COUNT_ANSWERS_STAR - 1 || countRightAnswer > 2 * GAME_COUNT_ANSWERS_STAR + 2)
+        (countRightAnswer === GAME_COUNT_ANSWERS_STAR - 1 ||
+            countRightAnswer === 2 * GAME_COUNT_ANSWERS_STAR - 1 ||
+            countRightAnswer > 2 * GAME_COUNT_ANSWERS_STAR + 2)
             ? " active"
             : "";
 

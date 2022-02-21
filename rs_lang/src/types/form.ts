@@ -1,6 +1,6 @@
 import ServiceApi from "../services/services";
-import { TSimpleFunction, TSimpleTypeFunction } from "./common";
-import { IStatisticGameState, IUserWordsInformation } from "./redux";
+import { TSimpleFunction } from "./common";
+import { IUserWordsInformation } from "./redux";
 
 export type TFormSubmitFC = (event: React.FormEvent<HTMLFormElement>) => void;
 export type TСhangeUserInfo = (newObj: IChangeUserObject) => void;
